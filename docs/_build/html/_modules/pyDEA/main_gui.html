@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.main_gui &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.main_gui</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.main_gui</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module should be used for running application GUI.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">Tk</span><span class="p">,</span> <span class="n">BOTH</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">StringVar</span><span class="p">,</span> <span class="n">PhotoImage</span>
+<span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Style</span><span class="p">,</span> <span class="n">Progressbar</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="kn">import</span> <span class="n">askyesno</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="kn">import</span> <span class="n">showerror</span>
+
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ObserverStringVar</span><span class="p">,</span> <span class="n">bg_color</span><span class="p">,</span> <span class="n">center_window</span>
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">clean_up_pickled_files</span><span class="p">,</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">core.utils.run_routine</span> <span class="kn">import</span> <span class="n">RunMethodGUI</span>
+<span class="kn">from</span> <span class="nn">core.gui_modules.data_frame_gui</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">core.gui_modules.params_frame_gui</span> <span class="kn">import</span> <span class="n">ParamsFrame</span>
+
+
+<div class="viewcode-block" id="MainFrame"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame">[docs]</a><span class="k">class</span> <span class="nc">MainFrame</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class implements main GUI of the application.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            parent (Tk object): parent of this frame (Tk()).</span>
+<span class="sd">            params_frame (ParamsFrame): frame with parameters.</span>
+<span class="sd">            data_frame (DataFrame): frame with data and solution.</span>
+<span class="sd">            progress_bar (Progressbar): progress bar widget.</span>
+<span class="sd">            increment (int): progress bar increment, it is modified</span>
+<span class="sd">                in other classes that are responsible for solving</span>
+<span class="sd">                the problem and update progress.</span>
+<span class="sd">            weights_status_lbl (Label): label that displays if weight</span>
+<span class="sd">                restrictions are feasible.</span>
+<span class="sd">            weights_status_str (StringVar): StringVar object used for</span>
+<span class="sd">                tracking if weight restrictions are feasible.</span>
+<span class="sd">            current_categories (list of str): list of current categories.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parent (Tk object): parent of this frame (Tk()).</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">Frame</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">increment</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_lbl</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_weights_status_change</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_widgets</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MainFrame.create_widgets"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame.create_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">create_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates all widgets that belong to this frame.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;pyDEA&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rowconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rowconfigure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rowconfigure</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">data_from_params_file</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="n">str_var_for_input_output_boxes</span> <span class="o">=</span> <span class="n">ObserverStringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span> <span class="o">=</span> <span class="n">ParamsFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span><span class="p">,</span>
+                                        <span class="n">data_from_params_file</span><span class="p">,</span>
+                                        <span class="n">str_var_for_input_output_boxes</span><span class="p">,</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span><span class="p">)</span>
+        <span class="n">data_frame</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span><span class="p">,</span>
+                               <span class="n">data_from_params_file</span><span class="p">,</span>
+                               <span class="n">str_var_for_input_output_boxes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_frame</span> <span class="o">=</span> <span class="n">data_frame</span>
+        <span class="n">data_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">W</span><span class="o">+</span><span class="n">E</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="o">+</span><span class="n">E</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+                               <span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="n">lbl_progress</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Progress&#39;</span><span class="p">)</span>
+        <span class="n">lbl_progress</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span> <span class="o">=</span> <span class="n">Progressbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;determinate&#39;</span><span class="p">,</span> <span class="n">maximum</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="o">+</span><span class="n">E</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="n">run_btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Run&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+        <span class="n">run_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_lbl</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_lbl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainFrame.on_weights_status_change"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame.on_weights_status_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_weights_status_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; This method is called when weight restrictions status is changed.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_lbl</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span><span class="o">.</span><span class="n">get</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="MainFrame.run"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; This method is called when the user presses Run button.</span>
+<span class="sd">            Solves the problem and displays solution.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">clean_up_pickled_files</span><span class="p">()</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span><span class="o">.</span><span class="n">params</span>
+        <span class="n">run_method</span> <span class="o">=</span> <span class="n">RunMethodGUI</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">run_method</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MainFrame.construct_categories"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame.construct_categories">[docs]</a>    <span class="k">def</span> <span class="nf">construct_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns current categories.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                (list of str): list of current categories</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">category</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span>
+                <span class="k">if</span> <span class="n">category</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="MainFrame.on_dmu_change"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame.on_dmu_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_dmu_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Updates progress bar.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">increment</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="ask_quit"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.ask_quit">[docs]</a><span class="k">def</span> <span class="nf">ask_quit</span><span class="p">(</span><span class="n">main_frame</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This method is called before application is closed if there is</span>
+<span class="sd">        an unsaved solution to verify if the user wants to safe solution</span>
+<span class="sd">        before quitting.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            main_frame (MainFrame): main application GUI.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">main_frame</span><span class="o">.</span><span class="n">data_frame</span><span class="o">.</span><span class="n">tab</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="s1">&#39;text&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">askyesno</span><span class="p">(</span><span class="s2">&quot;Verify&quot;</span><span class="p">,</span> <span class="s2">&quot;Do you want to save solution before quitting?&quot;</span><span class="p">):</span>
+            <span class="n">main_frame</span><span class="o">.</span><span class="n">data_frame</span><span class="o">.</span><span class="n">solution_tab</span><span class="o">.</span><span class="n">on_save_solution</span><span class="p">()</span>
+    <span class="n">clean_up_pickled_files</span><span class="p">()</span>
+    <span class="n">main_frame</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="show_error"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.show_error">[docs]</a><span class="k">def</span> <span class="nf">show_error</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="c1"># show only short error message to the user without traceback</span>
+    <span class="n">showerror</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39; Runs main application GUI.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;pyDEA started as a GUI application.&#39;</span><span class="p">)</span>
+
+    <span class="n">root</span> <span class="o">=</span> <span class="n">Tk</span><span class="p">()</span>
+
+    <span class="n">root</span><span class="o">.</span><span class="n">report_callback_exception</span> <span class="o">=</span> <span class="n">show_error</span>
+
+    <span class="c1"># load logo</span>
+    <span class="k">if</span> <span class="s2">&quot;nt&quot;</span> <span class="o">==</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">wm_iconbitmap</span><span class="p">(</span><span class="n">bitmap</span><span class="o">=</span><span class="s2">&quot;pyDEA/pyDEAlogo.ico&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s1">&#39;pyDEA/pyDEAlogo.gif&#39;</span><span class="p">)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;wm&#39;</span><span class="p">,</span> <span class="s1">&#39;iconphoto&#39;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">_w</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
+
+    <span class="c1"># change background color of all widgets</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">Style</span><span class="p">()</span>
+    <span class="n">s</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="n">bg_color</span><span class="p">)</span>
+
+    <span class="c1"># run the application</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">MainFrame</span><span class="p">(</span><span class="n">root</span><span class="p">)</span>
+    <span class="n">root</span><span class="o">.</span><span class="n">protocol</span><span class="p">(</span><span class="s2">&quot;WM_DELETE_WINDOW&quot;</span><span class="p">,</span> <span class="p">(</span><span class="k">lambda</span><span class="p">:</span> <span class="n">ask_quit</span><span class="p">(</span><span class="n">app</span><span class="p">)))</span>
+
+    <span class="n">center_window</span><span class="p">(</span><span class="n">root</span><span class="p">,</span>
+                  <span class="n">root</span><span class="o">.</span><span class="n">winfo_screenwidth</span><span class="p">()</span> <span class="o">-</span> <span class="n">root</span><span class="o">.</span><span class="n">winfo_screenwidth</span><span class="p">()</span><span class="o">*</span><span class="mf">0.15</span><span class="p">,</span>
+                  <span class="n">root</span><span class="o">.</span><span class="n">winfo_screenheight</span><span class="p">()</span> <span class="o">-</span> <span class="n">root</span><span class="o">.</span><span class="n">winfo_screenheight</span><span class="p">()</span><span class="o">*</span><span class="mf">0.15</span><span class="p">)</span>
+
+    <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;pyDEA exited.&#39;</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

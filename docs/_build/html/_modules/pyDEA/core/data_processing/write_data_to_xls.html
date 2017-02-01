@@ -1,0 +1,905 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.data_processing.write_data_to_xls &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.data_processing.write_data_to_xls</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.data_processing.write_data_to_xls</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains functions and classes responsible for</span>
+<span class="sd">    writing solutions into different outputs (files, screen, GUI, etc).</span>
+<span class="sd">    All names start with XLS because originally only xls-files were supported.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        if new methods for writing output are added, they MUST</span>
+<span class="sd">        follow the rule: data must be added</span>
+<span class="sd">        sequentially, row after row, column after column.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">pulp</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ZERO_TOLERANCE</span>
+<span class="kn">from</span> <span class="nn">core.data_processing.targets_and_slacks</span> <span class="kn">import</span> <span class="n">calculate_target</span>
+<span class="kn">from</span> <span class="nn">core.data_processing.targets_and_slacks</span> <span class="kn">import</span> <span class="n">calculate_radial_reduction</span>
+<span class="kn">from</span> <span class="nn">core.data_processing.targets_and_slacks</span> <span class="kn">import</span> <span class="n">calculate_non_radial_reduction</span>
+<span class="kn">from</span> <span class="nn">core.utils.progress_recorders</span> <span class="kn">import</span> <span class="n">NullProgress</span>
+
+
+<div class="viewcode-block" id="XLSSheetWithParameters"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithParameters">[docs]</a><span class="k">class</span> <span class="nc">XLSSheetWithParameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Writes parameters to a given output.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            params (Parameters): parameters.</span>
+<span class="sd">            run_date (datetime): date and time when the problem was solved.</span>
+<span class="sd">            total_seconds (float): time (in seconds) needed to solve</span>
+<span class="sd">                the problem.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params (Parameters): parameters.</span>
+<span class="sd">            run_date (datetime): date and time when the problem was solved.</span>
+<span class="sd">            total_seconds (float): time (in seconds) needed to solve</span>
+<span class="sd">                the problem.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">run_date</span><span class="p">,</span> <span class="n">total_seconds</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_date</span> <span class="o">=</span> <span class="n">run_date</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_seconds</span> <span class="o">=</span> <span class="n">total_seconds</span>
+
+<div class="viewcode-block" id="XLSSheetWithParameters.create_sheet_parameters"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithParameters.create_sheet_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">create_sheet_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">start_row_index</span><span class="p">,</span>
+                                <span class="n">params_str</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes parameters to a given output.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                work_sheet: object that has name attribute and implements</span>
+<span class="sd">                    write method, it actually writes data to some output</span>
+<span class="sd">                    (like file, screen, etc.).</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                start_row_index (int): initial row index (usually used to append</span>
+<span class="sd">                    data to existing output).</span>
+<span class="sd">                params_str (str): string that is usually written in the first</span>
+<span class="sd">                    row.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: index of the last row where data were written plus 1.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Parameters&#39;</span>
+
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Run date and time:&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_date</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%c</span><span class="s1">&#39;</span><span class="p">))</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Calculation time:&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;{0} seconds&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">))</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Parameter name&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Value&#39;</span><span class="p">)</span>
+        <span class="n">row_index</span> <span class="o">=</span> <span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">3</span>
+        <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">param_value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">param_value</span><span class="p">)</span>
+            <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">row_index</span></div></div>
+
+
+<div class="viewcode-block" id="XLSSheetOnionRank"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetOnionRank">[docs]</a><span class="k">class</span> <span class="nc">XLSSheetOnionRank</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Writes information about peel the onion solution to a given output.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            ranks (list of dict of str to double):</span>
+<span class="sd">                list that contains dictionaries that map DMU code</span>
+<span class="sd">                to peel the onion rank.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            ranks (list of dict of str to double):</span>
+<span class="sd">                list that contains dictionaries that map DMU code</span>
+<span class="sd">                to peel the onion rank.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ranks</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ranks</span> <span class="o">=</span> <span class="n">ranks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="XLSSheetOnionRank.create_sheet_onion_rank"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetOnionRank.create_sheet_onion_rank">[docs]</a>    <span class="k">def</span> <span class="nf">create_sheet_onion_rank</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">start_row_index</span><span class="p">,</span>
+                                <span class="n">params_str</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes information about peel the onion solution to a given output.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                work_sheet: object that has name attribute and implements</span>
+<span class="sd">                    write method, it actually writes data to some output</span>
+<span class="sd">                    (like file, screen, etc.).</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                start_row_index (int): initial row index (usually used to append</span>
+<span class="sd">                    data to existing output).</span>
+<span class="sd">                params_str (str): string that is usually written in the first</span>
+<span class="sd">                    row.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: index of the last row where data were written plus 1.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;OnionRank&#39;</span>
+        <span class="c1"># in case of max_slacks and peel-the-onion we should not</span>
+        <span class="c1"># write ranks twice</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ranks</span><span class="p">):</span>
+
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s1">&#39;Tier / Rank is the run in which DMU became efficient&#39;</span><span class="p">)</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;DMU&#39;</span><span class="p">)</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Efficiency&#39;</span><span class="p">)</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Tier / Rank&#39;</span><span class="p">)</span>
+            <span class="n">ordered_dmu_codes</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span>
+            <span class="n">row_index</span> <span class="o">=</span> <span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">3</span>
+            <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
+                <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">get_dmu_user_name</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                                     <span class="n">solution</span><span class="o">.</span><span class="n">get_efficiency_score</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">))</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">ranks</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">][</span><span class="n">dmu_code</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                        <span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>
+                        <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]])</span>
+                <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">row_index</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div></div>
+
+
+<div class="viewcode-block" id="XLSSheetWithCategoricalVar"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithCategoricalVar">[docs]</a><span class="k">class</span> <span class="nc">XLSSheetWithCategoricalVar</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Writes various solution information to a given output, and</span>
+<span class="sd">        adds categorical information if necessary.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            categorical (str): name of categorical category.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            categorical (str): name of categorical category.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span> <span class="o">=</span> <span class="n">categorical</span>
+
+<div class="viewcode-block" id="XLSSheetWithCategoricalVar.create_sheet_efficiency_scores"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithCategoricalVar.create_sheet_efficiency_scores">[docs]</a>    <span class="k">def</span> <span class="nf">create_sheet_efficiency_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
+                                       <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes efficiency scores to a given output.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                work_sheet: object that has name attribute and implements</span>
+<span class="sd">                    write method, it actually writes data to some output</span>
+<span class="sd">                    (like file, screen, etc.).</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                start_row_index (int): initial row index (usually used to append</span>
+<span class="sd">                    data to existing output).</span>
+<span class="sd">                params_str (str): string that is usually written in the first</span>
+<span class="sd">                    row.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: index of the last row where data were written plus 1.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;EfficiencyScores&#39;</span>
+
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;DMU&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Efficiency&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+                             <span class="s1">&#39;Categorical: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categorical</span><span class="p">))</span>
+
+        <span class="n">ordered_dmu_codes</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span>
+        <span class="n">row_index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ordered_dmu_codes</span><span class="p">):</span>
+            <span class="n">row_index</span> <span class="o">=</span> <span class="n">start_row_index</span> <span class="o">+</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">2</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">get_dmu_user_name</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
+                <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">solution</span><span class="o">.</span><span class="n">get_efficiency_score</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]])</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">row_index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span>
+                        <span class="n">dmu_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">row_index</span></div>
+
+<div class="viewcode-block" id="XLSSheetWithCategoricalVar.create_sheet_input_output_data_base"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithCategoricalVar.create_sheet_input_output_data_base">[docs]</a>    <span class="k">def</span> <span class="nf">create_sheet_input_output_data_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
+                                            <span class="n">get_multiplier</span><span class="p">,</span>
+                                            <span class="n">sheet_name</span><span class="p">,</span> <span class="n">start_row_index</span><span class="p">,</span>
+                                            <span class="n">params_str</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes input and output weights or weighted data to a given output</span>
+<span class="sd">            depending on input parameters.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                work_sheet: object that has name attribute and implements</span>
+<span class="sd">                    write method, it actually writes data to some output</span>
+<span class="sd">                    (like file, screen, etc.).</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                get_multiplier (func): function that scales weights.</span>
+<span class="sd">                sheet_name (str): name that will be written into the name</span>
+<span class="sd">                    attribute of work_sheet.</span>
+<span class="sd">                start_row_index (int): initial row index (usually used to append</span>
+<span class="sd">                    data to existing output).</span>
+<span class="sd">                params_str (str): string that is usually written in the first</span>
+<span class="sd">                    row.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: index of the last row where data were written plus 1.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">sheet_name</span>
+
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;DMU&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Efficiency&#39;</span><span class="p">)</span>
+
+        <span class="n">init_column_index</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+                             <span class="s1">&#39;Categorical: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categorical</span><span class="p">))</span>
+            <span class="n">init_column_index</span> <span class="o">=</span> <span class="mi">3</span>
+
+        <span class="n">categories</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">)</span>
+        <span class="n">categories</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">)</span>
+
+        <span class="n">column_index</span> <span class="o">=</span> <span class="n">init_column_index</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
+            <span class="n">column_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">solution</span><span class="o">.</span><span class="n">vrs_duals</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                             <span class="n">init_column_index</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">categories</span><span class="p">),</span> <span class="s1">&#39;VRS&#39;</span><span class="p">)</span>
+
+        <span class="n">row_index</span> <span class="o">=</span> <span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span>
+        <span class="n">ordered_dmu_codes</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span>
+        <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
+            <span class="n">dmu_name</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">get_dmu_user_name</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
+                <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">solution</span><span class="o">.</span><span class="n">get_efficiency_score</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">row_index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span>
+                        <span class="n">dmu_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span><span class="p">]))</span>
+
+            <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
+
+                <span class="n">column_index</span> <span class="o">=</span> <span class="n">init_column_index</span>
+                <span class="k">for</span> <span class="n">input_category</span> <span class="ow">in</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">:</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                        <span class="n">row_index</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span>
+                        <span class="n">get_multiplier</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_category</span><span class="p">)</span> <span class="o">*</span>
+                        <span class="n">solution</span><span class="o">.</span><span class="n">get_input_dual</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_category</span><span class="p">))</span>
+                    <span class="n">column_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">for</span> <span class="n">output_category</span> <span class="ow">in</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">:</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                        <span class="n">row_index</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span>
+                        <span class="n">get_multiplier</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">output_category</span><span class="p">)</span> <span class="o">*</span>
+                        <span class="n">solution</span><span class="o">.</span><span class="n">get_output_dual</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">output_category</span><span class="p">))</span>
+                    <span class="n">column_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">vrs_dual</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">get_VRS_dual</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">vrs_dual</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                    <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]])</span>
+
+            <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">row_index</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_const_multiplier</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Helper method that is used for writing input and output data</span>
+<span class="sd">            to a given output.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+<span class="sd">                category (str): category name.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: always returns 1 since we don&#39;t need to scale weights.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+<div class="viewcode-block" id="XLSSheetWithCategoricalVar.create_sheet_input_output_data"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithCategoricalVar.create_sheet_input_output_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_sheet_input_output_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
+                                       <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes input and output weights to a given output.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                work_sheet: object that has name attribute and implements</span>
+<span class="sd">                    write method, it actually writes data to some output</span>
+<span class="sd">                    (like file, screen, etc.).</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                start_row_index (int): initial row index (usually used to append</span>
+<span class="sd">                    data to existing output).</span>
+<span class="sd">                params_str (str): string that is usually written in the first</span>
+<span class="sd">                    row.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: index of the last row where data were written plus 1.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_sheet_input_output_data_base</span><span class="p">(</span>
+            <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_const_multiplier</span><span class="p">,</span> <span class="s1">&#39;InputOutputWeights&#39;</span><span class="p">,</span>
+            <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_get_data_multiplier</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Helper method that is used for writing weighted data</span>
+<span class="sd">            to a given output.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+<span class="sd">                category (str): category name.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: a scale value to scale weights.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span>
+
+<div class="viewcode-block" id="XLSSheetWithCategoricalVar.create_sheet_weighted_data"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithCategoricalVar.create_sheet_weighted_data">[docs]</a>    <span class="k">def</span> <span class="nf">create_sheet_weighted_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
+                                   <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes weighted data to a given output.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                work_sheet: object that has name attribute and implements</span>
+<span class="sd">                    write method, it actually writes data to some output</span>
+<span class="sd">                    (like file, screen, etc.).</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                start_row_index (int): initial row index (usually used to append</span>
+<span class="sd">                    data to existing output).</span>
+<span class="sd">                params_str (str): string that is usually written in the first</span>
+<span class="sd">                    row.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: index of the last row where data were written plus 1.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_sheet_input_output_data_base</span><span class="p">(</span>
+            <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_multiplier</span><span class="p">,</span> <span class="s1">&#39;WeightedData&#39;</span><span class="p">,</span>
+            <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="XLSSheetWithCategoricalVar.create_sheet_targets"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithCategoricalVar.create_sheet_targets">[docs]</a>    <span class="k">def</span> <span class="nf">create_sheet_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">start_row_index</span><span class="p">,</span>
+                             <span class="n">params_str</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes targets to a given output.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                work_sheet: object that has name attribute and implements</span>
+<span class="sd">                    write method, it actually writes data to some output</span>
+<span class="sd">                    (like file, screen, etc.).</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                start_row_index (int): initial row index (usually used to append</span>
+<span class="sd">                    data to existing output).</span>
+<span class="sd">                params_str (str): string that is usually written in the first</span>
+<span class="sd">                    row.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                int: index of the last row where data were written plus 1.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Targets&#39;</span>
+
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;DMU&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Category&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Target&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Radial&#39;</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;Non-radial&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+                <span class="s1">&#39;Categorical: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">categorical</span><span class="p">))</span>
+
+        <span class="n">ordered_dmu_codes</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span>
+        <span class="n">row_index</span> <span class="o">=</span> <span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span>
+        <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">get_dmu_user_name</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
+
+                <span class="n">once</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">all_lambda_vars</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">get_lambda_variables</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">chain</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">,</span>
+                                      <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">):</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
+                    <span class="n">original</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span>
+                        <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">original</span><span class="p">)</span>
+
+                    <span class="n">target</span> <span class="o">=</span> <span class="n">calculate_target</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">all_lambda_vars</span><span class="p">,</span>
+                                              <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">)</span>
+                    <span class="n">radial_reduction</span> <span class="o">=</span> <span class="n">calculate_radial_reduction</span><span class="p">(</span>
+                        <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="p">,</span>
+                        <span class="n">solution</span><span class="o">.</span><span class="n">get_efficiency_score</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">),</span>
+                        <span class="n">solution</span><span class="o">.</span><span class="n">orientation</span><span class="p">)</span>
+                    <span class="n">non_radial_reduction</span> <span class="o">=</span> <span class="n">calculate_non_radial_reduction</span><span class="p">(</span>
+                        <span class="n">target</span><span class="p">,</span> <span class="n">radial_reduction</span><span class="p">,</span> <span class="n">original</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">non_radial_reduction</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">ZERO_TOLERANCE</span><span class="p">:</span>
+                            <span class="n">non_radial_reduction</span> <span class="o">=</span> <span class="mi">0</span>
+
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">radial_reduction</span><span class="p">)</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">non_radial_reduction</span><span class="p">)</span>
+
+                    <span class="k">if</span> <span class="n">once</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                                <span class="n">row_index</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span>
+                                <span class="nb">int</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span>
+                                    <span class="n">dmu_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span><span class="p">]))</span>
+                        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                            <span class="n">row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                            <span class="n">solution</span><span class="o">.</span><span class="n">get_efficiency_score</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">))</span>
+                        <span class="n">once</span> <span class="o">=</span> <span class="bp">False</span>
+                    <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]])</span>
+
+            <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="n">row_index</span></div></div>
+
+
+<div class="viewcode-block" id="XLSWriter"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSWriter">[docs]</a><span class="k">class</span> <span class="nc">XLSWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class is responsible for writing solution information</span>
+<span class="sd">        into a given output.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            params (Parameters): parameters.</span>
+<span class="sd">            writer: object that contains several objects that</span>
+<span class="sd">                have name attribute and implement</span>
+<span class="sd">                write method, it actually writes data to some output</span>
+<span class="sd">                (like file, screen, etc.).</span>
+<span class="sd">            ranks (list of dict of str to double):</span>
+<span class="sd">                list that contains dictionaries that map DMU code</span>
+<span class="sd">                to peel the onion rank.</span>
+<span class="sd">            categorical (str): name of categorical category.</span>
+<span class="sd">            run_date (datetime): date and time when the problem was solved.</span>
+<span class="sd">            total_seconds (float): time (in seconds) needed to solve</span>
+<span class="sd">                the problem.</span>
+<span class="sd">            params_sheet (XLSSheetWithParameters): object that writes</span>
+<span class="sd">                parameters to a given output.</span>
+<span class="sd">            worksheets (list of func): list of functions that will be called</span>
+<span class="sd">                to write solution information to a given output.</span>
+<span class="sd">            start_rows (list of int): list of start row indexes for each</span>
+<span class="sd">                element in worksheets.</span>
+<span class="sd">            existing_sheets (list of func): contains None references in the</span>
+<span class="sd">                beginning, but after at least one call to write_data method</span>
+<span class="sd">                contains a copy of worksheets. It is necessary for appending</span>
+<span class="sd">                data to the same output.</span>
+<span class="sd">            print_params (bool): if set to true parameters are written to</span>
+<span class="sd">                a given output. It ensures that we don&#39;t write parameters more</span>
+<span class="sd">                than once if we should append information to the same output.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            params (Parameters): parameters.</span>
+<span class="sd">            writer: object that contains several objects that</span>
+<span class="sd">                have name attribute and implement</span>
+<span class="sd">                write method, it actually writes data to some output</span>
+<span class="sd">                (like file, screen, etc.).</span>
+<span class="sd">            run_date (datetime): date and time when the problem was solved.</span>
+<span class="sd">            total_seconds (float): time (in seconds) needed to solve</span>
+<span class="sd">                the problem.</span>
+<span class="sd">            worksheets (list of func, optional): list of functions that will</span>
+<span class="sd">                be called to write solution information to a given output.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">            ranks (list of dict of str to double, optional):</span>
+<span class="sd">                list that contains dictionaries that map DMU code</span>
+<span class="sd">                to peel the onion rank. Defaults to None.</span>
+<span class="sd">            categorical (str, optional): name of categorical category.</span>
+<span class="sd">                Defaults to None.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">writer</span><span class="p">,</span> <span class="n">run_date</span><span class="p">,</span> <span class="n">total_seconds</span><span class="p">,</span>
+                 <span class="n">worksheets</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ranks</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writer</span> <span class="o">=</span> <span class="n">writer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ranks</span> <span class="o">=</span> <span class="n">ranks</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span> <span class="o">=</span> <span class="n">categorical</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_date</span> <span class="o">=</span> <span class="n">run_date</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">total_seconds</span> <span class="o">=</span> <span class="n">total_seconds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_sheet</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">worksheets</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">worksheets</span> <span class="o">=</span> <span class="n">worksheets</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">worksheets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_default_worksheets</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_rows</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">worksheets</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">existing_sheets</span> <span class="o">=</span> <span class="p">[</span><span class="bp">None</span><span class="p">]</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">worksheets</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_params</span> <span class="o">=</span> <span class="bp">True</span>
+
+<div class="viewcode-block" id="XLSWriter.get_default_worksheets"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSWriter.get_default_worksheets">[docs]</a>    <span class="k">def</span> <span class="nf">get_default_worksheets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns a default list of functions that will</span>
+<span class="sd">            be called to write solution information to a given output.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                list of func: list of functions.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">sheet_with_categorical_var</span> <span class="o">=</span> <span class="n">XLSSheetWithCategoricalVar</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span><span class="p">)</span>
+        <span class="n">worksheets</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">sheet_with_categorical_var</span><span class="o">.</span><span class="n">create_sheet_efficiency_scores</span><span class="p">,</span>
+            <span class="n">create_sheet_peers</span><span class="p">,</span> <span class="n">create_sheet_peer_count</span><span class="p">,</span>
+            <span class="n">sheet_with_categorical_var</span><span class="o">.</span><span class="n">create_sheet_input_output_data</span><span class="p">,</span>
+            <span class="n">sheet_with_categorical_var</span><span class="o">.</span><span class="n">create_sheet_weighted_data</span><span class="p">,</span>
+            <span class="n">sheet_with_categorical_var</span><span class="o">.</span><span class="n">create_sheet_targets</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ranks</span><span class="p">:</span>
+            <span class="n">onion_rank_sheet</span> <span class="o">=</span> <span class="n">XLSSheetOnionRank</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ranks</span><span class="p">)</span>
+            <span class="n">worksheets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">onion_rank_sheet</span><span class="o">.</span><span class="n">create_sheet_onion_rank</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_sheet</span> <span class="o">=</span> <span class="n">XLSSheetWithParameters</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_date</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">)</span><span class="o">.</span><span class="n">create_sheet_parameters</span>
+        <span class="k">return</span> <span class="n">worksheets</span></div>
+
+<div class="viewcode-block" id="XLSWriter.write_data"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSWriter.write_data">[docs]</a>    <span class="k">def</span> <span class="nf">write_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">params_str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                   <span class="n">progress_recorder</span><span class="o">=</span><span class="n">NullProgress</span><span class="p">()):</span>
+        <span class="sd">&#39;&#39;&#39; Writes given solution to a given output.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                solution (Solution): solution.</span>
+<span class="sd">                params_str (str, optional): string that is usually written in</span>
+<span class="sd">                    the first row. Defaults to empty string.</span>
+<span class="sd">                progress_recorder (NullProgress, optional): object that</span>
+<span class="sd">                    shows progress with writing solution to a given output.</span>
+<span class="sd">                    Defaults to NullProgress.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">worksheet</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">worksheets</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_sheets</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">work_sheet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">add_sheet</span><span class="p">(</span>
+                    <span class="s1">&#39;Sheet_{count}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">existing_sheets</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">work_sheet</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">work_sheet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">existing_sheets</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">start_rows</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">worksheet</span><span class="p">(</span><span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">start_rows</span><span class="p">[</span><span class="n">count</span><span class="p">],</span>
+                                      <span class="n">params_str</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">progress_recorder</span><span class="o">.</span><span class="n">increment_step</span><span class="p">()</span>
+
+        <span class="c1"># parameters are printed only once to file</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">print_params</span><span class="p">:</span>
+            <span class="n">work_sheet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">writer</span><span class="o">.</span><span class="n">add_sheet</span><span class="p">(</span>
+                <span class="s1">&#39;Sheet_{count}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params_sheet</span><span class="p">(</span><span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">progress_recorder</span><span class="o">.</span><span class="n">increment_step</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_params</span> <span class="o">=</span> <span class="bp">False</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_calculate_frontier_classification</span><span class="p">(</span><span class="n">sum_of_lambda_values</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Returns string that describes frontier classification. If</span>
+<span class="sd">        sum_of_lambda_values is &gt; 1, then classification is DRS.</span>
+<span class="sd">        If sum_of_lambda_values is &lt; 1, then</span>
+<span class="sd">        classification is IRS. If sum_of_lambda_values == 1,</span>
+<span class="sd">        then classification is CRS.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            sum_of_lambda_values (double): sum of lambda variables</span>
+<span class="sd">                values.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: frontier classification.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">sum_of_lambda_values</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;DRS&#39;</span>
+    <span class="k">elif</span> <span class="n">sum_of_lambda_values</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;IRS&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;CRS&#39;</span>
+
+
+<div class="viewcode-block" id="create_sheet_peers"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.create_sheet_peers">[docs]</a><span class="k">def</span> <span class="nf">create_sheet_peers</span><span class="p">(</span><span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Writes peers to a given output.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            work_sheet: object that has name attribute and implements</span>
+<span class="sd">                write method, it actually writes data to some output</span>
+<span class="sd">                (like file, screen, etc.).</span>
+<span class="sd">            solution (Solution): solution.</span>
+<span class="sd">            start_row_index (int): initial row index (usually used to append</span>
+<span class="sd">                data to existing output).</span>
+<span class="sd">            params_str (str): string that is usually written in the first</span>
+<span class="sd">                row.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: index of the last row where data were written plus 1.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Peers&#39;</span>
+
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span>
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;DMU&#39;</span><span class="p">)</span>
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Peer&#39;</span><span class="p">)</span>
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Lambda&#39;</span><span class="p">)</span>
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Classification&#39;</span><span class="p">)</span>
+
+    <span class="n">ordered_dmu_codes</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span>
+    <span class="n">row_index</span> <span class="o">=</span> <span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span>
+    <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">get_dmu_user_name</span><span class="p">(</span>
+            <span class="n">dmu_code</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
+            <span class="n">lambda_vars</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">get_lambda_variables</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+            <span class="n">sum_of_lambda_values</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">once</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">for</span> <span class="n">dmu</span><span class="p">,</span> <span class="n">lambda_value</span> <span class="ow">in</span> <span class="n">lambda_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">lambda_value</span><span class="p">:</span>
+                    <span class="n">sum_of_lambda_values</span> <span class="o">+=</span> <span class="n">lambda_value</span>
+                    <span class="n">dmu_name</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">get_dmu_user_name</span><span class="p">(</span><span class="n">dmu</span><span class="p">)</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">)</span>
+                    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">lambda_value</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">once</span><span class="p">:</span>
+                        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                            <span class="n">row_index</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
+                            <span class="n">_calculate_frontier_classification</span><span class="p">(</span>
+                                <span class="n">sum_of_lambda_values</span><span class="p">))</span>
+                        <span class="n">once</span> <span class="o">=</span> <span class="bp">False</span>
+                    <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">row_index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]])</span>
+        <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">row_index</span></div>
+
+
+<div class="viewcode-block" id="create_sheet_peer_count"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.create_sheet_peer_count">[docs]</a><span class="k">def</span> <span class="nf">create_sheet_peer_count</span><span class="p">(</span><span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Writes peer counts to a given output.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            work_sheet: object that has name attribute and implements</span>
+<span class="sd">                write method, it actually writes data to some output</span>
+<span class="sd">                (like file, screen, etc.).</span>
+<span class="sd">            solution (Solution): solution.</span>
+<span class="sd">            start_row_index (int): initial row index (usually used to append</span>
+<span class="sd">                data to existing output).</span>
+<span class="sd">            params_str (str): string that is usually written in the first</span>
+<span class="sd">                row.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: index of the last row where data were written plus 1.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;PeerCount&#39;</span>
+
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span>
+    <span class="n">ordered_dmu_codes</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span>
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Efficient Peers&#39;</span><span class="p">)</span>
+
+    <span class="c1"># write names of efficient DMUs first</span>
+    <span class="n">column_index</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">is_efficient</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">):</span>
+                <span class="n">dmu_name</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">get_dmu_user_name</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+                <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">)</span>
+                <span class="n">column_index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;DMU&#39;</span><span class="p">)</span>
+    <span class="c1"># continue line by line</span>
+    <span class="n">row_index</span> <span class="o">=</span> <span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">3</span>
+    <span class="n">nb_peers</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
+
+        <span class="n">dmu_name</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">get_dmu_user_name</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
+            <span class="n">column_index</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">all_lambda_vars</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">get_lambda_variables</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">dmu</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span> <span class="ow">and</span>
+                        <span class="n">solution</span><span class="o">.</span><span class="n">is_efficient</span><span class="p">(</span><span class="n">dmu</span><span class="p">,</span> <span class="n">all_lambda_vars</span><span class="p">)):</span>
+                    <span class="c1"># get is used since some lambda</span>
+                    <span class="c1"># # variables might not be present in categorical model!</span>
+                    <span class="n">lambda_value</span> <span class="o">=</span> <span class="n">all_lambda_vars</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dmu</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">lambda_value</span><span class="p">:</span>
+                        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">lambda_value</span><span class="p">)</span>
+                        <span class="n">nb_peers</span><span class="p">[</span><span class="n">dmu</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">)</span>
+                    <span class="n">column_index</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]])</span>
+        <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;Peer count&#39;</span><span class="p">)</span>
+    <span class="n">column_index</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">nb_peers</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">nb_peers</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">])</span>
+            <span class="n">column_index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">row_index</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

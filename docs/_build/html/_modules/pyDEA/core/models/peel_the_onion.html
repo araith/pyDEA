@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.models.peel_the_onion &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.models.peel_the_onion</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.models.peel_the_onion</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains peel the onion model.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">from</span> <span class="nn">pulp</span> <span class="kn">import</span> <span class="n">LpStatusOptimal</span>
+
+
+<div class="viewcode-block" id="restore_base"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.peel_the_onion.restore_base">[docs]</a><span class="k">def</span> <span class="nf">restore_base</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">first_solution</span><span class="p">,</span> <span class="n">copy_of_dmu_codes</span><span class="p">,</span> <span class="n">max_slack_solution</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Helper function used for restoring DMU codes and first solution.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (ModelBase): model used in the peel the onion.</span>
+<span class="sd">            first_solution (Solution): first solution of the peel the</span>
+<span class="sd">                onion.</span>
+<span class="sd">            copy_of_dmu_codes (list of str): list of original DMU codes.</span>
+<span class="sd">            max_slack_solution (Solution): solution obtained by two phase</span>
+<span class="sd">                model if any.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span> <span class="o">=</span> <span class="n">copy_of_dmu_codes</span>
+    <span class="k">if</span> <span class="n">max_slack_solution</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">second_solution</span> <span class="o">=</span> <span class="n">max_slack_solution</span>
+    <span class="k">assert</span><span class="p">(</span><span class="n">first_solution</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="peel_the_onion_method"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.peel_the_onion.peel_the_onion_method">[docs]</a><span class="k">def</span> <span class="nf">peel_the_onion_method</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Runs the peel the onion model and returns solution that corresponds to</span>
+<span class="sd">        the first run and ranking of all DMUs.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (ModelBase): DEA model that must be called in the peel</span>
+<span class="sd">                the onion.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            tuple of Solution, dict of str to int, bool: tuple with the first</span>
+<span class="sd">                solution of the problem, dictionary that maps DMU code to peel</span>
+<span class="sd">                the onion rank, boolean value which is true if all peel the</span>
+<span class="sd">                onion runs were successful, false otherwise.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">copy_of_dmu_codes</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">)</span>
+    <span class="n">current_rank</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ranks</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
+        <span class="n">ranks</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Infeasible/unbounded&#39;</span>
+
+    <span class="n">first_solution</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">max_slack_solution</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">while</span> <span class="n">model</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
+        <span class="n">solution</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">current_rank</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">first_solution</span> <span class="o">=</span> <span class="n">solution</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">max_slack_solution</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">second_solution</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="n">dmus_to_remove</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">not_efficient_dmus</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">one_is_infeasible</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">!=</span> <span class="n">LpStatusOptimal</span><span class="p">:</span>
+                <span class="n">one_is_infeasible</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">elif</span> <span class="n">solution</span><span class="o">.</span><span class="n">is_efficient</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">):</span>
+                <span class="n">ranks</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_rank</span>
+                <span class="n">dmus_to_remove</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">not_efficient_dmus</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">one_is_infeasible</span><span class="p">:</span>
+            <span class="n">restore_base</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">first_solution</span><span class="p">,</span> <span class="n">copy_of_dmu_codes</span><span class="p">,</span>
+                         <span class="n">max_slack_solution</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">first_solution</span><span class="p">,</span> <span class="n">ranks</span><span class="p">,</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">dmus_to_remove</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dmus_to_remove</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">not_efficient_dmus</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">dmu</span> <span class="ow">in</span> <span class="n">not_efficient_dmus</span><span class="p">:</span>
+                <span class="n">ranks</span><span class="p">[</span><span class="n">dmu</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_rank</span>
+            <span class="k">break</span>
+        <span class="n">current_rank</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">restore_base</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">first_solution</span><span class="p">,</span> <span class="n">copy_of_dmu_codes</span><span class="p">,</span> <span class="n">max_slack_solution</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">first_solution</span><span class="p">,</span> <span class="n">ranks</span><span class="p">,</span> <span class="bp">True</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

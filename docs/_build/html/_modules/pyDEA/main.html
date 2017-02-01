@@ -1,0 +1,260 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.main &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.main</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.main</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains method for running pyDEA from terminal.</span>
+
+<span class="sd">    Warning:</span>
+<span class="sd">        This module must be run from trunk folder.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">core.data_processing.parameters</span> <span class="kn">import</span> <span class="n">parse_parameters_from_file</span>
+<span class="kn">from</span> <span class="nn">core.utils.run_routine</span> <span class="kn">import</span> <span class="n">RunMethodTerminal</span>
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">clean_up_pickled_files</span><span class="p">,</span> <span class="n">get_logger</span>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;xlsx&#39;</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sheet_name_usr</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Main function to run DEA models from terminal.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            filename (str): path to file with parameters.</span>
+<span class="sd">            output_format (str, optional): file format of solution file.</span>
+<span class="sd">                This value is used</span>
+<span class="sd">                only if OUTPUT_FILE in parameters is empty or set to auto.</span>
+<span class="sd">                Defaults to xlsx.</span>
+<span class="sd">            output_dir (str, optional): directory where solution must</span>
+<span class="sd">                be written.</span>
+<span class="sd">                If it is not given, solution will be written to current folder.</span>
+<span class="sd">            sheet_name_usr (str, optional): name of the sheet in xls- or</span>
+<span class="sd">                xlsx-file with</span>
+<span class="sd">                input data from which data will be read. If input data file is</span>
+<span class="sd">                in csv format,</span>
+<span class="sd">                this value is ignored.</span>
+
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Params file&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;output_format&#39;</span><span class="p">,</span> <span class="n">output_format</span><span class="p">,</span>
+          <span class="s1">&#39;output_dir&#39;</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="s1">&#39;sheet_name_usr&#39;</span><span class="p">,</span> <span class="n">sheet_name_usr</span><span class="p">)</span>
+    
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Params file &quot;</span><span class="si">%s</span><span class="s1">&quot;, output format &quot;</span><span class="si">%s</span><span class="s1">&quot;, output directory &quot;</span><span class="si">%s</span><span class="s1">&quot;, sheet name &quot;</span><span class="si">%s</span><span class="s1">&quot;.&#39;</span><span class="p">,</span>
+                <span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">sheet_name_usr</span><span class="p">)</span>
+
+    <span class="n">params</span> <span class="o">=</span> <span class="n">parse_parameters_from_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">params</span><span class="o">.</span><span class="n">print_all_parameters</span><span class="p">()</span>
+    <span class="n">run_method</span> <span class="o">=</span> <span class="n">RunMethodTerminal</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">sheet_name_usr</span><span class="p">,</span> <span class="n">output_format</span><span class="p">,</span>
+                                   <span class="n">output_dir</span><span class="p">)</span>
+    <span class="n">run_method</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+    <span class="n">clean_up_pickled_files</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;pyDEA exited.&#39;</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;pyDEA started as a console application.&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">&#39;args = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Invalid number of input arguments. At least one &#39;</span>
+                     <span class="s1">&#39;argument must be given, no more than 4 arguments, but </span><span class="si">%d</span><span class="s1"> were given.&#39;</span><span class="p">,</span>
+                     <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid number of input arguments. At least one &#39;</span>
+                         <span class="s1">&#39;argument must be given, no more than 4 arguments&#39;</span>
+                         <span class="s1">&#39; are expected. Input arguments are:</span><span class="se">\n</span><span class="s1"> (1) path to&#39;</span>
+                         <span class="s1">&#39; file with parameters (compulsory)</span><span class="se">\n</span><span class="s1">&#39;</span>
+                         <span class="s1">&#39;(2) output file format, possible values: xls, xlsx&#39;</span>
+                         <span class="s1">&#39; and csv, default value is xlsx (optional), this&#39;</span>
+                         <span class="s1">&#39; value is used only if auto or empty string was set&#39;</span>
+                         <span class="s1">&#39; for OUTPUT_FILE in parameters file </span><span class="se">\n</span><span class="s1">&#39;</span>
+                         <span class="s1">&#39;(3) output directory (optional, if not specified,&#39;</span>
+                         <span class="s1">&#39; output is written to current directory)</span><span class="se">\n</span><span class="s1">&#39;</span>
+                         <span class="s1">&#39;(4) sheet name from which data should be read &#39;</span>
+                         <span class="s1">&#39;(optional, if not specified, data is read from&#39;</span>
+                         <span class="s1">&#39; the first sheet)&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">main</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">excinfo</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">excinfo</span><span class="p">)</span>
+        <span class="k">raise</span>    
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

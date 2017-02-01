@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.models.categorical_dmus &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.models.categorical_dmus</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.models.categorical_dmus</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains class for performing DEA analysis with categorical DMUs</span>
+<span class="sd">    and some helper functions.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">core.models.model_base</span> <span class="kn">import</span> <span class="n">ModelBase</span>
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">check_input_and_output_categories</span>
+
+
+<div class="viewcode-block" id="get_dmus_with_fixed_hierarchical_category"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.get_dmus_with_fixed_hierarchical_category">[docs]</a><span class="k">def</span> <span class="nf">get_dmus_with_fixed_hierarchical_category</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span>
+                                              <span class="n">hierarchical_category</span><span class="p">,</span>
+                                              <span class="n">category_name</span><span class="p">,</span>
+                                              <span class="n">dmu_codes</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Constructs a set of DMU codes that have the value of hierarchical</span>
+<span class="sd">        category equal to the specified category value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            coefficients (dict of tuple of str, str to double): dictionary</span>
+<span class="sd">                that maps DMU codes and categories to values.</span>
+<span class="sd">            hierarchical_category (int): specified value of hierarchical</span>
+<span class="sd">                category.</span>
+<span class="sd">            category_name (str): name of the category with hierarchical</span>
+<span class="sd">                order of DMUs.</span>
+<span class="sd">            dmu_codes (set of str): set of DMU codes.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            set of str: a set of DMU codes that have the value of hierarchical</span>
+<span class="sd">                category equal to given input parameter hierarchical_category.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">dmu</span> <span class="k">for</span> <span class="p">(</span><span class="n">dmu</span><span class="p">,</span> <span class="n">category</span><span class="p">),</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">coefficients</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+               <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span> <span class="o">==</span> <span class="n">hierarchical_category</span> <span class="ow">and</span>
+               <span class="n">category</span> <span class="o">==</span> <span class="n">category_name</span> <span class="ow">and</span> <span class="n">dmu</span> <span class="ow">in</span> <span class="n">dmu_codes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ModelWithCategoricalDMUs"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs">[docs]</a><span class="k">class</span> <span class="nc">ModelWithCategoricalDMUs</span><span class="p">(</span><span class="n">ModelBase</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39; This class implements DEA categorical analysis.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            model (ModelBase): a concrete model that is used for categorical</span>
+<span class="sd">                analysis.</span>
+<span class="sd">            category_name (str): name of the category with hierarchical</span>
+<span class="sd">                order of DMUs.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model (ModelBase): model that should be used for every</span>
+<span class="sd">                hierarchical category.</span>
+<span class="sd">            category_name (str): name of the category with hierarchical</span>
+<span class="sd">                order of DMUs.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">category_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">categories</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Category &lt;{category}&gt; does not exist&#39;</span><span class="o">.</span>
+                             <span class="n">format</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_name</span> <span class="o">=</span> <span class="n">category_name</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Redirects calls to all undefined methods or attributes</span>
+<span class="sd">            to self.model.</span>
+
+<span class="sd">            Attributes:</span>
+<span class="sd">                name (str): attribute name.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ModelWithCategoricalDMUs.run"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Performs categorical analysis.</span>
+
+<span class="sd">            Warning:</span>
+<span class="sd">                All categorical values must be integers.</span>
+
+<span class="sd">            DMUs with category 1 are considered first and compared</span>
+<span class="sd">            only to each other. Then DMUs with category 1 and 2 are considered,</span>
+<span class="sd">            and so on. Hence, category 1 is least favourable, category 2 is more</span>
+<span class="sd">            favourable and so on.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                Solution: solution of the problem.</span>
+
+<span class="sd">            Warning:</span>
+<span class="sd">                All floating point values of categorical category will be</span>
+<span class="sd">                truncated to integer values.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">check_input_and_output_categories</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="n">copy_of_dmu_codes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">dmu</span> <span class="k">for</span> <span class="n">dmu</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">])</span>
+        <span class="n">model_solution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_solution</span><span class="p">()</span>
+
+        <span class="n">tmp_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">dmu</span><span class="p">,</span> <span class="n">category</span><span class="p">),</span> <span class="n">coeff</span> <span class="ow">in</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                      <span class="k">if</span> <span class="n">category</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_name</span><span class="p">)</span>
+        <span class="n">sorted_hierarchical_categories</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">tmp_set</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">hierarchical_category</span> <span class="ow">in</span> <span class="n">sorted_hierarchical_categories</span><span class="p">:</span>
+            <span class="n">dmu_fixed_category</span> <span class="o">=</span> <span class="n">get_dmus_with_fixed_hierarchical_category</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">,</span>
+                <span class="n">hierarchical_category</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_name</span><span class="p">,</span>
+                <span class="n">copy_of_dmu_codes</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span> <span class="o">=</span> <span class="n">dmu_fixed_category</span><span class="o">.</span><span class="n">union</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_create_lp</span><span class="p">()</span>
+                <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">dmu_fixed_category</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">run_for_one_DMU</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">update_dmu_str_var</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span> <span class="o">=</span> <span class="n">copy_of_dmu_codes</span>
+        <span class="k">return</span> <span class="n">model_solution</span></div>
+
+<div class="viewcode-block" id="ModelWithCategoricalDMUs.run_for_one_DMU"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.run_for_one_DMU">[docs]</a>    <span class="k">def</span> <span class="nf">run_for_one_DMU</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Solves LP for a given DMU.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+<span class="sd">                model_solution (Solution): model solution, it will be</span>
+<span class="sd">                    filled by this method.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">run_for_one_DMU</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_fill_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Fills given solution for a given DMU.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+<span class="sd">                model_solution (Solution): model solution that will be</span>
+<span class="sd">                    filled.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_fill_solution</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Allocates a proper solution object.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                Solution: allocated solution object.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_create_solution</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_create_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates a proper linear program.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_create_lp</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_update_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Updates created linear program with parameters of the given</span>
+<span class="sd">            DMU.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_update_lp</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,360 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.data_processing.solution_text_writer &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.data_processing.solution_text_writer</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.data_processing.solution_text_writer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This model contains classes used for writing one page of a</span>
+<span class="sd">    solution to a file.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">format_data</span><span class="p">,</span> <span class="n">change_to_unique_name_if_needed</span>
+
+
+<div class="viewcode-block" id="SolutionTextWriter"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.SolutionTextWriter">[docs]</a><span class="k">class</span> <span class="nc">SolutionTextWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class implements generic utility to write formatted data</span>
+<span class="sd">        to a given output (usually file, but could be anything that implements</span>
+<span class="sd">        a particular interface). Data is written row by row an column by column,</span>
+<span class="sd">        as a table.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            current_row (int): index of current row.</span>
+<span class="sd">            current_col (int): index of current column.</span>
+<span class="sd">            delimiter (str): delimiter used to separate columns.</span>
+
+<span class="sd">                    Note:</span>
+<span class="sd">                        Rows are separated by end of line symbol.</span>
+
+<span class="sd">            write_fnc (callable): function that takes one string argument which</span>
+<span class="sd">                should be written to a given output, and writes this argument</span>
+<span class="sd">                to that output.</span>
+<span class="sd">            name (str): name of the solution page</span>
+<span class="sd">                (i.e. EfficiencyScores, Parameters,...).</span>
+<span class="sd">                Name is usually changed by the user or another function</span>
+<span class="sd">                manually, for example see module write_data_to_xls.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            delimiter (str): delimiter used to separate columns.</span>
+<span class="sd">            write_fnc (callable): function that takes one string argument which</span>
+<span class="sd">                should be written to a given output, and writes this argument</span>
+<span class="sd">                to that output.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">write_fnc</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_row</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_col</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span> <span class="o">=</span> <span class="n">delimiter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_fnc</span> <span class="o">=</span> <span class="n">write_fnc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+
+<div class="viewcode-block" id="SolutionTextWriter.write"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.SolutionTextWriter.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes given data to an output (usually file).</span>
+
+<span class="sd">            Warning:</span>
+<span class="sd">                When using this function, rows and columns must be</span>
+<span class="sd">                specified in order,</span>
+<span class="sd">                i.e. you can call write(0, 0, &#39;data&#39;), then write(1, 0, &#39;data&#39;).</span>
+<span class="sd">                But you cannot call write(2, 0, &#39;data&#39;), and then</span>
+<span class="sd">                write(0, 0, &#39;data&#39;).</span>
+<span class="sd">                Data should be written row by row and column by column.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                row_index (int): index of the row where data must be written.</span>
+<span class="sd">                column_index (int): index of the column where data must</span>
+<span class="sd">                    be written.</span>
+<span class="sd">                data (str or float): data that will be written.</span>
+
+<span class="sd">                    Note:</span>
+<span class="sd">                        data will be formatted before writing, see function</span>
+<span class="sd">                        format_data.</span>
+
+<span class="sd">            Example:</span>
+<span class="sd">                &gt;&gt;&gt; writer = SolutionTextWriter(&#39;;&#39;, write_fnc)</span>
+<span class="sd">                &gt;&gt;&gt; write(0, 0, &#39;a&#39;)</span>
+<span class="sd">                &gt;&gt;&gt; write(0, 1, &#39;b&#39;)</span>
+<span class="sd">                &gt;&gt;&gt; write(1, 0, &#39;c&#39;)</span>
+<span class="sd">                &quot;\\na;b\\nc&quot;</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">row_index</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_row</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_fnc</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_col</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">column_index</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write_fnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_fnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_row</span> <span class="o">=</span> <span class="n">row_index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_col</span> <span class="o">=</span> <span class="n">column_index</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_fnc</span><span class="p">(</span><span class="n">format_data</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div></div>
+
+
+<div class="viewcode-block" id="TxtOneFileWriter"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.TxtOneFileWriter">[docs]</a><span class="k">class</span> <span class="nc">TxtOneFileWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class is a helper class for TxtWriter. It implements</span>
+<span class="sd">        function write_text that writes data to a file, and it</span>
+<span class="sd">        keeps reference to file.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            file_ref (file reference): reference to file where all data</span>
+<span class="sd">                is written.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_ref (file reference): reference to file where all</span>
+<span class="sd">                data is written.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_ref</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_ref</span> <span class="o">=</span> <span class="n">file_ref</span>
+
+<div class="viewcode-block" id="TxtOneFileWriter.write_text"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.TxtOneFileWriter.write_text">[docs]</a>    <span class="k">def</span> <span class="nf">write_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes given data to file.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                data (str): data to write to file.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_ref</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TxtWriter"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.TxtWriter">[docs]</a><span class="k">class</span> <span class="nc">TxtWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class is used for writing solution to csv. It creates a</span>
+<span class="sd">        given folder where all csv files will be written and</span>
+<span class="sd">        creates solution files in this folder.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            folder_name (str): folder for csv files.</span>
+<span class="sd">            tabs (list of file references): list of references to files where</span>
+<span class="sd">                solution will be written.</span>
+<span class="sd">            tab_writers (list of SolutionTextWriter): list of SolutionTextWriter</span>
+<span class="sd">                objects each of which is responsible to filling one csv</span>
+<span class="sd">                file with data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            folder_name (str): folder for csv files.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">folder_name</span> <span class="o">=</span> <span class="n">folder_name</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">folder_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_writers</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="TxtWriter.add_sheet"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.TxtWriter.add_sheet">[docs]</a>    <span class="k">def</span> <span class="nf">add_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates a csv file that represents one page of the solution.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                name (str): name of the file.</span>
+
+<span class="sd">                    Note:</span>
+<span class="sd">                        This is a temporary name. After solution is written</span>
+<span class="sd">                        and save is called,</span>
+<span class="sd">                        file will be renamed according to a solution page name</span>
+<span class="sd">                        (i.e. EfficiencyScores).</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                SolutionTextWriter: SolutionTextWriter object that is</span>
+<span class="sd">                    responsible for filling this file with data.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;{0}.csv&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_name</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="n">change_to_unique_name_if_needed</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="n">file_ref</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file_ref</span><span class="p">)</span>
+        <span class="n">tab_writer</span> <span class="o">=</span> <span class="n">TxtOneFileWriter</span><span class="p">(</span><span class="n">file_ref</span><span class="p">)</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">SolutionTextWriter</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">tab_writer</span><span class="o">.</span><span class="n">write_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_writers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">file_name</span><span class="p">,</span> <span class="n">writer</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">writer</span></div>
+
+<div class="viewcode-block" id="TxtWriter.save"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.TxtWriter.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Closes all created csv files and renames them according to solution</span>
+<span class="sd">            page names.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                file_name (str): this parameter is ignored.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># no need to save, only to close all files</span>
+        <span class="k">for</span> <span class="n">file_ref</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabs</span><span class="p">:</span>
+            <span class="n">file_ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">saved_file_name</span><span class="p">,</span> <span class="n">tab_writer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_writers</span><span class="p">:</span>
+            <span class="n">new_name</span> <span class="o">=</span> <span class="s1">&#39;{0}.csv&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tab_writer</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">new_name</span> <span class="o">=</span> <span class="n">change_to_unique_name_if_needed</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">saved_file_name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

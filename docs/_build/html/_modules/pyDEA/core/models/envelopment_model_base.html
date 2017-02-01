@@ -1,0 +1,395 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.models.envelopment_model_base &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.models.envelopment_model_base</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.models.envelopment_model_base</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains a base class that implements envelopment model.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">pulp</span>
+
+<span class="kn">from</span> <span class="nn">core.models.model_base</span> <span class="kn">import</span> <span class="n">ModelBase</span>
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ZERO_TOLERANCE</span>
+
+
+<div class="viewcode-block" id="EnvelopmentModelBase"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase">[docs]</a><span class="k">class</span> <span class="nc">EnvelopmentModelBase</span><span class="p">(</span><span class="n">ModelBase</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class is a base class for different envelopment models.</span>
+<span class="sd">        It implements general structure of all envelopment models.</span>
+<span class="sd">        Concrete variations of envelopment models are passed in the</span>
+<span class="sd">        class constructor.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            _concrete_model: concrete implementation of the envelopment</span>
+<span class="sd">                model.</span>
+<span class="sd">            _constraint_creator: object that creates a proper</span>
+<span class="sd">                constraint depending on presence of</span>
+<span class="sd">                disposable variables.</span>
+<span class="sd">            _variables (dict of str to pulp.LpVariable): dictionary of pulp</span>
+<span class="sd">                variables than maps variable names to pulp variables.</span>
+<span class="sd">            _constraints (dict of str to str): dictionary that maps name of</span>
+<span class="sd">                the category to the name of the corresponding constraint.</span>
+<span class="sd">            _should_add_efficiency (bool): if set to False, previously</span>
+<span class="sd">                stored efficiency score is used. This variable is changed</span>
+<span class="sd">                in two phase model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            input_data (InputData): object that stores all data of</span>
+<span class="sd">                a DEA instance.</span>
+<span class="sd">            concrete_model: concrete implementation of the envelopment</span>
+<span class="sd">                model.</span>
+<span class="sd">            constraint_creator: object that creates a proper</span>
+<span class="sd">                constraint depending on presence of disposable variables.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">concrete_model</span><span class="p">,</span> <span class="n">constraint_creator</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">EnvelopmentModelBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span> <span class="o">=</span> <span class="n">concrete_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constraint_creator</span> <span class="o">=</span> <span class="n">constraint_creator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_should_add_efficiency</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="k">def</span> <span class="nf">_create_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates initial linear program.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="c1"># create LP for the first DMU - it is the easiest way to</span>
+        <span class="c1"># adapt current code</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
+            <span class="n">dmu_code</span> <span class="o">=</span> <span class="n">elem</span>
+            <span class="k">break</span>
+
+        <span class="n">orientation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">get_orientation</span><span class="p">()</span>
+        <span class="n">obj_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">get_objective_type</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpProblem</span><span class="p">(</span><span class="s1">&#39;Envelopment model: {0}-&#39;</span>
+                                       <span class="s1">&#39;oriented&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">orientation</span><span class="p">),</span>
+                                       <span class="n">obj_type</span><span class="p">)</span>
+        <span class="n">ub_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">get_upper_bound_for_objective_variable</span><span class="p">()</span>
+        <span class="n">obj_variable</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">(</span><span class="s1">&#39;Variable in objective function&#39;</span><span class="p">,</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span>
+                                       <span class="n">get_lower_bound_for_objective_variable</span><span class="p">(),</span>
+                                       <span class="n">ub_obj</span><span class="p">,</span>
+                                       <span class="n">pulp</span><span class="o">.</span><span class="n">LpContinuous</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="p">[</span><span class="s1">&#39;obj_var&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_variable</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">+=</span> <span class="p">(</span><span class="n">obj_variable</span><span class="p">,</span>
+                          <span class="s1">&#39;Efficiency score or inverse of efficiency score&#39;</span><span class="p">)</span>
+
+        <span class="n">lambda_variables</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="o">.</span><span class="n">dicts</span><span class="p">(</span><span class="s1">&#39;lambda&#39;</span><span class="p">,</span>
+                                                 <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">,</span>
+                                                 <span class="mi">0</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpContinuous</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">lambda_variables</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_constraints_for_outputs</span><span class="p">(</span><span class="n">lambda_variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                          <span class="n">obj_variable</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_constraints_for_inputs</span><span class="p">(</span><span class="n">lambda_variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                         <span class="n">obj_variable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Updates existing linear program with coefficients corresponding</span>
+<span class="sd">            to a given DMU.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">output_category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">:</span>
+            <span class="n">constraint_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">output_category</span><span class="p">]</span>
+            <span class="n">current_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[(</span><span class="n">dmu_code</span><span class="p">,</span>
+                                                          <span class="n">output_category</span><span class="p">)]</span>
+            <span class="n">constraint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="n">constraint_name</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">update_output_category_coefficient</span><span class="p">(</span>
+                <span class="n">current_output</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="p">[</span><span class="s1">&#39;obj_var&#39;</span><span class="p">],</span>
+                <span class="n">output_category</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">input_category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">:</span>
+            <span class="n">current_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[(</span><span class="n">dmu_code</span><span class="p">,</span>
+                                                         <span class="n">input_category</span><span class="p">)]</span>
+            <span class="n">constraint_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">input_category</span><span class="p">]</span>
+            <span class="n">constraint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="n">constraint_name</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">update_input_category_coefficient</span><span class="p">(</span>
+                <span class="n">current_input</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="p">[</span><span class="s1">&#39;obj_var&#39;</span><span class="p">],</span>
+                <span class="n">input_category</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_constraints_for_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                     <span class="n">obj_variable</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds constraints for outputs to linear program.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                variables (dict of str to pulp.LpVariable): a dictionary</span>
+<span class="sd">                    that maps DMU codes to pulp.LpVariable, created with</span>
+<span class="sd">                    pulp.LpVariable.dicts.</span>
+<span class="sd">                dmu_code (str): DMU code for which LP is being created.</span>
+<span class="sd">                obj_variable (pulp.LpVariable): LP variable that is optimised</span>
+<span class="sd">                    (either efficiency score or inverse of efficiency score).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">output_category</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">):</span>
+            <span class="n">current_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[(</span><span class="n">dmu_code</span><span class="p">,</span>
+                                                          <span class="n">output_category</span><span class="p">)]</span>
+            <span class="n">output_coeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">get_output_variable_coefficient</span><span class="p">(</span>
+                <span class="n">obj_variable</span><span class="p">,</span> <span class="n">output_category</span><span class="p">)</span>
+            <span class="n">sum_all_outputs</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">lpSum</span><span class="p">([</span><span class="n">variables</span><span class="p">[</span><span class="n">dmu</span><span class="p">]</span> <span class="o">*</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span>
+                                         <span class="p">[(</span><span class="n">dmu</span><span class="p">,</span> <span class="n">output_category</span><span class="p">)]</span>
+                                         <span class="k">for</span> <span class="n">dmu</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">])</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;constraint_output_{count}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constraint_creator</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                              <span class="o">-</span><span class="n">output_coeff</span> <span class="o">*</span> <span class="n">current_output</span> <span class="o">+</span>
+                              <span class="n">sum_all_outputs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">output_category</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">output_category</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">_add_constraints_for_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span>
+                                    <span class="n">dmu_code</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds constraints for inputs to LP.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                variables (dict of {str: pulp.LpVariable}): a dictionary that</span>
+<span class="sd">                    maps DMU codes to pulp.LpVariable, created with</span>
+<span class="sd">                    pulp.LpVariable.dicts.</span>
+<span class="sd">                dmu_code (str): DMU code for which LP is being created.</span>
+<span class="sd">                obj_variable (pulp.LpVariable): LP variable that is optimised</span>
+<span class="sd">                    (either efficiency score or inverse of efficiency score).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">input_category</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">):</span>
+            <span class="n">current_input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[(</span><span class="n">dmu_code</span><span class="p">,</span>
+                                                         <span class="n">input_category</span><span class="p">)]</span>
+            <span class="n">input_coeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">get_input_variable_coefficient</span><span class="p">(</span>
+                <span class="n">obj_variable</span><span class="p">,</span> <span class="n">input_category</span><span class="p">)</span>
+            <span class="n">sum_all_inputs</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">lpSum</span><span class="p">([</span><span class="n">variables</span><span class="p">[</span><span class="n">dmu</span><span class="p">]</span> <span class="o">*</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span>
+                                        <span class="p">[(</span><span class="n">dmu</span><span class="p">,</span> <span class="n">input_category</span><span class="p">)]</span>
+                                        <span class="k">for</span> <span class="n">dmu</span> <span class="ow">in</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">])</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;constraint_input_{count}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_constraint_creator</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+                              <span class="n">input_coeff</span> <span class="o">*</span> <span class="n">current_input</span>
+                              <span class="o">-</span> <span class="n">sum_all_inputs</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">input_category</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">input_category</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">_fill_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Fills given solution with data calculated for one DMU.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code for which the LP was solved.</span>
+<span class="sd">                model_solution (Solution): object where solution for one DMU</span>
+<span class="sd">                    will be written.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">model_solution</span><span class="o">.</span><span class="n">orientation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">get_orientation</span><span class="p">()</span>
+        <span class="n">model_solution</span><span class="o">.</span><span class="n">add_lp_status</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
+            <span class="n">lambda_variables</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">dmu</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
+                <span class="n">var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dmu</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">var</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">var</span><span class="o">.</span><span class="n">varValue</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span>
+                        <span class="nb">abs</span><span class="p">(</span><span class="n">var</span><span class="o">.</span><span class="n">varValue</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">ZERO_TOLERANCE</span><span class="p">):</span>
+                    <span class="n">lambda_variables</span><span class="p">[</span><span class="n">dmu</span><span class="p">]</span> <span class="o">=</span> <span class="n">var</span><span class="o">.</span><span class="n">varValue</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_add_efficiency</span><span class="p">:</span>
+                <span class="n">model_solution</span><span class="o">.</span><span class="n">add_efficiency_score</span><span class="p">(</span>
+                    <span class="n">dmu_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">process_obj_var</span>
+                    <span class="p">(</span><span class="n">pulp</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">objective</span><span class="p">)))</span>
+                
+            <span class="n">model_solution</span><span class="o">.</span><span class="n">add_lambda_variables</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">lambda_variables</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_duals</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">,</span>
+                                <span class="n">model_solution</span><span class="o">.</span><span class="n">add_input_dual</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_duals</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">,</span>
+                                <span class="n">model_solution</span><span class="o">.</span><span class="n">add_output_dual</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process_duals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Helper function that adds duals to solution using given method func.</span>
+<span class="sd">            Helps to avoid code duplication.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code under consideration.</span>
+<span class="sd">                categories (list of str): list of either input or output</span>
+<span class="sd">                    categories.</span>
+<span class="sd">                func (function): a function that accepts DMU code, category and</span>
+<span class="sd">                    dual variable value and adds it to solution.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+            <span class="n">constraint_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+            <span class="n">dual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">process_dual_value</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="n">constraint_name</span><span class="p">]</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+            <span class="n">func</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">dual</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

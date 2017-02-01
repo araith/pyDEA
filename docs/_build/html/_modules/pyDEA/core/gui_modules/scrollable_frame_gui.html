@@ -1,0 +1,346 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.gui_modules.scrollable_frame_gui &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.gui_modules.scrollable_frame_gui</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.gui_modules.scrollable_frame_gui</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains classes that implement multi-platform</span>
+<span class="sd">    scrolling for frames. Code is mainly borrowed from web and</span>
+<span class="sd">    slightly modified. Unfortunately, I don&#39;t have web-page address</span>
+<span class="sd">    any more.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">VERTICAL</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">RIGHT</span><span class="p">,</span> <span class="n">LEFT</span><span class="p">,</span> <span class="n">BOTH</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">W</span>
+<span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Scrollbar</span>
+
+<span class="kn">from</span> <span class="nn">core.gui_modules.custom_canvas_gui</span> <span class="kn">import</span> <span class="n">StyledCanvas</span>
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">on_canvas_resize</span>
+
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="n">os</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="MouseWheel"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel">[docs]</a><span class="k">class</span> <span class="nc">MouseWheel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class bind scrolling events to a scroll object.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">root</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">os</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">factor</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">factor</span> <span class="o">=</span> <span class="n">factor</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Factor must be an integer.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">os</span> <span class="o">==</span> <span class="s2">&quot;Linux&quot;</span><span class="p">:</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s1">&#39;&lt;4&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">onMouseWheel</span><span class="p">,</span>  <span class="n">add</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s1">&#39;&lt;5&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">onMouseWheel</span><span class="p">,</span>  <span class="n">add</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Windows and MacOS</span>
+            <span class="n">root</span><span class="o">.</span><span class="n">bind_all</span><span class="p">(</span><span class="s2">&quot;&lt;MouseWheel&gt;&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">onMouseWheel</span><span class="p">,</span>  <span class="n">add</span><span class="o">=</span><span class="s1">&#39;+&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">root</span>
+
+<div class="viewcode-block" id="MouseWheel.onMouseWheel"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.onMouseWheel">[docs]</a>    <span class="k">def</span> <span class="nf">onMouseWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span><span class="o">.</span><span class="n">onMouseWheel</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MouseWheel.mouseWheel_bind"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.mouseWheel_bind">[docs]</a>    <span class="k">def</span> <span class="nf">mouseWheel_bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span> <span class="o">=</span> <span class="n">widget</span></div>
+
+<div class="viewcode-block" id="MouseWheel.mouseWheel_unbind"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.mouseWheel_unbind">[docs]</a>    <span class="k">def</span> <span class="nf">mouseWheel_unbind</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span> <span class="o">=</span> <span class="bp">None</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MouseWheel.build_function_onMouseWheel"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.build_function_onMouseWheel">[docs]</a>    <span class="k">def</span> <span class="nf">build_function_onMouseWheel</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">orient</span><span class="p">,</span> <span class="n">scrollbar</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">view_command</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">orient</span><span class="o">+</span><span class="s1">&#39;view&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span> <span class="o">==</span> <span class="s1">&#39;Linux&#39;</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">onMouseWheel</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                <span class="c1"># scroll moves only when it is not disables</span>
+
+                <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scrollbar</span><span class="o">.</span><span class="n">state</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span>
+                        <span class="n">scrollbar</span><span class="o">.</span><span class="n">state</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;disabled&#39;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">num</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+                        <span class="n">view_command</span><span class="p">(</span><span class="s2">&quot;scroll&quot;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">factor</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">)</span>
+                    <span class="k">elif</span> <span class="n">event</span><span class="o">.</span><span class="n">num</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+                        <span class="n">view_command</span><span class="p">(</span><span class="s2">&quot;scroll&quot;</span><span class="p">,</span> <span class="n">factor</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">os</span> <span class="o">==</span> <span class="s1">&#39;Windows&#39;</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">onMouseWheel</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scrollbar</span><span class="o">.</span><span class="n">state</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span>
+                        <span class="n">scrollbar</span><span class="o">.</span><span class="n">state</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;disabled&#39;</span><span class="p">):</span>
+                    <span class="n">view_command</span><span class="p">(</span><span class="s2">&quot;scroll&quot;</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="nb">int</span><span class="p">((</span><span class="n">event</span><span class="o">.</span><span class="n">delta</span><span class="o">/</span><span class="mi">120</span><span class="p">)</span><span class="o">*</span><span class="n">factor</span><span class="p">),</span>
+                                 <span class="s2">&quot;units&quot;</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">os</span> <span class="o">==</span> <span class="s1">&#39;Darwin&#39;</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">onMouseWheel</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">scrollbar</span><span class="o">.</span><span class="n">state</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span>
+                        <span class="n">scrollbar</span><span class="o">.</span><span class="n">state</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;disabled&#39;</span><span class="p">):</span>
+                    <span class="n">view_command</span><span class="p">(</span><span class="s2">&quot;scroll&quot;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">delta</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">onMouseWheel</span></div>
+
+<div class="viewcode-block" id="MouseWheel.add_scrolling"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.add_scrolling">[docs]</a>    <span class="k">def</span> <span class="nf">add_scrolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scrollingArea</span><span class="p">,</span> <span class="n">xscrollbar</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">yscrollbar</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">scrollingArea</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Enter&gt;&#39;</span><span class="p">,</span>
+                           <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouseWheel_bind</span><span class="p">(</span><span class="n">scrollingArea</span><span class="p">))</span>
+        <span class="n">scrollingArea</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Leave&gt;&#39;</span><span class="p">,</span>
+                           <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouseWheel_unbind</span><span class="p">())</span>
+        <span class="n">scrollingArea</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Configure&gt;&#39;</span><span class="p">,</span>
+                           <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="n">on_canvas_resize</span><span class="p">(</span><span class="n">scrollingArea</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">xscrollbar</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">xscrollbar</span><span class="p">,</span> <span class="s1">&#39;onMouseWheel&#39;</span><span class="p">):</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">xscrollbar</span><span class="p">,</span> <span class="s1">&#39;onMouseWheel&#39;</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">build_function_onMouseWheel</span><span class="p">(</span><span class="n">scrollingArea</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span>
+                        <span class="n">xscrollbar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">factor</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">yscrollbar</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">yscrollbar</span><span class="p">,</span> <span class="s1">&#39;onMouseWheel&#39;</span><span class="p">):</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">yscrollbar</span><span class="p">,</span> <span class="s1">&#39;onMouseWheel&#39;</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">build_function_onMouseWheel</span><span class="p">(</span><span class="n">scrollingArea</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span>
+                        <span class="n">yscrollbar</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">factor</span><span class="p">))</span>
+
+        <span class="n">active_scrollbar_on_mouse_wheel</span> <span class="o">=</span> <span class="n">yscrollbar</span> <span class="ow">or</span> <span class="n">xscrollbar</span>
+        <span class="k">if</span> <span class="n">active_scrollbar_on_mouse_wheel</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">scrollingArea</span><span class="p">,</span> <span class="s1">&#39;onMouseWheel&#39;</span><span class="p">,</span>
+                    <span class="n">active_scrollbar_on_mouse_wheel</span><span class="o">.</span><span class="n">onMouseWheel</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">scrollbar</span> <span class="ow">in</span> <span class="p">(</span><span class="n">xscrollbar</span><span class="p">,</span> <span class="n">yscrollbar</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">scrollbar</span><span class="p">:</span>
+                <span class="n">scrollbar</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+                    <span class="s1">&#39;&lt;Enter&gt;&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">event</span><span class="p">,</span>
+                    <span class="n">scrollbar</span><span class="o">=</span><span class="n">scrollbar</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouseWheel_bind</span><span class="p">(</span><span class="n">scrollbar</span><span class="p">))</span>
+                <span class="n">scrollbar</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Leave&gt;&#39;</span><span class="p">,</span>
+                               <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouseWheel_unbind</span><span class="p">())</span></div></div>
+
+
+<div class="viewcode-block" id="VerticalScrolledFrame"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.VerticalScrolledFrame">[docs]</a><span class="k">class</span> <span class="nc">VerticalScrolledFrame</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; A pure Tkinter scrollable frame that actually works!</span>
+<span class="sd">            Use the &#39;interior&#39; attribute to place widgets inside the scrollable</span>
+<span class="sd">            frame Construct and pack/place/grid normally</span>
+<span class="sd">            This frame only allows vertical scrolling.</span>
+
+<span class="sd">            Attributes:</span>
+<span class="sd">                canvas (StyledCanvas): canvas.</span>
+<span class="sd">                interior (frame): frame where all widgets are palced.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                parent (Tk object): parent of this widget.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+            <span class="n">Frame</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+            <span class="c1"># create a canvas object and a vertical scrollbar for scrolling it</span>
+            <span class="n">vscrollbar</span> <span class="o">=</span> <span class="n">Scrollbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="n">VERTICAL</span><span class="p">)</span>
+            <span class="n">vscrollbar</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">fill</span><span class="o">=</span><span class="n">Y</span><span class="p">,</span> <span class="n">side</span><span class="o">=</span><span class="n">RIGHT</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">canvas</span> <span class="o">=</span> <span class="n">StyledCanvas</span><span class="p">(</span>
+                <span class="bp">self</span><span class="p">,</span> <span class="n">bd</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">highlightthickness</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                <span class="n">yscrollcommand</span><span class="o">=</span><span class="n">vscrollbar</span><span class="o">.</span><span class="n">set</span><span class="p">)</span>
+            <span class="n">canvas</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">side</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">BOTH</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+            <span class="n">vscrollbar</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="n">canvas</span><span class="o">.</span><span class="n">yview</span><span class="p">)</span>
+
+            <span class="c1"># reset the view</span>
+            <span class="n">canvas</span><span class="o">.</span><span class="n">xview_moveto</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">canvas</span><span class="o">.</span><span class="n">yview_moveto</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="c1"># create a frame inside the canvas which will be scrolled with it</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">interior</span> <span class="o">=</span> <span class="n">interior</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
+            <span class="n">interior_id</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">create_window</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">interior</span><span class="p">,</span>
+                                               <span class="n">anchor</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+
+            <span class="c1"># track changes to the canvas and frame width and sync them,</span>
+            <span class="c1"># also updating the scrollbar</span>
+            <span class="k">def</span> <span class="nf">_configure_interior</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                <span class="c1"># update the scrollbars to match the size of the inner frame</span>
+                <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">interior</span><span class="o">.</span><span class="n">winfo_reqwidth</span><span class="p">(),</span> <span class="n">interior</span><span class="o">.</span><span class="n">winfo_reqheight</span><span class="p">())</span>
+                <span class="n">canvas</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">scrollregion</span><span class="o">=</span><span class="s2">&quot;0 0 </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">size</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">interior</span><span class="o">.</span><span class="n">winfo_reqwidth</span><span class="p">()</span> <span class="o">!=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">winfo_width</span><span class="p">():</span>
+                    <span class="c1"># update the canvas&#39;s width to fit the inner frame</span>
+                    <span class="n">canvas</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="n">interior</span><span class="o">.</span><span class="n">winfo_reqwidth</span><span class="p">())</span>
+            <span class="n">interior</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Configure&gt;&#39;</span><span class="p">,</span> <span class="n">_configure_interior</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">_configure_canvas</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">interior</span><span class="o">.</span><span class="n">winfo_reqwidth</span><span class="p">()</span> <span class="o">!=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">winfo_width</span><span class="p">():</span>
+                   <span class="c1"># update the inner frame&#39;s width to fill the canvas</span>
+                    <span class="n">canvas</span><span class="o">.</span><span class="n">itemconfigure</span><span class="p">(</span><span class="n">interior_id</span><span class="p">,</span>
+                                         <span class="n">width</span><span class="o">=</span><span class="n">canvas</span><span class="o">.</span><span class="n">winfo_width</span><span class="p">())</span>
+            <span class="n">canvas</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Configure&gt;&#39;</span><span class="p">,</span> <span class="n">_configure_canvas</span><span class="p">)</span>
+            <span class="n">MouseWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">add_scrolling</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">yscrollbar</span><span class="o">=</span><span class="n">vscrollbar</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.data_processing.input_data &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.data_processing.input_data</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.data_processing.input_data</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains a class for storing input data.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="InputData"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData">[docs]</a><span class="k">class</span> <span class="nc">InputData</span><span class="p">:</span>
+
+    <span class="sd">&#39;&#39;&#39; This class stores input data and provides some useful methods to</span>
+<span class="sd">        add input data and to access it.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            DMU_codes (set of str): set of internal codes of DMUs.</span>
+<span class="sd">                All codes are assigned automatically when DMUs are added.</span>
+<span class="sd">            DMU_code_to_user_name (dict of str to str): dictionary that maps</span>
+<span class="sd">                internal DMU codes to DMU names provided by the user.</span>
+<span class="sd">            _DMU_user_name_to_code (dict of str to str): dictionary that</span>
+<span class="sd">                maps DMU names to internal DMU codes. It is useful for</span>
+<span class="sd">                adding new DMUs and for unit tests.</span>
+<span class="sd">            DMU_codes_in_added_order (list of str): list of DMU codes</span>
+<span class="sd">                in the order they were added.</span>
+<span class="sd">            categories (set of str): set of all categories (input and</span>
+<span class="sd">                output).</span>
+<span class="sd">            coefficients (dict of tuple of str, str to double}): dictionary</span>
+<span class="sd">                that maps internal DMU code and category to the</span>
+<span class="sd">                corresponding coefficient, e.g. {(DMU, category) : value}.</span>
+<span class="sd">            output_categories (set of str): set of output categories.</span>
+<span class="sd">            input_categories (set of str): set of input categories.</span>
+<span class="sd">            _count (int): internal variable used to generate DMU codes.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DMU_codes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_DMU_user_name_to_code</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>  <span class="c1"># intended to use</span>
+        <span class="c1"># only in this class for adding new DMUs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>  <span class="c1"># all categories</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_categories</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_categories</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="InputData.add_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData.add_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">add_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_user_name</span><span class="p">,</span> <span class="n">category_name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds coefficient value corresponding to DMU and</span>
+<span class="sd">            category to the internal data structure.</span>
+<span class="sd">            Updates other containers that</span>
+<span class="sd">            store DMUs and categories. If given pair of DMU and category already</span>
+<span class="sd">            exist, KeyError is raised.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_user_name (str): DMU name.</span>
+<span class="sd">                category_name (str): category (input or output).</span>
+<span class="sd">                value (double): coefficient value.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                KeyError: if a pair of dmu_user_name and category_name</span>
+<span class="sd">                    has already been added before</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># if dmu_user_name is alread in the self._DMU_user_name_to_code</span>
+        <span class="c1"># corresponding dmu_code is returned.</span>
+        <span class="c1"># if dmu_user_name is not in self._DMU_user_name_to_code</span>
+        <span class="c1"># new code will be generated and added to</span>
+        <span class="c1"># self._DMU_user_name_to_code</span>
+        <span class="c1"># self._generate_next_DMU_code() is executed every time,</span>
+        <span class="c1"># so codes are not consecutive.</span>
+        <span class="n">dmu_code</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_DMU_user_name_to_code</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
+            <span class="n">dmu_user_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_next_DMU_code</span><span class="p">())</span>
+
+        <span class="n">key</span> <span class="o">=</span> <span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;Pair ({dmu}, {category}) is already recorded&#39;</span><span class="o">.</span>
+                           <span class="n">format</span><span class="p">(</span><span class="n">dmu</span><span class="o">=</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="n">category_name</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">if</span> <span class="n">dmu_code</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">DMU_codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">dmu_user_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_generate_next_DMU_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Generates a code for new DMU in the following format: {dmu_number}.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: generated DMU code.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="s1">&#39;dmu_{index}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_count</span><span class="p">)</span>
+
+<div class="viewcode-block" id="InputData.get_dmu_user_name"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData.get_dmu_user_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_dmu_user_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns DMU user name given DMU code.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: DMU name.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                KeyError: if dmu_code does not exist.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="InputData.add_input_category"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData.add_input_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_input_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds given category to the set of input categories.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                category_name (str): name of the input category.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                KeyError: if category_name is not present among existing</span>
+<span class="sd">                    categories.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_category_exists</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_categories</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Category: {category} was previously added&#39;</span>
+                             <span class="s1">&#39; to output categories&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                             <span class="n">category</span><span class="o">=</span><span class="n">category_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="InputData.add_output_category"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData.add_output_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_output_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds given category to the set of output categories.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                category_name (str): name of the output category.</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                KeyError: if category_name is not present among existing</span>
+<span class="sd">                    categories.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_category_exists</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_categories</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Category: {category} was previously added&#39;</span>
+                             <span class="s1">&#39; to input categories&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                             <span class="n">category</span><span class="o">=</span><span class="n">category_name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_check_if_category_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Helper function that raises KeyError if a given category is not</span>
+<span class="sd">            present in the list of categories.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                category_name (str): category (input or output).</span>
+
+<span class="sd">            Raises:</span>
+<span class="sd">                KeyError: if category_name is not in the set of existing</span>
+<span class="sd">                    categories.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">category_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">&#39;{category} is not present in categories list&#39;</span><span class="o">.</span>
+                           <span class="n">format</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category_name</span><span class="p">))</span>
+
+<div class="viewcode-block" id="InputData.print_coefficients"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData.print_coefficients">[docs]</a>    <span class="k">def</span> <span class="nf">print_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Prints all coefficients on the screen.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coefficients</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;DMU: {0}, category: {1}, value: {2}&#39;</span><span class="o">.</span>
+                  <span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;DMU code:{code}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">dmu_code</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;DMU code: {code}, name: {name}&#39;</span><span class="o">.</span>
+                  <span class="n">format</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;category: {category}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">category</span><span class="o">=</span><span class="n">category</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

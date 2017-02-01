@@ -1,0 +1,606 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.models.envelopment_model_decorators &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.models.envelopment_model_decorators</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.models.envelopment_model_decorators</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains classes that implement VRS envelopment model,</span>
+<span class="sd">    envelopment model with disposable variables and with various</span>
+<span class="sd">    kind of weight restrictions.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">pulp</span>
+
+<span class="kn">from</span> <span class="nn">core.models.envelopment_model_base</span> <span class="kn">import</span> <span class="n">EnvelopmentModelBase</span>
+<span class="kn">from</span> <span class="nn">core.data_processing.solution</span> <span class="kn">import</span> <span class="n">SolutionWithVRS</span>
+
+
+<div class="viewcode-block" id="EnvelopmentModelVRSDecorator"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelVRSDecorator">[docs]</a><span class="k">class</span> <span class="nc">EnvelopmentModelVRSDecorator</span><span class="p">(</span><span class="n">EnvelopmentModelBase</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class is a concrete implementation of VRS envelopment model.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            _model_to_decorate (EnvelopmentModelBase): envelopment model.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_to_decorate (EnvelopmentModelBase): envelopment model</span>
+<span class="sd">                that needs to be decorated with VRS constraint.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_to_decorate</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span> <span class="o">=</span> <span class="n">model_to_decorate</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates initial LP.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_create_lp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">lp_model</span>
+        <span class="n">variables</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_variables</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="k">for</span> <span class="n">dmu_code</span>
+                     <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">+=</span> <span class="p">(</span><span class="n">pulp</span><span class="o">.</span><span class="n">lpSum</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span>
+                                             <span class="s1">&#39;VRS_constraint&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">lp_model</span>
+
+    <span class="k">def</span> <span class="nf">_create_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates SolutionWithVRS instead of usual Solution in order to</span>
+<span class="sd">            add extra information about VRS dual variable.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                SolutionWithVRS: solution that is able to store extra</span>
+<span class="sd">                    information about VRS dual variable.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">basic_solution</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_create_solution</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">SolutionWithVRS</span><span class="p">(</span><span class="n">basic_solution</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_fill_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds value of dual variable corresponding to VRS constraint to</span>
+<span class="sd">            model_solution.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code for which the LP was solved.</span>
+<span class="sd">                model_solution (Solution): object where solution for one DMU</span>
+<span class="sd">                    will be written.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_fill_solution</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span>
+        <span class="n">model_solution</span><span class="o">.</span><span class="n">add_VRS_dual</span><span class="p">(</span>
+            <span class="n">dmu_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="s1">&#39;VRS_constraint&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Updates LP with coefficients corresponding to a given DMU.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_update_lp</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_constraints_for_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                     <span class="n">obj_variable</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds constraints for outputs to linear program.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                variables (dict of str to pulp.LpVariable): a dictionary</span>
+<span class="sd">                    that maps DMU codes to pulp.LpVariable, created with</span>
+<span class="sd">                    pulp.LpVariable.dicts.</span>
+<span class="sd">                dmu_code (str): DMU code for which LP is being created.</span>
+<span class="sd">                obj_variable (pulp.LpVariable): LP variable that is optimised</span>
+<span class="sd">                    (either efficiency score or inverse of efficiency score).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_add_constraints_for_outputs</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span>
+                                                             <span class="n">dmu_code</span><span class="p">,</span>
+                                                             <span class="n">obj_variable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_constraints_for_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span>
+                                    <span class="n">dmu_code</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds constraints for inputs to LP.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                variables (dict of {str: pulp.LpVariable}): a dictionary that</span>
+<span class="sd">                    maps DMU codes to pulp.LpVariable, created with</span>
+<span class="sd">                    pulp.LpVariable.dicts.</span>
+<span class="sd">                dmu_code (str): DMU code for which LP is being created.</span>
+<span class="sd">                obj_variable (pulp.LpVariable): LP variable that is optimised</span>
+<span class="sd">                    (either efficiency score or inverse of efficiency score).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_add_constraints_for_inputs</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span>
+                                                            <span class="n">dmu_code</span><span class="p">,</span>
+                                                            <span class="n">obj_variable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process_duals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Helper function that adds duals to solution using given method func.</span>
+<span class="sd">            Helps to avoid code duplication.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code under consideration.</span>
+<span class="sd">                categories (list of str): list of either input or output</span>
+<span class="sd">                    categories.</span>
+<span class="sd">                func (function): a function that accepts DMU code, category and</span>
+<span class="sd">                    dual variable value and adds it to solution.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_process_duals</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DefaultConstraintCreator"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model_decorators.DefaultConstraintCreator">[docs]</a><span class="k">class</span> <span class="nc">DefaultConstraintCreator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This is a helper class that creates constraints for envelopment model</span>
+<span class="sd">        with strongly disposable categories.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="DefaultConstraintCreator.create"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model_decorators.DefaultConstraintCreator.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; By default all categories are strongly disposable.</span>
+<span class="sd">            Hence all constraints have the form lhs &gt;= rhs.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                lhs (pulp.LpAffineExpression): left hand side of the constraint.</span>
+<span class="sd">                rhs (pulp.LpAffineExpression): right hand side of the</span>
+<span class="sd">                    constraint.</span>
+<span class="sd">                category(str): input or output category (it is not used by</span>
+<span class="sd">                    this class).</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">lhs</span> <span class="o">&gt;=</span> <span class="n">rhs</span></div></div>
+
+
+<div class="viewcode-block" id="DisposableVarsConstraintCreator"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model_decorators.DisposableVarsConstraintCreator">[docs]</a><span class="k">class</span> <span class="nc">DisposableVarsConstraintCreator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This is a helper class that creates constraints for envelopment model</span>
+<span class="sd">        with weakly disposable categories.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            weakly_disposable_categories (set of str): list of weakly</span>
+<span class="sd">                disposable categories.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            weakly_disposable_categories (list of str): list of weakly</span>
+<span class="sd">                disposable categories.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weakly_disposable_categories</span><span class="p">):</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">weakly_disposable_categories</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weakly_disposable_categories</span> <span class="o">=</span> <span class="n">weakly_disposable_categories</span>
+
+<div class="viewcode-block" id="DisposableVarsConstraintCreator.create"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model_decorators.DisposableVarsConstraintCreator.create">[docs]</a>    <span class="k">def</span> <span class="nf">create</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; If category is weakly disposable, returns constraint of the form</span>
+<span class="sd">            lhs == rhs, otherwise: lhs &gt;= rhs.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                lhs (pulp.LpAffineExpression): left hand side of the constraint.</span>
+<span class="sd">                rhs (pulp.LpAffineExpression): right hand side of the</span>
+<span class="sd">                    constraint.</span>
+<span class="sd">                category (str): input or output category.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">weakly_disposable_categories</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">lhs</span> <span class="o">==</span> <span class="n">rhs</span>
+        <span class="k">return</span> <span class="n">lhs</span> <span class="o">&gt;=</span> <span class="n">rhs</span></div></div>
+
+
+<div class="viewcode-block" id="EnvelopmentModelWithAbsoluteWeightRestrictions"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions">[docs]</a><span class="k">class</span> <span class="nc">EnvelopmentModelWithAbsoluteWeightRestrictions</span><span class="p">(</span><span class="n">EnvelopmentModelBase</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class implements envelopment model with absolute weight</span>
+<span class="sd">        restrictions.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            model (EnvelopmentModelBase): envelopment model.</span>
+<span class="sd">            bounds (dict of str to tuple of double,</span>
+<span class="sd">                double or dict of tuple of str, str to tuple of double, double:</span>
+<span class="sd">                dictionary with parsed values of constraints):</span>
+<span class="sd">                dictionary with parsed values of constraints.</span>
+<span class="sd">            new_vars_lb (dict of str to pulp.LpVariable): dictionary that maps</span>
+<span class="sd">                category name to a pulp variable.</span>
+<span class="sd">            new_vars_ub (dict of str to pulp.LpVariable): dictionary that maps</span>
+<span class="sd">                category name to a pulp variable.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            model_to_decorate (EnvelopmentModelBase): envelopment model.</span>
+<span class="sd">            bounds (dict of str to tuple of double,</span>
+<span class="sd">                double or dict of tuple of str, str to tuple of double, double:</span>
+<span class="sd">                dictionary with parsed values of constraints):</span>
+<span class="sd">                dictionary with parsed values of constraints.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_to_decorate</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_to_decorate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="n">bounds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_vars_lb</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_vars_ub</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_create_lp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lp_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_vars_lb</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_vars_ub</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
+            <span class="n">dmu_code</span> <span class="o">=</span> <span class="n">elem</span>
+            <span class="k">break</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concrete_model</span><span class="o">.</span><span class="n">get_orientation</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;input&#39;</span><span class="p">:</span> 
+            <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># make objective variable unrestricted </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="p">[</span><span class="s1">&#39;obj_var&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lowBound</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_variables</span><span class="p">[</span><span class="s1">&#39;obj_var&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">upBound</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">lower_bound</span><span class="p">:</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">(</span>
+                    <span class="s1">&#39;{0}_category_{1}_lb&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_get_var_name</span><span class="p">(),</span> <span class="n">category</span><span class="p">),</span>
+                    <span class="bp">None</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpContinuous</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">new_vars_lb</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">variable</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">addterm</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">objective</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_multiplier</span><span class="p">(</span>
+                                            <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span> <span class="o">*</span>
+                                            <span class="n">lower_bound</span> <span class="o">*</span> <span class="n">variable</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">upper_bound</span><span class="p">:</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">(</span>
+                    <span class="s1">&#39;{0}_category_{1}_ub&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_var_name</span><span class="p">(),</span>
+                                                 <span class="n">category</span><span class="p">),</span>
+                    <span class="mi">0</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpContinuous</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">new_vars_ub</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">variable</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">addterm</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">objective</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_multiplier</span><span class="p">(</span>
+                                            <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span> <span class="o">*</span>
+                                            <span class="n">upper_bound</span> <span class="o">*</span> <span class="n">variable</span><span class="p">)</span>
+        <span class="c1">#if self._multiplier == -1:</span>
+            <span class="c1"># add constraint that objective function is &gt;= 1 for</span>
+            <span class="c1"># output-oriented model</span>
+         <span class="c1">#   self.lp_model += self.lp_model.objective &gt;= 1</span>
+
+
+    <span class="k">def</span> <span class="nf">_update_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_update_lp</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">lower_bound</span><span class="p">:</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_vars_lb</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">objective</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_multiplier</span><span class="p">(</span>
+                                                     <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span> <span class="o">*</span>
+                                                     <span class="n">lower_bound</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">upper_bound</span><span class="p">:</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_vars_ub</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">objective</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_multiplier</span><span class="p">(</span>
+                                                     <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span> <span class="o">*</span>
+                                                     <span class="n">upper_bound</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_create_solution</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_fill_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_fill_solution</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns a multiplier used in the model objective function.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+<span class="sd">                category (str): category name.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span>
+
+    <span class="k">def</span> <span class="nf">_get_var_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns base for a variable name.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: base for a variable name.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;abs&#39;</span>
+
+    <span class="k">def</span> <span class="nf">_add_constraints_for_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                     <span class="n">obj_variable</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_add_constraints_for_outputs</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                                <span class="n">obj_variable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_constraints_for_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span>
+                                    <span class="n">dmu_code</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_add_constraints_for_inputs</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                               <span class="n">obj_variable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process_duals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_process_duals</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="EnvelopmentModelWithVirtualWeightRestrictions"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithVirtualWeightRestrictions">[docs]</a><span class="k">class</span> <span class="nc">EnvelopmentModelWithVirtualWeightRestrictions</span><span class="p">(</span>
+        <span class="n">EnvelopmentModelWithAbsoluteWeightRestrictions</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class implements envelopment model with virtual weight</span>
+<span class="sd">        restrictions.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">_get_multiplier</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns a multiplier used in the model objective function.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dmu_code (str): DMU code.</span>
+<span class="sd">                category (str): category name.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_multiplier</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_get_var_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns base for a variable name.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: base for a variable name.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;virtual&#39;</span></div>
+
+
+<div class="viewcode-block" id="EnvelopmentModelWithPriceRatioConstraints"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithPriceRatioConstraints">[docs]</a><span class="k">class</span> <span class="nc">EnvelopmentModelWithPriceRatioConstraints</span><span class="p">(</span><span class="n">EnvelopmentModelBase</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class implements envelopment model with price ratio weight</span>
+<span class="sd">        restrictions.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            model (EnvelopmentModelBase): envelopment model.</span>
+<span class="sd">            bounds (dict of str to tuple of double,</span>
+<span class="sd">                double or dict of tuple of str, str to tuple of double, double:</span>
+<span class="sd">                dictionary with parsed values of constraints):</span>
+<span class="sd">                dictionary with parsed values of constraints.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            model_to_decorate (EnvelopmentModelBase): envelopment model.</span>
+<span class="sd">            bounds (dict of str to tuple of double,</span>
+<span class="sd">                double or dict of tuple of str, str to tuple of double, double:</span>
+<span class="sd">                dictionary with parsed values of constraints):</span>
+<span class="sd">                dictionary with parsed values of constraints.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_to_decorate</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_to_decorate</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span> <span class="o">=</span> <span class="n">bounds</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_create_lp</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lp_model</span>
+
+        <span class="c1"># create varibales</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">category_in_nom</span><span class="p">,</span> <span class="n">category_in_denom</span><span class="p">),</span> <span class="p">(</span><span class="n">lower_bound</span><span class="p">,</span> <span class="n">upper_bound</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bounds</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">lower_bound</span><span class="p">:</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">(</span>
+                    <span class="s1">&#39;price_ratio_category_{0}_{1}_lb&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">category_in_nom</span><span class="p">,</span> <span class="n">category_in_denom</span><span class="p">),</span>
+                    <span class="mi">0</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpContinuous</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">category_in_nom</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">addterm</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">category_in_denom</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">addterm</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">lower_bound</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">upper_bound</span><span class="p">:</span>
+                <span class="n">variable</span> <span class="o">=</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpVariable</span><span class="p">(</span>
+                    <span class="s1">&#39;price_ratio_category_{0}_{1}_ub&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">category_in_nom</span><span class="p">,</span> <span class="n">category_in_denom</span><span class="p">),</span>
+                    <span class="mi">0</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpContinuous</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">category_in_nom</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">addterm</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_constraints</span><span class="p">[</span><span class="n">category_in_denom</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">addterm</span><span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="o">-</span><span class="n">upper_bound</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_create_solution</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_fill_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_fill_solution</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_update_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_update_lp</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_constraints_for_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                     <span class="n">obj_variable</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_add_constraints_for_outputs</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                                <span class="n">obj_variable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_constraints_for_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variables</span><span class="p">,</span>
+                                    <span class="n">dmu_code</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_add_constraints_for_inputs</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span>
+                                               <span class="n">obj_variable</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process_duals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; See base class.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_process_duals</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">func</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

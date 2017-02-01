@@ -1,0 +1,545 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using pyDEA &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="index.html"/>
+        <link rel="up" title="User Guide" href="userGuide.html"/>
+        <link rel="next" title="Input Data" href="DEApy_inputData.html"/>
+        <link rel="prev" title="User Guide" href="userGuide.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="userGuide.html">User Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Using <em>pyDEA</em></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#starting-pydea">Starting <em>pyDEA</em></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-are-all-those-files-and-folders-in-deapy">What Are all those Files and Folders in DEApy</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Using <em>pyDEA</em></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#load-input-data-file">Load Input Data File</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#manipulating-loaded-data">Manipulating Loaded Data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-inputs-and-outputs">Selecting Inputs and Outputs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#run">Run</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#saving-results">Saving Results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multiple-runs">Multiple Runs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quit">Quit</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced">Advanced</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#non-discretionary-and-disposability">Non-discretionary and Disposability</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#categorical-variable">Categorical Variable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weight-restrictions">Weight Restrictions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#application-colour">Application Colour</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#a-note-of-warning">A Note of Warning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_inputData.html">Input Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_outputData.html">Output Data Format</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_terminal.html">Running <em>pyDEA</em> from Terminal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_last_section.html">Disclaimer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_last_section.html#acknowledgements">Acknowledgements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_models.html">Models Used</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="userGuide.html">User Guide</a> &raquo;</li>
+      
+    <li>Using <em>pyDEA</em></li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/DEApy_usage.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-pydea">
+<h1>Using <em>pyDEA</em><a class="headerlink" href="#using-pydea" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="starting-pydea">
+<h2>Starting <em>pyDEA</em><a class="headerlink" href="#starting-pydea" title="Permalink to this headline">¶</a></h2>
+<p>THIS SECTION MIGTH CHANGE IN THE FUTURE DEPENDING ON HOW WE DECIDE TO DEPLOY PyDEA.</p>
+<p>This is the easiest way of running <em>pyDEA</em> on your computer and does
+not require the installation of any files.</p>
+<p>Copy file <code class="docutils literal"><span class="pre">DEApy.zip</span></code> to a location on your computer and un-zip it.
+Then browse to folder DEApy and find the file <code class="docutils literal"><span class="pre">runNewGui.bat</span></code>. Double
+click this file and <em>pyDEA</em> should start (you may have to be a little
+patient, especially the first time).</p>
+<p>This will open the <em>pyDEA</em> main window, see Figure <a class="reference internal" href="#fig-main-window"><span>pyDEA solver main window</span></a>. There
+are two parts in the <em>pyDEA</em> main window: the <em>Data/Solution</em> part and
+the <em>Parameters/Weights Editor</em> part.</p>
+<p>In the <em>Data/Solution</em> part, under the <em>Data</em> tab is where you load the
+data (see Section <a class="reference internal" href="#section-load-data"><span>Load Input Data File</span></a>), select the inputs and outputs for the DEA
+model (see Section <a class="reference internal" href="#section-select-inputs-outputs"><span>Selecting Inputs and Outputs</span></a>) and under the <em>Solution</em>
+tab, the solution will be displayed after each run of <em>pyDEA</em>.</p>
+<p>The <em>Parameters</em> tab under the <em>Parameters/Weights Editor</em> allows you to
+configure <em>pyDEA</em> (see Section <a class="reference internal" href="#section-run"><span>Run</span></a>) and the <em>Weights Editor</em> is
+for the more advanced usage of <em>pyDEA</em> which allows you to manipulate
+the weights of the inputs and outputs (see Section <a class="reference internal" href="#section-advanced"><span>Advanced</span></a>).</p>
+<div class="figure" id="id2">
+<span id="fig-main-window"></span><img alt="_images/pyDEASolver.png" src="_images/pyDEASolver.png" />
+<p class="caption"><span class="caption-text"><em>pyDEA</em> solver main window</span></p>
+</div>
+<p><em>Note to University of Auckland students:</em> Do not copy the files to your
+Desktop as this may not work. Instead, copy them to your home drive
+(could be <code class="docutils literal"><span class="pre">echome</span></code> or could be named after your upi) or save them
+somewhere on the computer’s local file system.</p>
+<p>Note that as you start <em>pyDEA</em> a minimised command window will appear
+in your task bar, see Figure <a class="reference internal" href="#fig-taskbar"><span>Taskbar with pyDEA running and command window</span></a>. This command window is shown
+in Figure <a class="reference internal" href="#fig-command-window"><span>Command window that opens whenever pyDEA is running</span></a>. Do not close it as it that will also close
+<em>pyDEA</em>.</p>
+<div class="figure" id="id3">
+<span id="fig-taskbar"></span><img alt="_images/TaskbarWindows.png" src="_images/TaskbarWindows.png" />
+<p class="caption"><span class="caption-text">Taskbar with <em>pyDEA</em> running and command window</span></p>
+</div>
+<div class="figure" id="id4">
+<span id="fig-command-window"></span><img alt="_images/pyDEACommandWindow.png" src="_images/pyDEACommandWindow.png" />
+<p class="caption"><span class="caption-text">Command window that opens whenever <em>pyDEA</em> is running</span></p>
+</div>
+<div class="section" id="what-are-all-those-files-and-folders-in-deapy">
+<h3>What Are all those Files and Folders in DEApy<a class="headerlink" href="#what-are-all-those-files-and-folders-in-deapy" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span>DEApy/Data/
+</pre></div>
+</div>
+<p>Is the default location for reading input data files and storing
+<em>pyDEA</em>’s output result files. There are some small example files
+here that can be used to try <em>pyDEA</em>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>DEApy/source/
+</pre></div>
+</div>
+<p>This folder contains all the program code. It is best to leave this as
+it is – most importantly don’t move it to a different location.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>DEApy/SupportFiles/
+</pre></div>
+</div>
+<p>This folder contains all the files that are needed for the program to
+run. Again, it is best to leave this as it is – most importantly don’t
+move it to a different location.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">DEApy</span><span class="o">/</span><span class="n">runNewGui</span><span class="o">.</span><span class="n">bat</span>
+</pre></div>
+</div>
+<p>Allows to run <em>pyDEA</em> on Windows systems. Double click this file to
+start <em>pyDEA</em>.</p>
+<p>Note that as you run <em>pyDEA</em> two types of files are generated.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">*.mps</span></code> – these are generated in running <em>pyDEA</em> and can safely
+be deleted after the <em>pyDEA</em> is finished.</li>
+<li><code class="docutils literal"><span class="pre">*.p</span></code> – these are generated in running <em>pyDEA</em> and should be
+automatically deleted when <em>pyDEA</em> closes. If they are not deleted
+automatically they can safely be deleted after the <em>pyDEA</em> is
+finished.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Using <em>pyDEA</em><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="load-input-data-file">
+<span id="section-load-data"></span><h3>Load Input Data File<a class="headerlink" href="#load-input-data-file" title="Permalink to this headline">¶</a></h3>
+<p>To select the Excel (.xls or .xlsx) or CSV file that contains your input
+data, click <em>Load</em>. This will open a window to select the file and click
+<em>Open</em>, see Figure <a class="reference internal" href="#fig-selection-window"><span>pyDEA file selection window</span></a>. The default directory shown in the
+window is folder</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>../Data/
+</pre></div>
+</div>
+<p>Browse to the location of your data file and select it.</p>
+<div class="figure" id="id5">
+<span id="fig-selection-window"></span><img alt="_images/pyDEAFileSelected.png" src="_images/pyDEAFileSelected.png" />
+<p class="caption"><span class="caption-text"><em>pyDEA</em> file selection window</span></p>
+</div>
+<p>Note that a .xls/.xlsx or .csv file must be selected, data cannot be
+read from other file formats. Also, data has to be in a very specific
+format, see Section <a class="reference internal" href="DEApy_inputData.html#section-input-data"><span>Input Data</span></a> for details.</p>
+<p>After you have selected a file, you will be asked to select the
+worksheet containing the data you wish to analyse (this is for Excel
+file only - multiple worksheets in Excel file is now supported in
+<em>pyDEA</em>). By default, the first sheet is selected, see Figure <a class="reference internal" href="#fig-choose-worksheet"><span>pyDEA - Choose worksheet</span></a>.</p>
+<div class="figure" id="id6">
+<span id="fig-choose-worksheet"></span><a class="reference internal image-reference" href="_images/pyDEAChooseWorksheet2.png"><img alt="_images/pyDEAChooseWorksheet2.png" src="_images/pyDEAChooseWorksheet2.png" style="width: 350px;" /></a>
+<p class="caption"><span class="caption-text"><em>pyDEA</em> - Choose worksheet</span></p>
+</div>
+<p>After you have clicked <em>OK</em>, the data is displayed in a spreadsheet
+style format with the selected filename displayed at the top, see Figure <a class="reference internal" href="#fig-after-file-select"><span>pyDEA variables in main window after loading data</span></a>.</p>
+<p>Note that <em>pyDEA</em> will not use any data columns that contain empty
+cells and such columns will be disabled (greyed out). Also note that DEA
+models are not capable of completing an analysis with negative numbers.
+Hence, all numbers must be non-negative and preferably strictly positive
+(no zero values). <em>pyDEA</em> disables data columns with negative
+value(s). the negative value(s) is(are) highlighted in red for users to
+address it. While zero values are not preferred and are highlighted in
+orange, <em>pyDEA</em> can still analyse the data with zero values, see
+Figure <a class="reference internal" href="#fig-after-file-select"><span>pyDEA variables in main window after loading data</span></a>.</p>
+<div class="figure" id="id7">
+<span id="fig-after-file-select"></span><img alt="_images/pyDEALoaddata.png" src="_images/pyDEALoaddata.png" />
+<p class="caption"><span class="caption-text"><em>pyDEA</em> variables in main window after loading data</span></p>
+</div>
+</div>
+<div class="section" id="manipulating-loaded-data">
+<h3>Manipulating Loaded Data<a class="headerlink" href="#manipulating-loaded-data" title="Permalink to this headline">¶</a></h3>
+<p>You can add data for new DMUs (i.e. add new rows) or you can add new
+variables (i.e. add new columns) by simply adding to the empty
+rows/columns or if there is no empty row/column, then click on <em>Add
+row(s)</em>/<em>Add column(s)</em>. Alternately, you can delete existing
+row(s)/column(s) of data by selecting the checkboxes on the left/top of
+the corresponding row(s)/column(s) and clicking on the <em>Remove
+row(s)</em>/<em>Remove column(s)</em>. <em>Clear all</em> will remove all data. See Figure <a class="reference internal" href="#fig-mandata"><span>pyDEA - manipulating data</span></a>.</p>
+<div class="figure" id="id8">
+<span id="fig-mandata"></span><img alt="_images/pyDEAMandata.png" src="_images/pyDEAMandata.png" />
+<p class="caption"><span class="caption-text"><em>pyDEA</em> - manipulating data</span></p>
+</div>
+</div>
+<div class="section" id="selecting-inputs-and-outputs">
+<span id="section-select-inputs-outputs"></span><h3>Selecting Inputs and Outputs<a class="headerlink" href="#selecting-inputs-and-outputs" title="Permalink to this headline">¶</a></h3>
+<p>Selecting DEA Inputs and Outputs is done by selecting the <em>Input</em> or
+<em>Output</em> checkboxes above each data column. After the selection is done,
+you will see that the corresponding names of the selected data columns
+are added to the <em>Input categories</em> or <em>Output categories</em> respectively
+under the <em>Parameters</em> tab on the left part of the main window.</p>
+<p>Similarly, names can be removed from the <em>Input categories</em> or <em>Output
+categories</em> by deselecting the <em>Input</em> or <em>Output</em> checkboxes above the
+conrresponding data columns.</p>
+</div>
+<div class="section" id="run">
+<span id="section-run"></span><h3>Run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h3>
+<p>In order to run <em>pyDEA</em>, a few more parameters can be selected in the
+<em>Parameters</em> tab on the left part of the main window, see Figure <a class="reference internal" href="#fig-run-params"><span>pyDEA solver main window ready to run</span></a>.</p>
+<div class="figure" id="id9">
+<span id="fig-run-params"></span><img alt="_images/pyDEARun.png" src="_images/pyDEARun.png" />
+<p class="caption"><span class="caption-text"><em>pyDEA</em> solver main window ready to run</span></p>
+</div>
+<p>There are four different categories to configure <em>pyDEA</em>:</p>
+<ol class="arabic simple">
+<li><em>Return to scale</em> (RTS)<ul>
+<li><em>VRS</em>: Variable returns to scale model</li>
+<li><em>CRS</em>: Constant returns to scale model</li>
+<li><em>Both</em>: Selects both VRS and CRS model, that is <em>pyDEA</em> will run
+the analysis twice (once under VRS and once under CRS) and return
+a set of results for each run.</li>
+</ul>
+</li>
+<li><em>Orientation</em><ul>
+<li><em>Input</em>: Input-orientation model</li>
+<li><em>Output</em>: Output-orientation model</li>
+<li><em>Both</em>: Selects both input and output model, that is <em>pyDEA</em>
+will run the analysis twice (once under input and once under
+output orientation) and return a set of results for each run.</li>
+</ul>
+</li>
+<li><em>Model</em><ul>
+<li><em>Envelopment Form</em>: Model is formulated and solved in its
+envelopment form.</li>
+<li><em>Multiplier Form</em>: Model is formulated and solved in its
+multiplier form. Tolerance can be set in the <em>Multiplier model
+tolerance</em> field.</li>
+</ul>
+</li>
+<li><em>Others</em><ul>
+<li><em>Two phase</em>: A second phase model is run to maximise slacks. Note
+that this is only possible when the envelopment form is chosen.</li>
+<li><em>Super efficiency</em>: Super efficiency model.</li>
+<li><em>Peel the onion</em>: A tiered DEA model is run to layer and
+rank-order DMUs into a series of nested efficient-frontier layers.</li>
+</ul>
+</li>
+</ol>
+<p>One of each of the first three categories needs to be selected. Category
+4 (<em>Others</em>) is optional.</p>
+<p>There are also additional settings such as weight restrictions,
+categorical variables, weak disposability and non-discretionary
+variables that will be discussed later in Section <a class="reference internal" href="#section-advanced"><span>Advanced</span></a>.</p>
+<p>Select <em>Run …</em> to run. Some parameters cannot be chosen in combination
+with each other, if that is the case, an error message should appear.
+Otherwise, <em>pyDEA</em> runs the DEA analysis. Progress is shown in the
+progress bar next to the <em>Run …</em> button.</p>
+<p>When a run is finished, the <em>Solution</em> tab on the right part of the main
+window displays the obtained efficiency scores, see Figure <a class="reference internal" href="#fig-eff-window"><span>pyDEA Solution tab displaying the efficiency score window after a successful run</span></a>. Scores are given for all DMUs under all different run
+options. The figure shows an example where the analysis was run under
+VRS model and input orientation. You can also view other DEA results
+such as the Peer reference set, Targets, Weighted data etc.by clicking
+on the corresponding result tabs next to the <em>EfficiencyScores</em> tab. The
+filename of the data used in the analysis is displayed just above the
+efficiency scores. You can alternately click on the <em>Data</em> and
+<em>Solution</em> tabs to view the data and solution respectively. You can copy
+out partial results (e.g. just the efficiency scores) and paste into an
+Excel spreadsheet or simply close the window without saving the results.</p>
+<div class="figure" id="id10">
+<span id="fig-eff-window"></span><img alt="_images/pyDEASolution.png" src="_images/pyDEASolution.png" />
+<p class="caption"><span class="caption-text"><em>pyDEA</em> <em>Solution</em> tab displaying the efficiency score window after a successful run</span></p>
+</div>
+<p>Note that running the analysis may take a while. This depends mainly on
+how many DMUs there are in your input file. The more DMUs, the longer
+the runtime. Also, when you select <em>Both</em> under RTS or orientation it
+will run multiple DEA analyses under the different settings, and hence
+runtime increases.</p>
+</div>
+<div class="section" id="saving-results">
+<h3>Saving Results<a class="headerlink" href="#saving-results" title="Permalink to this headline">¶</a></h3>
+<p><em>pyDEA</em> gives you the option of saving results to Excel (xls/xlsx) and
+CSV formats. Just click on the <em>Save solution</em> button. Select the
+required format (Excel or CSV) and enter a suitable output filename e.g.
+inputFilename_results.xls. The complete set of results of the DEA run
+will be saved. The * in the <em>Solution*</em> tab will disappear upon
+successful save.</p>
+<p>You can also save the parameters with the <em>Save parameters</em> button in
+the <em>Parameters</em> tab if you are mostly using the same DEA settings for
+your data.</p>
+</div>
+<div class="section" id="multiple-runs">
+<h3>Multiple Runs<a class="headerlink" href="#multiple-runs" title="Permalink to this headline">¶</a></h3>
+<p>Make as many DEA runs as you’d like.</p>
+</div>
+<div class="section" id="quit">
+<h3>Quit<a class="headerlink" href="#quit" title="Permalink to this headline">¶</a></h3>
+<p>There is no special button to quit <em>pyDEA</em>. Simply click the <em>X</em>
+button on the top right corner of the main window.</p>
+</div>
+</div>
+<div class="section" id="advanced">
+<span id="section-advanced"></span><h2>Advanced<a class="headerlink" href="#advanced" title="Permalink to this headline">¶</a></h2>
+<p>There are further settings for DEA inputs and outputs. Some of them are
+available under <em>Parameters</em> and others under <em>Weights Editor</em>.</p>
+<div class="section" id="non-discretionary-and-disposability">
+<h3>Non-discretionary and Disposability<a class="headerlink" href="#non-discretionary-and-disposability" title="Permalink to this headline">¶</a></h3>
+<p>When an input or output is selected in the <em>Data</em> tab, it is possible to
+make it weakly disposable or non-discretionary by selecting the
+corresponding option in the checkboxes in the <em>Input</em> and <em>Output
+categories</em> under the <em>Parameters</em> tab.</p>
+</div>
+<div class="section" id="categorical-variable">
+<span id="sec-categorical"></span><h3>Categorical Variable<a class="headerlink" href="#categorical-variable" title="Permalink to this headline">¶</a></h3>
+<p>An input or output can also be a categorical variable. Variables (Data
+columns) that are not selected as an input or output can be set as a
+categorical variable. To set a variable as categorical, select the
+variable using the dropdown menu under in the <em>Parameters</em> tab. Figure
+<a class="reference internal" href="#fig-categorical-select"><span>Categorical option under Parameters tab</span></a> shows the variables that can be selected as a
+categorical variable.</p>
+<ul class="simple">
+<li>Categories are represented by numbers. If they are not integers,
+values will be rounded to the nearest integer.</li>
+<li>A value of <span class="math">1</span> represents the least favourable category, or in
+general: the smaller the number the less favourable the category.</li>
+</ul>
+<div class="figure" id="id11">
+<span id="fig-categorical-select"></span><img alt="_images/pyDEACategorical.png" src="_images/pyDEACategorical.png" />
+<p class="caption"><span class="caption-text">Categorical option under <em>Parameters</em> tab</span></p>
+</div>
+<div class="figure" id="id12">
+<span id="fig-weight-editor"></span><img alt="_images/pyDEAWeights.png" src="_images/pyDEAWeights.png" />
+<p class="caption"><span class="caption-text"><em>Weights editor</em> tab</span></p>
+</div>
+<div class="figure" id="id13">
+<span id="fig-validate"></span><img alt="_images/pyDEAValidate.png" src="_images/pyDEAValidate.png" />
+<p class="caption"><span class="caption-text">Validating weight restrictions</span></p>
+</div>
+</div>
+<div class="section" id="weight-restrictions">
+<h3>Weight Restrictions<a class="headerlink" href="#weight-restrictions" title="Permalink to this headline">¶</a></h3>
+<p>Under <em>Weights editor</em>, weight restrictions can be entered. The <em>Weights
+editor</em> tab is shown in Figure <a class="reference internal" href="#fig-weight-editor"><span>Weights editor tab</span></a>.</p>
+<p>To show the weight editor, first click <em>Weights editor</em> tab on the top
+left part of the main window. There are three different types of weight
+restrictions: Absolute, virtual, and price ratio, see Figure
+<a class="reference internal" href="#fig-weight-editor"><span>Weights editor tab</span></a>. Decide on the required type(s) of weight restrictions
+and enter the corresponding restriction(s) according to the format shown
+in the examples. Then click on <em>Validate weight restriction</em>. <em>Validate
+weight restrictions</em> does variable name and logic checks - it will give
+an error message when an undefined variable name or the wrong relational
+operator is used. Figure <a class="reference internal" href="#fig-validate"><span>Validating weight restrictions</span></a> shows a case of wrong operator
+entered and an error/warning message is given upon validating the weight
+restrictions.</p>
+<p>Note that <em>Validate weight restrictions</em> does not check for conflicting
+weight restrictions. Hence, you might get infeasible solutions! If that
+happens and you have weight restrictions, carefully review those.</p>
+</div>
+<div class="section" id="application-colour">
+<h3>Application Colour<a class="headerlink" href="#application-colour" title="Permalink to this headline">¶</a></h3>
+<p>In order to change the background colour of the entire application, it is sufficient to modify constant <cite>bg_color</cite> in the file <code class="docutils literal"><span class="pre">source/refactored/dea_utils.py</span></code>. A new colour must be specified in hex format (default colour is #E8E9FA).</p>
+</div>
+</div>
+<div class="section" id="a-note-of-warning">
+<h2>A Note of Warning<a class="headerlink" href="#a-note-of-warning" title="Permalink to this headline">¶</a></h2>
+<p>This is newly developped software and it may have some minor bugs. If
+there are any problems with the software, let Andrea know by sending an
+email to <a class="reference external" href="mailto:a&#46;raith&#37;&#52;&#48;auckland&#46;ac&#46;nz">a<span>&#46;</span>raith<span>&#64;</span>auckland<span>&#46;</span>ac<span>&#46;</span>nz</a>. Send
+command window output, name and version of your operating system, a
+screenshot of the solver window, the data file you used and any
+information you can about special settings (ideally save the parameter
+file and send it along), etc.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="DEApy_inputData.html" class="btn btn-neutral float-right" title="Input Data" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="userGuide.html" class="btn btn-neutral" title="User Guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

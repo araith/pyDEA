@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Running pyDEA from Terminal &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="index.html"/>
+        <link rel="up" title="User Guide" href="userGuide.html"/>
+        <link rel="next" title="Disclaimer" href="DEApy_last_section.html"/>
+        <link rel="prev" title="Output Data Format" href="DEApy_outputData.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="userGuide.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="DEApy_usage.html">Using <em>pyDEA</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_inputData.html">Input Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_outputData.html">Output Data Format</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Running <em>pyDEA</em> from Terminal</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sample-parameter-file">Sample parameter file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#packages-to-be-installed">packages to be installed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_last_section.html">Disclaimer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_last_section.html#acknowledgements">Acknowledgements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="DEApy_models.html">Models Used</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="userGuide.html">User Guide</a> &raquo;</li>
+      
+    <li>Running <em>pyDEA</em> from Terminal</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/DEApy_terminal.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="running-pydea-from-terminal">
+<h1>Running <em>pyDEA</em> from Terminal<a class="headerlink" href="#running-pydea-from-terminal" title="Permalink to this headline">¶</a></h1>
+<p>How to run <em>pyDEA</em> from terminal depends on whether you have Python 3
+and all necessary packages installed, see [sec:packages]. If all
+packages are installed, the following should work: Go to main folder
+containing your <em>pyDEA</em> files and run the following:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>python3 source\refactored\main.py param_file output_file_format
+  output_dir sheet_name
+</pre></div>
+</div>
+<p>Alternatively, ensure to use the Python 3 executable in the SupportFiles
+folder:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>SupportFiles\python\windows\Python33\python.exe source\refactored\main.py
+  param_file output_file_format output_dir sheet_name
+</pre></div>
+</div>
+<p>where</p>
+<ol class="arabic simple">
+<li><code class="docutils literal"><span class="pre">param_file</span></code> is path to file with parameters (an example of
+parameter files can be found in <code class="docutils literal"><span class="pre">Data/Params/</span></code>, but you can also
+generate your own by saving it from the <em>pyDEA</em> gui.)</li>
+<li><code class="docutils literal"><span class="pre">output_file_format</span></code> possible values: xls, xlsx and csv. The
+default value is xls (optional, this value is used only if auto was
+set for OUTPUT_FILE in parameters file)</li>
+<li><code class="docutils literal"><span class="pre">output_dir</span></code> is output directory (optional, if not specified,
+output is written to current directory)</li>
+<li><code class="docutils literal"><span class="pre">sheet_name</span></code> is sheet name from which data should be read
+(optional, if not specified, data is read from the first sheet)</li>
+</ol>
+<p>Note: if you want to specify the sheet name, but not the output
+directory use an empty string as the third argument, for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>python3 source/refactored/main.py param_file &quot;&quot; &quot;&quot; sheet_name
+</pre></div>
+</div>
+<p>Note:</p>
+<ul>
+<li><p class="first">If the file path contains spaces use quotes</p>
+</li>
+<li><div class="first line-block">
+<div class="line">Note operating-system specific standards for file locations, etc.</div>
+<div class="line">Eg <code class="docutils literal"><span class="pre">source\refactored\main.py</span></code> in windows but
+<code class="docutils literal"><span class="pre">source/refactored/main.py</span></code> in linux.</div>
+</div>
+</li>
+</ul>
+<div class="section" id="sample-parameter-file">
+<h2>Sample parameter file<a class="headerlink" href="#sample-parameter-file" title="Permalink to this headline">¶</a></h2>
+<p>File <code class="docutils literal"><span class="pre">DEA_example_data_params.txt</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>&lt;ABS_WEIGHT_RESTRICTIONS&gt; {}
+&lt;DATA_FILE&gt; {Data\DEA_example_data.xls}
+&lt;USE_SUPER_EFFICIENCY&gt; {}
+&lt;OUTPUT_CATEGORIES&gt; {O1;O2}
+&lt;NON_DISCRETIONARY_CATEGORIES&gt; {ND1}
+&lt;OUTPUT_FILE&gt; {auto}
+&lt;CATEGORICAL_CATEGORY&gt; {}
+&lt;VIRTUAL_WEIGHT_RESTRICTIONS&gt; {}
+&lt;PRICE_RATIO_RESTRICTIONS&gt; {}
+&lt;WEAKLY_DISPOSAL_CATEGORIES&gt; {}
+&lt;MULTIPLIER_MODEL_TOLERANCE&gt; {0}
+&lt;MAXIMIZE_SLACKS&gt; {}
+&lt;INPUT_CATEGORIES&gt; {ND1;I2;I1}
+&lt;PEEL_THE_ONION&gt; {}
+&lt;RETURN_TO_SCALE&gt; {both}
+&lt;DEA_FORM&gt; {env}
+&lt;ORIENTATION&gt; {input}
+</pre></div>
+</div>
+</div>
+<div class="section" id="packages-to-be-installed">
+<h2>packages to be installed<a class="headerlink" href="#packages-to-be-installed" title="Permalink to this headline">¶</a></h2>
+<p>Required packages for <em>pyDEA</em></p>
+<ul class="simple">
+<li>python 3</li>
+<li>pulp package</li>
+<li>xlrd package: python3-xlrd</li>
+<li>xlwt package: xlwt-future</li>
+<li>tkinter package: python3-tk</li>
+</ul>
+<p>There are other packages for unit tests and documentation, but they are
+not required packages for running <em>pyDEA</em>. See also document
+PackageInstallation.docx, which has exact linux install commands.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="DEApy_last_section.html" class="btn btn-neutral float-right" title="Disclaimer" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="DEApy_outputData.html" class="btn btn-neutral" title="Output Data Format" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

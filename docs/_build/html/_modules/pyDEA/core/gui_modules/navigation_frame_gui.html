@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.gui_modules.navigation_frame_gui &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.gui_modules.navigation_frame_gui</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.gui_modules.navigation_frame_gui</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains class NavigationForTableFrame.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">Spinbox</span><span class="p">,</span> <span class="n">StringVar</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">W</span>
+<span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Button</span>
+
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">calculate_start_row_index</span>
+
+
+<div class="viewcode-block" id="NavigationForTableFrame"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame">[docs]</a><span class="k">class</span> <span class="nc">NavigationForTableFrame</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class is responsible for navigation over the table object.</span>
+<span class="sd">        Table rows are displayed page by page.</span>
+<span class="sd">        This class provides buttons that allow to navigate from page</span>
+<span class="sd">        to page.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            table (TableFrame or any object that has attribute nb_rows and</span>
+<span class="sd">                implements display_data method): table that should be navigated.</span>
+<span class="sd">            goto_spin (Spinbox): Spinbox widget that allows to enter page</span>
+<span class="sd">                number and to switch between pages.</span>
+<span class="sd">            text_var_nb_pages (StringVar): text variable that shows total</span>
+<span class="sd">                number of pages.</span>
+<span class="sd">            current_page_str (StringVar): text variable that stores</span>
+<span class="sd">                currently displayed page.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parent (Tk object): parent for this frame.</span>
+<span class="sd">            table (TableFrameWithInputOutputBox): table with multiple pages that</span>
+<span class="sd">                will be navigated by this frame.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">table</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_var_nb_pages</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_widgets</span><span class="p">()</span>
+
+<div class="viewcode-block" id="NavigationForTableFrame.create_widgets"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.create_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">create_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates all necessary widgets for navigation.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">prev_btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&lt;&lt;&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                          <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_prev_page</span><span class="p">)</span>
+        <span class="n">prev_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">next_btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&gt;&gt;&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                          <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">show_next_page</span><span class="p">)</span>
+        <span class="n">next_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">goto_lbl</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Go to&#39;</span><span class="p">)</span>
+        <span class="n">goto_lbl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span> <span class="o">=</span> <span class="n">Spinbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">from_</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                 <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="p">,</span>
+                                 <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_page_change</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Return&gt;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_page_change</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">nb_pages_lb</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text_var_nb_pages</span><span class="p">)</span>
+        <span class="n">nb_pages_lb</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="o">+</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_navigation</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavigationForTableFrame.show_prev_page"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.show_prev_page">[docs]</a>    <span class="k">def</span> <span class="nf">show_prev_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Displays previous page.</span>
+
+<span class="sd">            This method is called when user presses button &#39;&lt;&lt;&#39;.</span>
+<span class="sd">            If the first page is currently displayed and the method is called,</span>
+<span class="sd">            then the call to this method is ignored.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">prev_page_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">prev_page_index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">prev_page_index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_page_change</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavigationForTableFrame.show_next_page"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.show_next_page">[docs]</a>    <span class="k">def</span> <span class="nf">show_next_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Displays next page.</span>
+
+<span class="sd">            This method is called when user presses button &#39;&gt;&gt;&#39;.</span>
+<span class="sd">            If the last page is currently displayed and the method is called,</span>
+<span class="sd">            then the call to this method is ignored.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">next_page_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">next_page_index</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;to&#39;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">next_page_index</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_page_change</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="NavigationForTableFrame.on_page_change"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.on_page_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_page_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Displays a page which number is currently stored in</span>
+<span class="sd">            current_page_str.</span>
+
+<span class="sd">            This method is called in show_next_page(), show_prev_page() and</span>
+<span class="sd">            when the user enters data and presses Enter.</span>
+<span class="sd">            args are supplied by Return event.</span>
+<span class="sd">            If the entered value is invalid, then the first page is displayed.</span>
+<span class="sd">            If the entered value is zero or negative, then the first page is</span>
+<span class="sd">            isplayed.</span>
+<span class="sd">            If the entered value is larger than the total number of pages,</span>
+<span class="sd">            then the last page is displayed.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">curr_page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">curr_page</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">curr_page</span><span class="p">)</span>
+
+        <span class="n">max_page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;to&#39;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">curr_page</span> <span class="o">&gt;</span> <span class="n">max_page</span><span class="p">:</span>
+            <span class="n">curr_page</span> <span class="o">=</span> <span class="n">max_page</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">curr_page</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">curr_page</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">curr_page</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">curr_page</span><span class="p">)</span>
+        <span class="c1"># second -1 because row indeces start with 0</span>
+        <span class="n">row_index</span> <span class="o">=</span> <span class="n">calculate_start_row_index</span><span class="p">(</span><span class="n">curr_page</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_rows</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">display_data</span><span class="p">(</span><span class="n">row_index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavigationForTableFrame.reset_navigation"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.reset_navigation">[docs]</a>    <span class="k">def</span> <span class="nf">reset_navigation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Resets navigation parameters.</span>
+
+<span class="sd">            Sets current page number to 1 and total number of pages to zero.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_var_nb_pages</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;1 pages&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">to</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="NavigationForTableFrame.set_navigation"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.set_navigation">[docs]</a>    <span class="k">def</span> <span class="nf">set_navigation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_data_pages</span><span class="p">,</span> <span class="n">reset_curr_page</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Sets navigation parameters.</span>
+
+<span class="sd">            Sets current page number to 1 and total number of pages</span>
+<span class="sd">            to nb_data_pages.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                nb_data_pages (int): new value for the total number of pages.</span>
+<span class="sd">                reset_curr_page (bool): True is current page must be reset to 1,</span>
+<span class="sd">                    False otherwise.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">to</span><span class="o">=</span><span class="n">nb_data_pages</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">reset_curr_page</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_var_nb_pages</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;{0} pages&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nb_data_pages</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.gui_modules.weight_frame_gui &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.gui_modules.weight_frame_gui</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.gui_modules.weight_frame_gui</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains class WeightFrame that is used as a tab in</span>
+<span class="sd">    parameters frame to edit and display weights.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">LabelFrame</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">N</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">E</span>
+
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">create_bounds</span>
+<span class="kn">from</span> <span class="nn">core.gui_modules.text_for_weights_gui</span> <span class="kn">import</span> <span class="n">TextForWeights</span>
+<span class="kn">from</span> <span class="nn">core.gui_modules.scrollable_frame_gui</span> <span class="kn">import</span> <span class="n">VerticalScrolledFrame</span>
+
+
+<div class="viewcode-block" id="WeightFrame"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.weight_frame_gui.WeightFrame">[docs]</a><span class="k">class</span> <span class="nc">WeightFrame</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class represents weights editor. It allows to display, modify</span>
+<span class="sd">        and validate weights.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            parent (Tk object): parent of this widget.</span>
+<span class="sd">            current_categories (list of str): list of current categories,</span>
+<span class="sd">                this list is not modified by this class.</span>
+<span class="sd">            params (Parameters): Parameters object with all parameter values.</span>
+
+<span class="sd">                Note:</span>
+<span class="sd">                    This class does not change values in Parameters object</span>
+<span class="sd">                    until the weight</span>
+<span class="sd">                    restrictions are validated, see on_validate_weights().</span>
+
+<span class="sd">            weights_status_str (StringVar): StringVar object that is used</span>
+<span class="sd">                to show an error if it occurred after validating weights.</span>
+<span class="sd">            abs_weights (TextForWeights): text widget for displaying and editing</span>
+<span class="sd">                absolute weight restrictions.</span>
+<span class="sd">            virtual_weights (TextForWeights): text widget for displaying and</span>
+<span class="sd">                editing virtual weight restrictions.</span>
+<span class="sd">            price_ratio_weights (TextForWeights): text widget for displaying and</span>
+<span class="sd">                editing price-ratio weight restrictions.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parent (Tk object): parent of this widget.</span>
+<span class="sd">            current_categories (list of str): list of current categories,</span>
+<span class="sd">                this list is not modified by this class.</span>
+<span class="sd">            params (Parameters): Parameters object with all parameter values</span>
+<span class="sd">            weights_status_str (StringVar): StringVar object that is used to</span>
+<span class="sd">                show an error if it occurred after validating weights.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">current_categories</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">weights_status_str</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span> <span class="o">=</span> <span class="n">current_categories</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span> <span class="o">=</span> <span class="n">weights_status_str</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abs_weights</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">virtual_weights</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_widgets</span><span class="p">()</span>
+
+<div class="viewcode-block" id="WeightFrame.create_widgets"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.weight_frame_gui.WeightFrame.create_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">create_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates all widgets.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rowconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">validate_btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Validate weight restrictions&#39;</span><span class="p">,</span>
+                              <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_validate_weights</span><span class="p">)</span>
+        <span class="n">validate_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">panel</span> <span class="o">=</span> <span class="n">LabelFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Weight restrictions&#39;</span><span class="p">)</span>
+        <span class="n">panel</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">panel</span><span class="o">.</span><span class="n">rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">panel</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                   <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">N</span><span class="p">)</span>
+
+        <span class="n">weight_tab_main</span> <span class="o">=</span> <span class="n">VerticalScrolledFrame</span><span class="p">(</span><span class="n">panel</span><span class="p">)</span>
+        <span class="n">weight_tab_main</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">weights_tab</span> <span class="o">=</span> <span class="n">weight_tab_main</span><span class="o">.</span><span class="n">interior</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">abs_weights</span> <span class="o">=</span> <span class="n">TextForWeights</span><span class="p">(</span><span class="n">weights_tab</span><span class="p">,</span> <span class="s1">&#39;absolute&#39;</span><span class="p">,</span>
+                                          <span class="s1">&#39;Input1 &lt;= 0.02&#39;</span><span class="p">,</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                          <span class="s1">&#39;ABS_WEIGHT_RESTRICTIONS&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abs_weights</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">virtual_weights</span> <span class="o">=</span> <span class="n">TextForWeights</span><span class="p">(</span><span class="n">weights_tab</span><span class="p">,</span> <span class="s1">&#39;virtual&#39;</span><span class="p">,</span>
+                                              <span class="s1">&#39;Input1 &gt;= 0.34&#39;</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                              <span class="s1">&#39;VIRTUAL_WEIGHT_RESTRICTIONS&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">virtual_weights</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span> <span class="o">=</span> <span class="n">TextForWeights</span><span class="p">(</span><span class="n">weights_tab</span><span class="p">,</span> <span class="s1">&#39;price ratio&#39;</span><span class="p">,</span>
+                                                  <span class="s1">&#39;Input1/Input2 &lt;= 5&#39;</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span>
+                                                  <span class="s1">&#39;PRICE_RATIO_RESTRICTIONS&#39;</span><span class="p">,</span>
+                                                  <span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                      <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="WeightFrame.add_weights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.weight_frame_gui.WeightFrame.add_weights">[docs]</a>    <span class="k">def</span> <span class="nf">add_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds weight restrictions stored in params to the appropriate</span>
+<span class="sd">            text widgets if such weight restrictions can be parsed and</span>
+<span class="sd">            contain categories that are also present in current_categories.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remove_all_weights</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_given_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abs_weights</span><span class="p">,</span> <span class="s1">&#39;ABS_WEIGHT_RESTRICTIONS&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_given_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">virtual_weights</span><span class="p">,</span>
+                                <span class="s1">&#39;VIRTUAL_WEIGHT_RESTRICTIONS&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_given_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span><span class="p">,</span>
+                                <span class="s1">&#39;PRICE_RATIO_RESTRICTIONS&#39;</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_add_given_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_widget</span><span class="p">,</span> <span class="n">weights_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds given weight restrictions to a given text widget.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                text_widget (TextForWeights): text widget where weight</span>
+<span class="sd">                    restrictions will be added.</span>
+<span class="sd">                weights_name (str): name of the parameter that stores weight</span>
+<span class="sd">                    restrictions in params.</span>
+
+<span class="sd">            Example:</span>
+<span class="sd">                If currently parameters contain absolute weight</span>
+<span class="sd">                restrictions &quot;I1 &gt;= 0.1&quot;, then we can add this constraint to the</span>
+<span class="sd">                text widget as follows:</span>
+<span class="sd">                &gt;&gt;&gt; self._add_given_weights(self.abs_weights,</span>
+<span class="sd">                    &#39;ABS_WEIGHT_RESTRICTIONS&#39;)</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_set_of_parameters</span><span class="p">(</span><span class="n">weights_name</span><span class="p">)</span>
+        <span class="n">weights_were_added</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="n">weights</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">weight</span> <span class="ow">in</span> <span class="n">weights</span><span class="p">:</span>
+                <span class="n">weight_as_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">weight_as_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">create_bounds</span><span class="p">(</span><span class="n">weight_as_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                    <span class="k">pass</span>  <span class="c1"># everything that we cannot parse is ignored</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">text_widget</span><span class="o">.</span><span class="n">insert_weight</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span>
+                    <span class="n">weights_were_added</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="n">weights_were_added</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">change_weight_tab_name</span><span class="p">(</span><span class="s1">&#39;Weights editor*&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WeightFrame.remove_all_weights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.weight_frame_gui.WeightFrame.remove_all_weights">[docs]</a>    <span class="k">def</span> <span class="nf">remove_all_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Removes all weight restrictions from all text widgets.</span>
+
+<span class="sd">            Note:</span>
+<span class="sd">                Parameters object is not affected by this. All weight</span>
+<span class="sd">                restrictions will still be there. Parameters are updated</span>
+<span class="sd">                only when they are validated,</span>
+<span class="sd">                i.e. when the user presses validate weights button or run</span>
+<span class="sd">                button.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">change_weight_tab_name</span><span class="p">(</span><span class="s1">&#39;Weights editor&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">abs_weights</span><span class="o">.</span><span class="n">delete_weights</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">virtual_weights</span><span class="o">.</span><span class="n">delete_weights</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span><span class="o">.</span><span class="n">delete_weights</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="WeightFrame.on_validate_weights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.weight_frame_gui.WeightFrame.on_validate_weights">[docs]</a>    <span class="k">def</span> <span class="nf">on_validate_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Validates weights of all text widgets and displays an error if</span>
+<span class="sd">            some of the weights are invalid.</span>
+
+<span class="sd">            Note:</span>
+<span class="sd">                Parameters object is modified by this method.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">abs_weights_present</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">abs_weights</span><span class="o">.</span><span class="n">validate_weights</span><span class="p">()</span>
+        <span class="n">virtual_weights_present</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">virtual_weights</span><span class="o">.</span><span class="n">validate_weights</span><span class="p">()</span>
+        <span class="n">price_ratio_weights_present</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span><span class="o">.</span><span class="n">validate_weights</span><span class="p">()</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">abs_weights</span><span class="o">.</span><span class="n">error_tag_exists</span> <span class="ow">or</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">virtual_weights</span><span class="o">.</span><span class="n">error_tag_exists</span> <span class="ow">or</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span><span class="o">.</span><span class="n">error_tag_exists</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span>
+                <span class="s1">&#39;Some of the weight restrictions cannot be parsed. </span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="s1">&#39;For error details, see Weights editor tab.&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">abs_weights_present</span> <span class="ow">or</span> <span class="n">virtual_weights_present</span> <span class="ow">or</span>
+                <span class="n">price_ratio_weights_present</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">change_weight_tab_name</span><span class="p">(</span><span class="s1">&#39;Weights editor*&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">change_weight_tab_name</span><span class="p">(</span><span class="s1">&#39;Weights editor&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

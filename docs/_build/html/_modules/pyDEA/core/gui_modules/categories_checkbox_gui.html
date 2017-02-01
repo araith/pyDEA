@@ -1,0 +1,447 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.gui_modules.categories_checkbox_gui &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.gui_modules.categories_checkbox_gui</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.gui_modules.categories_checkbox_gui</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains class responsible for displaying and</span>
+<span class="sd">    configuring categories.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        MIN_COLUMN_WIDTH (int): minimum column width.</span>
+<span class="sd">        MIN_COLUMN_WIDTH_NAME (int): minimum text width of the column.</span>
+<span class="sd">        HEIGHT_WITHOUT_CHECKBOXES (int): widget height.</span>
+<span class="sd">        COUNT_TO_NAME (dict of int to str): dictionary that maps index</span>
+<span class="sd">            to parameter name.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">LEFT</span><span class="p">,</span> <span class="n">VERTICAL</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">IntVar</span><span class="p">,</span> <span class="n">ALL</span>
+<span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Scrollbar</span>
+<span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Separator</span><span class="p">,</span> <span class="n">LabelFrame</span><span class="p">,</span> <span class="n">Checkbutton</span>
+
+<span class="kn">from</span> <span class="nn">core.gui_modules.scrollable_frame_gui</span> <span class="kn">import</span> <span class="n">MouseWheel</span>
+<span class="kn">from</span> <span class="nn">core.gui_modules.custom_canvas_gui</span> <span class="kn">import</span> <span class="n">StyledCanvas</span>
+
+<span class="n">MIN_COLUMN_WIDTH</span> <span class="o">=</span> <span class="mi">150</span>
+<span class="n">MIN_COLUMN_WIDTH_NAME</span> <span class="o">=</span> <span class="mi">160</span>
+<span class="n">HEIGHT_WITHOUT_CHECKBOXES</span> <span class="o">=</span> <span class="mi">110</span>
+<span class="n">COUNT_TO_NAME</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;NON_DISCRETIONARY_CATEGORIES&#39;</span><span class="p">,</span>
+                 <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;WEAKLY_DISPOSAL_CATEGORIES&#39;</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="CategoriesCheckBox"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox">[docs]</a><span class="k">class</span> <span class="nc">CategoriesCheckBox</span><span class="p">(</span><span class="n">LabelFrame</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class implement a widget for displaying and</span>
+<span class="sd">        configuring categories.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            parent (Tk object): widget parent.</span>
+<span class="sd">            frame_with_boxes (Frame): frame for check buttons.</span>
+<span class="sd">            canvas (StyledCanvas): canvas for all objects of this widget.</span>
+<span class="sd">            options (dict of str to list of IntVar and int): dictionary</span>
+<span class="sd">                that maps</span>
+<span class="sd">                category name to two IntVar objects that keep track of the</span>
+<span class="sd">                state of check buttons and grid row index.</span>
+<span class="sd">                The first check button is used</span>
+<span class="sd">                for checking if category is non-discretionary. The second</span>
+<span class="sd">                check button is used for checking if category is weakly</span>
+<span class="sd">                disposal.</span>
+<span class="sd">            nb_entries (int): total number of categories.</span>
+<span class="sd">            add_headers (bool): if set to True, the widget displays column</span>
+<span class="sd">                headers, if set to False column headers are not</span>
+<span class="sd">                displayed.</span>
+<span class="sd">            category_objects (dict of list of Tk objects): dictionary that</span>
+<span class="sd">                maps category name to a list with three elements. The first</span>
+<span class="sd">                element is Label with category name, the remaining elements</span>
+<span class="sd">                are Checkbuttons used for non-discretionary and weakly</span>
+<span class="sd">                disposal categories.</span>
+<span class="sd">            params (Parameters): parameters of the model.</span>
+<span class="sd">            category_type (str): INPUT_CATEGORIES or OUTPUT_CATEGORIES,</span>
+<span class="sd">                defines type of categories (input or output).</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parent (Tk object): widget parent.</span>
+<span class="sd">            label_text (str): text that will be displayed on top of this widget.</span>
+<span class="sd">            add_headers (bool): if set to True, the widget displays column</span>
+<span class="sd">                headers, if set to False column headers are not</span>
+<span class="sd">                displayed.</span>
+<span class="sd">            params (Parameters): parameters of the model.</span>
+<span class="sd">            category_type (str): INPUT_CATEGORIES or OUTPUT_CATEGORIES,</span>
+<span class="sd">                defines type of categories (input or output).</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">label_text</span><span class="p">,</span> <span class="n">add_headers</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span>
+                 <span class="n">category_type</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">LabelFrame</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">label_text</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_with_boxes</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nb_entries</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_headers</span> <span class="o">=</span> <span class="n">add_headers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_type</span> <span class="o">=</span> <span class="n">category_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_widgets</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CategoriesCheckBox.create_widgets"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.create_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">create_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates widgets of this object.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">yScrollbar</span> <span class="o">=</span> <span class="n">Scrollbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="n">VERTICAL</span><span class="p">)</span>
+        <span class="n">yScrollbar</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">S</span><span class="p">)</span>
+
+        <span class="n">canvas</span> <span class="o">=</span> <span class="n">StyledCanvas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="n">HEIGHT_WITHOUT_CHECKBOXES</span><span class="p">,</span>
+                              <span class="n">yscrollcommand</span><span class="o">=</span><span class="n">yScrollbar</span><span class="o">.</span><span class="n">set</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="n">canvas</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_headers</span><span class="p">:</span>
+            <span class="n">non_discr_lbl</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Non-</span><span class="se">\n</span><span class="s1">discretionary&#39;</span><span class="p">)</span>
+            <span class="n">non_discr_lbl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">weakly_disp_lbl</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Weakly</span><span class="se">\n</span><span class="s1">disposable&#39;</span><span class="p">)</span>
+            <span class="n">weakly_disp_lbl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">sep</span> <span class="o">=</span> <span class="n">Separator</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">sep</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_with_boxes</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="n">canvas</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config_columns</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_with_boxes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_with_boxes</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">W</span><span class="o">+</span><span class="n">E</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+        <span class="n">canvas</span><span class="o">.</span><span class="n">create_window</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_with_boxes</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+        <span class="n">canvas</span><span class="o">.</span><span class="n">update_idletasks</span><span class="p">()</span>
+
+        <span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;scrollregion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">HEIGHT_WITHOUT_CHECKBOXES</span><span class="p">)</span>
+        <span class="n">yScrollbar</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">yview</span>
+
+        <span class="n">MouseWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">add_scrolling</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">yscrollbar</span><span class="o">=</span><span class="n">yScrollbar</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CategoriesCheckBox.add_category"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.add_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds a given category to this object. If the given</span>
+<span class="sd">            category already exists, it won&#39;t be added again. Category</span>
+<span class="sd">            names are assumed to be unique.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                category_name (str): name of the category to add.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">category_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">categories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_set_of_parameters</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">category_type</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">category_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+                <span class="n">categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">category_type</span><span class="p">,</span>
+                                             <span class="s1">&#39;;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">categories</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nb_entries</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">row_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_entries</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">category_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">IntVar</span><span class="p">(),</span> <span class="n">IntVar</span><span class="p">(),</span> <span class="n">row_index</span><span class="p">]</span>
+
+            <span class="n">box</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_with_boxes</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">category_name</span><span class="p">,</span>
+                        <span class="n">justify</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> <span class="n">wraplength</span><span class="o">=</span><span class="n">MIN_COLUMN_WIDTH_NAME</span> <span class="o">-</span> <span class="mi">10</span><span class="p">)</span>
+            <span class="n">box</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row_index</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+            <span class="n">btn</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">count</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+                <span class="n">check_btn</span> <span class="o">=</span> <span class="n">Checkbutton</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frame_with_boxes</span><span class="p">,</span>
+                                        <span class="n">variable</span><span class="o">=</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">category_name</span><span class="p">][</span><span class="n">count</span><span class="p">])</span>
+                <span class="n">check_btn</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="p">(</span><span class="k">lambda</span> <span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="p">:</span>
+                                          <span class="bp">self</span><span class="o">.</span><span class="n">on_select_box</span><span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">count</span><span class="p">)))</span>
+                <span class="n">btn</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">check_btn</span><span class="p">)</span>
+                <span class="n">btn</span><span class="p">[</span><span class="n">count</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row_index</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="p">[</span><span class="n">category_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">box</span><span class="p">,</span> <span class="n">btn</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">btn</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">nd_categories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_set_of_parameters</span><span class="p">(</span>
+                <span class="s1">&#39;NON_DISCRETIONARY_CATEGORIES&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="n">nd_categories</span><span class="p">:</span>
+                <span class="n">btn</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+
+            <span class="n">wd_categories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_set_of_parameters</span><span class="p">(</span>
+                <span class="s1">&#39;WEAKLY_DISPOSAL_CATEGORIES&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="n">wd_categories</span><span class="p">:</span>
+                <span class="n">btn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_scroll_region</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="CategoriesCheckBox.change_category_name"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.change_category_name">[docs]</a>    <span class="k">def</span> <span class="nf">change_category_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Changes category name if such a category is present.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                old_name (str): previous category name that should</span>
+<span class="sd">                    be changed.</span>
+<span class="sd">                new_name (str): new category name.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">old_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="p">[</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span>
+                <span class="n">old_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="p">[</span><span class="n">new_name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">new_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">old_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">change_category_name</span><span class="p">(</span><span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CategoriesCheckBox.on_select_box"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.on_select_box">[docs]</a>    <span class="k">def</span> <span class="nf">on_select_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; This method is called when the user clicks on a Checkbutton.</span>
+<span class="sd">            It updates corresponding parameters that must be changed</span>
+<span class="sd">            after clicking on Checkbutton.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                box (Label): Label that stores category name.</span>
+<span class="sd">                count (int): index of the Checkbutton that distinguishes</span>
+<span class="sd">                    between Checkbuttons responsible for non-discretionary</span>
+<span class="sd">                    categories and weakly disposal categories.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">param_name</span> <span class="o">=</span> <span class="n">COUNT_TO_NAME</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+        <span class="n">category_name</span> <span class="o">=</span> <span class="n">box</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">category_name</span><span class="p">][</span><span class="n">count</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="n">param_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">+=</span> <span class="s1">&#39;; &#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">value</span> <span class="o">+</span> <span class="n">category_name</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_set_of_parameters</span><span class="p">(</span><span class="n">param_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+            <span class="n">new_value</span> <span class="o">=</span> <span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_destroy_category_boxes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Destroys all widgets associated with a given category</span>
+<span class="sd">            name.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                category_name (str): category name.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="p">[</span><span class="n">category_name</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
+        <span class="n">row_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">category_name</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">option</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">row</span> <span class="o">&gt;</span> <span class="n">row_index</span><span class="p">:</span>
+                <span class="c1"># re-grid all categories below removed category</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">grid_remove</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove_category_from_params</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">category_type</span><span class="p">,</span>
+                                                <span class="n">category_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove_category_from_params</span><span class="p">(</span><span class="s1">&#39;WEAKLY_DISPOSAL_CATEGORIES&#39;</span><span class="p">,</span>
+                                                <span class="n">category_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove_category_from_params</span><span class="p">(</span><span class="s1">&#39;NON_DISCRETIONARY_CATEGORIES&#39;</span><span class="p">,</span>
+                                                <span class="n">category_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CategoriesCheckBox.remove_category"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.remove_category">[docs]</a>    <span class="k">def</span> <span class="nf">remove_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Removes given category, destroys all widgets associated with</span>
+<span class="sd">            this category and updates corresponding parameters.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                category_name (str): category name.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_destroy_category_boxes</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_scroll_region</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nb_entries</span> <span class="o">-=</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="CategoriesCheckBox.remove_all_categories"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.remove_all_categories">[docs]</a>    <span class="k">def</span> <span class="nf">remove_all_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Removes all categories.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_destroy_category_boxes</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_scroll_region</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nb_entries</span> <span class="o">=</span> <span class="mi">0</span></div>
+
+    <span class="k">def</span> <span class="nf">_config_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Configures columns of a given frame.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                frame (Frame): frame to configure.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="n">MIN_COLUMN_WIDTH_NAME</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="n">MIN_COLUMN_WIDTH</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">frame</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">minsize</span><span class="o">=</span><span class="n">MIN_COLUMN_WIDTH</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CategoriesCheckBox.update_scroll_region"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.update_scroll_region">[docs]</a>    <span class="k">def</span> <span class="nf">update_scroll_region</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Updates scrolling region.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_with_boxes</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;scrollregion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">bbox</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.models.input_output_model_bases &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.models.input_output_model_bases</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.models.input_output_model_bases</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains classes that implement methods common for input- and</span>
+<span class="sd">    output-oriented models.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ZERO_TOLERANCE</span>
+
+
+<div class="viewcode-block" id="InputOrientedModel"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.InputOrientedModel">[docs]</a><span class="k">class</span> <span class="nc">InputOrientedModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&#39;&#39;&#39; This class implements methods that are the same for all input-oriented</span>
+<span class="sd">        models.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="InputOrientedModel.get_orientation"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.InputOrientedModel.get_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">get_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns orientation of the model as a string.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: a string &#39;input&#39;.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;input&#39;</span></div>
+
+<div class="viewcode-block" id="InputOrientedModel.process_obj_var"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.InputOrientedModel.process_obj_var">[docs]</a>    <span class="k">def</span> <span class="nf">process_obj_var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Post-process objective function value if necessary.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                obj_value (double): value of the objective function.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                double: value of obj_variable, since efficiency score is in</span>
+<span class="sd">                    the interval [0, 1] for input-oriented model.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">obj_value</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">obj_value</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">ZERO_TOLERANCE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mf">1.0</span>
+        <span class="k">return</span> <span class="n">obj_value</span></div>
+
+<div class="viewcode-block" id="InputOrientedModel.process_dual_value"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.InputOrientedModel.process_dual_value">[docs]</a>    <span class="k">def</span> <span class="nf">process_dual_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dual_value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Post-process given value of a dual variable if necessary.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dual_value (double): value of the dual variable.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                double: dual_value since in input-oriented model we do nothing</span>
+<span class="sd">                    with duals.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">dual_value</span></div></div>
+
+
+<div class="viewcode-block" id="OutputOrientedModel"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.OutputOrientedModel">[docs]</a><span class="k">class</span> <span class="nc">OutputOrientedModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class implements methods that are the same for all output-oriented</span>
+<span class="sd">        models.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+<div class="viewcode-block" id="OutputOrientedModel.get_orientation"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.OutputOrientedModel.get_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">get_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns orientation of the model as a string.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: a string &#39;output&#39;.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;output&#39;</span></div>
+
+<div class="viewcode-block" id="OutputOrientedModel.process_obj_var"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.OutputOrientedModel.process_obj_var">[docs]</a>    <span class="k">def</span> <span class="nf">process_obj_var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Post-process objective function value if necessary.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                obj_value (double): value of the objective function.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                double: 1/obj_variable, since in the case of output-oriented</span>
+<span class="sd">                    models the value of objective function corresponds to</span>
+<span class="sd">                    inverse of efficiency score.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">obj_value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">obj_value</span></div>
+
+<div class="viewcode-block" id="OutputOrientedModel.process_dual_value"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.OutputOrientedModel.process_dual_value">[docs]</a>    <span class="k">def</span> <span class="nf">process_dual_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dual_value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Post-process given value of a dual variable if necessary.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                dual_value (double): value of the dual variable.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                double: -dual_value if it is non-zero since in output-oriented</span>
+<span class="sd">                    models.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="n">dual_value</span><span class="p">:</span>
+            <span class="k">return</span> <span class="o">-</span><span class="n">dual_value</span>
+        <span class="k">return</span> <span class="n">dual_value</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.gui_modules.text_for_weights_gui &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.gui_modules.text_for_weights_gui</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.gui_modules.text_for_weights_gui</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains TextForWeights class which is a text widget</span>
+<span class="sd">    used for displaying and editing weight restrictions.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        TEXT_WIDTH_VAL (int): width of Text widget.</span>
+<span class="sd">        TEXT_HEIGHT_VAL (int): heigth of Text widget.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">Text</span><span class="p">,</span> <span class="n">NONE</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">HORIZONTAL</span><span class="p">,</span> <span class="n">END</span><span class="p">,</span> <span class="n">TclError</span>
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">StringVar</span><span class="p">,</span> <span class="n">LEFT</span>
+<span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Scrollbar</span>
+
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">create_bounds</span><span class="p">,</span> <span class="n">contraint_is_price_ratio_type</span>
+
+<span class="n">TEXT_WIDTH_VAL</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">TEXT_HEIGHT_VAL</span> <span class="o">=</span> <span class="mi">10</span>
+
+
+<div class="viewcode-block" id="TextForWeights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights">[docs]</a><span class="k">class</span> <span class="nc">TextForWeights</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Implements text widget used for displaying and editing weight</span>
+<span class="sd">        restrictions.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            parent (Tk object): parent of this widget.</span>
+<span class="sd">            weight_name (str): text describing type of weight restrictions,</span>
+<span class="sd">                e.g. absolute, virtual, etc.</span>
+<span class="sd">            examples (str): string with an example of usage of this</span>
+<span class="sd">                type of weight restrictions, e.g. I1 &lt;= 2.</span>
+<span class="sd">            current_categories (list of str): list of current categories.</span>
+<span class="sd">            params (Parameters): parameters.</span>
+<span class="sd">            param_name (str): parameter name that corresponds to this type</span>
+<span class="sd">                of weight restrictions, e.g. ABS_WEIGHT_RESTRICTIONS.</span>
+<span class="sd">            text (Text): text widget used for displaying weight restrictions.</span>
+<span class="sd">            error_tag_exists (bool): if set to True, means that there are</span>
+<span class="sd">                invalid weight restrictions, False otherwise.</span>
+<span class="sd">            errors_strvar (StringVar): is used for storing and displaying</span>
+<span class="sd">                error messages for invalid weight restrictions.</span>
+<span class="sd">            is_price_ratio (bool): if True price ratio constraints are </span>
+<span class="sd">                expected to be entered, if False other constraint types are </span>
+<span class="sd">                expected to be entered. Defaults to False.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parent (Tk object): parent of this widget.</span>
+<span class="sd">            weight_name (str): text describing type of weight restrictions,</span>
+<span class="sd">                e.g. absolute, virtual, etc.</span>
+<span class="sd">            examples (str): string with an example of usage of this</span>
+<span class="sd">                type of weight restrictions, e.g. I1 &lt;= 2.</span>
+<span class="sd">            current_categories (list of str): list of current categories.</span>
+<span class="sd">            params (Parameters): parameters.</span>
+<span class="sd">            param_name (str): parameter name that corresponds to this type</span>
+<span class="sd">                of weight restrictions, e.g. ABS_WEIGHT_RESTRICTIONS.</span>
+<span class="sd">            is_price_ratio (bool): if True price ratio constraints are </span>
+<span class="sd">                expected to be entered, if False other constraint types are </span>
+<span class="sd">                expected to be entered. Defaults to False.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">weight_name</span><span class="p">,</span> <span class="n">examples</span><span class="p">,</span>
+                 <span class="n">current_categories</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span>
+                 <span class="n">is_price_ratio_constraint</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">Frame</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">examples</span> <span class="o">=</span> <span class="n">examples</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span> <span class="o">=</span> <span class="n">current_categories</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">param_name</span> <span class="o">=</span> <span class="n">param_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_tag_exists</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">errors_strvar</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight_name</span> <span class="o">=</span> <span class="n">weight_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_price_ratio_constraint</span> <span class="o">=</span> <span class="n">is_price_ratio_constraint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_widgets</span><span class="p">(</span><span class="n">weight_name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TextForWeights.create_widgets"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights.create_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">create_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates all widgets.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">constraints_lbl</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Enter {0} weight restrictions:&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">weight_name</span><span class="p">))</span>
+        <span class="n">constraints_lbl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+        <span class="n">examples_lbl</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;e.g. {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">examples</span><span class="p">))</span>
+        <span class="n">examples_lbl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">errors_lbl</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">errors_strvar</span><span class="p">,</span> 
+                           <span class="n">foreground</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">anchor</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">justify</span><span class="o">=</span><span class="n">LEFT</span><span class="p">,</span> 
+                           <span class="n">wraplength</span><span class="o">=</span><span class="mi">80</span><span class="p">)</span>
+        <span class="n">errors_lbl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_rowconfigure</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid_columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">xscrollbar</span> <span class="o">=</span> <span class="n">Scrollbar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="n">HORIZONTAL</span><span class="p">)</span>
+        <span class="n">xscrollbar</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">yscrollbar</span> <span class="o">=</span> <span class="n">Scrollbar</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">yscrollbar</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">S</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wrap</span><span class="o">=</span><span class="n">NONE</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">TEXT_WIDTH_VAL</span><span class="p">,</span>
+                         <span class="n">height</span><span class="o">=</span><span class="n">TEXT_HEIGHT_VAL</span><span class="p">,</span>
+                         <span class="n">xscrollcommand</span><span class="o">=</span><span class="n">xscrollbar</span><span class="o">.</span><span class="n">set</span><span class="p">,</span>
+                         <span class="n">yscrollcommand</span><span class="o">=</span><span class="n">yscrollbar</span><span class="o">.</span><span class="n">set</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+
+        <span class="n">xscrollbar</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">xview</span><span class="p">)</span>
+        <span class="n">yscrollbar</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">yview</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextForWeights.delete_weights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights.delete_weights">[docs]</a>    <span class="k">def</span> <span class="nf">delete_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Removes all weight restrictions.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_tag_exists</span> <span class="o">=</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="TextForWeights.insert_weight"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights.insert_weight">[docs]</a>    <span class="k">def</span> <span class="nf">insert_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Add a given weight restriction in the end of the</span>
+<span class="sd">            text widget.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                weight (str): string that describes a given weight</span>
+<span class="sd">                    restriction.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># we assume that inserted weight is always correct</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">END</span><span class="p">,</span> <span class="n">weight</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextForWeights.validate_weights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights.validate_weights">[docs]</a>    <span class="k">def</span> <span class="nf">validate_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Checks if all weight restrictions are valid.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                bool: True if all weight restrictions are valid,</span>
+<span class="sd">                    False otherwise.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">foreground</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_tag_exists</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">tag_remove</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;error.first&#39;</span><span class="p">,</span> <span class="s1">&#39;error.last&#39;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">TclError</span><span class="p">:</span>
+                <span class="c1"># there is no error tag</span>
+                <span class="k">pass</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_tag_exists</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">errors_strvar</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">all_constraints</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;1.0&#39;</span><span class="p">,</span> <span class="s1">&#39;end-1c&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()):</span>
+            <span class="c1"># Iterate lines</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">weight_as_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">weight_as_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">bounds</span> <span class="o">=</span> <span class="n">create_bounds</span><span class="p">(</span><span class="n">weight_as_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span><span class="p">)</span>
+                    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+                    <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="o">=</span> <span class="n">bounds</span><span class="o">.</span><span class="n">popitem</span><span class="p">()</span>
+                    <span class="n">is_price_ratio</span> <span class="o">=</span> <span class="n">contraint_is_price_ratio_type</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_price_ratio_constraint</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">is_price_ratio</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Constraint {0} is not a price ratio constraint&#39;</span><span class="o">.</span>
+                            <span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_price_ratio_constraint</span> <span class="ow">and</span> <span class="n">is_price_ratio</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Constraint {0} is a price ratio constraint.&#39;</span>
+                            <span class="s1">&#39; Use {1} weight restriction type constraint instead.&#39;</span><span class="o">.</span>
+                            <span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">weight_name</span><span class="p">))</span>
+
+                <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">tag_add</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">.0&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span>
+                                      <span class="s1">&#39;</span><span class="si">%d</span><span class="s1">.end&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">error_tag_exists</span> <span class="o">=</span> <span class="bp">True</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;* &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">err</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1"># combine correct lines for parameters</span>
+                    <span class="n">all_constraints</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                    <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_tag_exists</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">tag_config</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+        <span class="n">constraints</span> <span class="o">=</span> <span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">all_constraints</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param_name</span><span class="p">,</span> <span class="n">constraints</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">error_tag_exists</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">errors_strvar</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_errors</span><span class="p">(</span><span class="n">errors</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">constraints</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="TextForWeights.get_all_errors"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights.get_all_errors">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_list</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns given list of errors as one string.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                error_list (list of str): list of strings to concatenate.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                str: concatenated string.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">error_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">error_list</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

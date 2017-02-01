@@ -1,0 +1,588 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.gui_modules.data_tab_frame_gui &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.gui_modules.data_tab_frame_gui</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.gui_modules.data_tab_frame_gui</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains class DataTabFrame that creates tab with all data.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="kn">import</span> <span class="nn">xlrd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">StringVar</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Toplevel</span>
+<span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">LabelFrame</span>
+<span class="kn">from</span> <span class="nn">tkinter.filedialog</span> <span class="kn">import</span> <span class="n">askopenfilename</span><span class="p">,</span> <span class="n">asksaveasfilename</span>
+<span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="kn">import</span> <span class="n">askyesno</span>
+
+<span class="kn">from</span> <span class="nn">core.gui_modules.table_gui</span> <span class="kn">import</span> <span class="n">TableFrameWithInputOutputBox</span>
+<span class="kn">from</span> <span class="nn">core.gui_modules.navigation_frame_gui</span> <span class="kn">import</span> <span class="n">NavigationForTableFrame</span>
+<span class="kn">from</span> <span class="nn">core.gui_modules.table_modifier_gui</span> <span class="kn">import</span> <span class="n">TableModifierFrame</span>
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">TEXT_FOR_PANEL</span><span class="p">,</span> <span class="n">FILE_TYPES</span><span class="p">,</span> <span class="n">center_window</span>
+<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">calculate_nb_pages</span>
+<span class="kn">from</span> <span class="nn">core.data_processing.read_data_from_xls</span> <span class="kn">import</span> <span class="n">read_data</span>
+<span class="kn">from</span> <span class="nn">core.gui_modules.load_xls_gui</span> <span class="kn">import</span> <span class="n">AskSheetName</span>
+<span class="kn">from</span> <span class="nn">core.data_processing.save_data_to_file</span> <span class="kn">import</span> <span class="n">save_data_to_xls</span>
+
+
+<div class="viewcode-block" id="remove_star"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.remove_star">[docs]</a><span class="k">def</span> <span class="nf">remove_star</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
+        <span class="n">data_file</span> <span class="o">=</span> <span class="n">file_name</span>
+        <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">file_name</span><span class="p">:</span>
+                <span class="n">data_file</span> <span class="o">=</span> <span class="n">data_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data_file</span></div>
+
+
+<div class="viewcode-block" id="DataTabFrame"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame">[docs]</a><span class="k">class</span> <span class="nc">DataTabFrame</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class creates frame with all widgets needed for working with data</span>
+<span class="sd">        (e.g. loading, saving, modifying, etc.)</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            parent (Tk object): parent of the frame.</span>
+<span class="sd">            data_from_params_file (StringVar): StringVar object that contains</span>
+<span class="sd">                name of data file. It is used for communication between this</span>
+<span class="sd">                frame and parameters frame.</span>
+<span class="sd">                When parameters are uploaded from file, then file name with</span>
+<span class="sd">                data might be updated,</span>
+<span class="sd">                and, hence, this frame must also be updated. If file name is set</span>
+<span class="sd">                to empty string, then</span>
+<span class="sd">                this framed is cleared (everything will be deleted). If file</span>
+<span class="sd">                name points to actual file,</span>
+<span class="sd">                then data from this file will be uploaded and displayed on</span>
+<span class="sd">                this frame</span>
+<span class="sd">            panel (LabelFrame): frame that holds table with data and name of</span>
+<span class="sd">                the currently loaded data file</span>
+<span class="sd">            table (TableFrameWithInputOutputBox): object that knows how to</span>
+<span class="sd">                display data in table and how to modify it</span>
+<span class="sd">            params_frame (Notebook): frame with parameters. When all data is</span>
+<span class="sd">                cleared, then we also need to clear parameters</span>
+<span class="sd">            data (list of list of str or float): stores all loaded or entered</span>
+<span class="sd">                data without categories,</span>
+<span class="sd">                for example:</span>
+<span class="sd">                    &gt;&gt;&gt; [[&quot;A&quot;, 1, 2, 3], [&quot;B&quot;, 1, &quot;&quot;, 5], [&quot;C&quot;, &quot;&quot;, &quot;a&quot;, &quot;b&quot;]]</span>
+<span class="sd">            if_text_modified_str (StringVar): is used for adding star to file</span>
+<span class="sd">                name if it was modified.</span>
+<span class="sd">                Technically it is not necessary to store this variable,</span>
+<span class="sd">                but it is used in unit tests.</span>
+<span class="sd">            sheet_name (str): name of the sheet in xls-file from where data</span>
+<span class="sd">                has been loaded</span>
+<span class="sd">            navigation_frame (NavigationForTableFrame): frame that knows how</span>
+<span class="sd">                to navigate table with data</span>
+<span class="sd">            table_modifier_frame (TableModifierFrame): frame that adds and</span>
+<span class="sd">                removes rows and columns of data table</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            parent (Tk object): parent of this frame</span>
+<span class="sd">            params_frame (Notebook): frame with parameters. When all data is</span>
+<span class="sd">                cleared, then we also need to clear parameters</span>
+<span class="sd">            current_categories (list of str): list with categories, it is</span>
+<span class="sd">                shared and modified by several objects</span>
+<span class="sd">            data_from_params_file (StringVar): StringVar object that contains</span>
+<span class="sd">                name of data file.</span>
+<span class="sd">                It is used for communication between this frame and</span>
+<span class="sd">                parameters frame</span>
+<span class="sd">            str_var_for_input_output_boxes (ObserverStringVar): object that</span>
+<span class="sd">                contains current input and output categories and notifies</span>
+<span class="sd">                table with data when data is loaded</span>
+<span class="sd">                and some categories need to be checked</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">params_frame</span><span class="p">,</span> <span class="n">current_categories</span><span class="p">,</span>
+                 <span class="n">data_from_params_file</span><span class="p">,</span>
+                 <span class="n">str_var_for_input_output_boxes</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">parent</span>
+        <span class="n">data_from_params_file</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_params_file_change</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_from_params_file</span> <span class="o">=</span> <span class="n">data_from_params_file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">panel</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span> <span class="o">=</span> <span class="n">params_frame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">if_text_modified_str</span> <span class="o">=</span> <span class="n">StringVar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">if_text_modified_str</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_data_modify</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table_modifier_frame</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_widgets</span><span class="p">(</span><span class="n">current_categories</span><span class="p">,</span> <span class="n">str_var_for_input_output_boxes</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataTabFrame.create_widgets"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.create_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">create_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_categories</span><span class="p">,</span>
+                       <span class="n">str_var_for_input_output_boxes</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates widgets on this frame.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                current_categories (list of str): list of current categories</span>
+<span class="sd">                    (might be empty).</span>
+<span class="sd">                str_var_for_input_output_boxes (ObserverStringVar): object</span>
+<span class="sd">                    that contains current</span>
+<span class="sd">                    input and output categories and notifies table with data</span>
+<span class="sd">                    when data is loaded</span>
+<span class="sd">                    and some categories need to be checked.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rowconfigure</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_btns</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_label_frame</span><span class="p">()</span>
+
+        <span class="n">table</span> <span class="o">=</span> <span class="n">TableFrameWithInputOutputBox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span><span class="p">,</span>
+                                             <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span><span class="o">.</span><span class="n">options_frame</span><span class="o">.</span>
+                                             <span class="n">combobox_text_var</span><span class="p">,</span>
+                                             <span class="n">current_categories</span><span class="p">,</span>
+                                             <span class="n">str_var_for_input_output_boxes</span><span class="p">,</span>
+                                             <span class="bp">self</span><span class="o">.</span><span class="n">if_text_modified_str</span><span class="p">,</span>
+                                             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span> <span class="o">=</span> <span class="n">table</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+        <span class="n">frame_for_navigation_btns</span> <span class="o">=</span> <span class="n">NavigationForTableFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">)</span>
+        <span class="n">table_modifier_frame</span> <span class="o">=</span> <span class="n">TableModifierFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">clear_all_on_btn_click</span><span class="p">,</span>
+                                                  <span class="n">frame_for_navigation_btns</span><span class="o">.</span>
+                                                  <span class="n">set_navigation</span><span class="p">)</span>
+        <span class="n">table_modifier_frame</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table_modifier_frame</span> <span class="o">=</span> <span class="n">table_modifier_frame</span>
+
+        <span class="n">frame_for_navigation_btns</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                                       <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span> <span class="o">=</span> <span class="n">frame_for_navigation_btns</span></div>
+
+    <span class="k">def</span> <span class="nf">_create_btns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates load and save buttons.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">load_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Load&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">load_file</span><span class="p">)</span>
+        <span class="n">load_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="o">+</span><span class="n">N</span><span class="p">)</span>
+
+        <span class="n">frame_for_save_btns</span> <span class="o">=</span> <span class="n">Frame</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">save_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">frame_for_save_btns</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Save&#39;</span><span class="p">,</span>
+                             <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">)</span>
+        <span class="n">save_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="o">+</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">save_as_button</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="n">frame_for_save_btns</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Save as...&#39;</span><span class="p">,</span>
+                                <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">save_data_as</span><span class="p">)</span>
+        <span class="n">save_as_button</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="o">+</span><span class="n">N</span><span class="p">)</span>
+        <span class="n">frame_for_save_btns</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="o">+</span><span class="n">N</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_create_label_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates label frame.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">panel</span> <span class="o">=</span> <span class="n">panel</span> <span class="o">=</span> <span class="n">LabelFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span><span class="p">)</span>
+        <span class="n">panel</span><span class="o">.</span><span class="n">columnconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">panel</span><span class="o">.</span><span class="n">rowconfigure</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">panel</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                   <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">N</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataTabFrame.get_data_file_name"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.get_data_file_name">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_file_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Returns name of a file with data if it was loaded.</span>
+
+<span class="sd">            File name is stored in label frame.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+        <span class="n">nb_letters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">TEXT_FOR_PANEL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_file</span><span class="p">[</span><span class="n">nb_letters</span><span class="p">:]</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.remove_star_from_panel"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.remove_star_from_panel">[docs]</a>    <span class="k">def</span> <span class="nf">remove_star_from_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Removes star from data file name if it was there.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_file_name</span><span class="p">()</span>
+        <span class="n">data_file</span> <span class="o">=</span> <span class="n">remove_star</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span> <span class="o">+</span> <span class="n">data_file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.save_data"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.save_data">[docs]</a>    <span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Saves data to an existing or new file.</span>
+
+<span class="sd">            This method is called when user presses &quot;Save&quot; button.</span>
+<span class="sd">            If user modified open data file, then modifications will</span>
+<span class="sd">            be saved in this file.</span>
+<span class="sd">            If user typed data, this method redirects user to</span>
+<span class="sd">            save_data_as() method.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_file_name</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">data_file</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>  <span class="c1"># when file was created and modified</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_data_as</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">data_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_data_to_given_file</span><span class="p">(</span><span class="n">remove_star</span><span class="p">(</span><span class="n">data_file</span><span class="p">),</span>
+                                         <span class="n">sheet_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_star_from_panel</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.save_data_as"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.save_data_as">[docs]</a>    <span class="k">def</span> <span class="nf">save_data_as</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Saves data to a new file.</span>
+
+<span class="sd">            Calls dialogue to ask user where to save file and saves</span>
+<span class="sd">            data file there. Default extension is .xls.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_file_save_as_dialog</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_data_to_given_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_call_file_save_as_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Calls save as dialogue.</span>
+
+<span class="sd">            This method is redefined in unit tests.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">asksaveasfilename</span><span class="p">(</span><span class="n">filetypes</span><span class="o">=</span><span class="n">FILE_TYPES</span><span class="p">,</span> <span class="n">defaultextension</span><span class="o">=</span><span class="s1">&#39;.xls&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataTabFrame.save_data_to_given_file"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.save_data_to_given_file">[docs]</a>    <span class="k">def</span> <span class="nf">save_data_to_given_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_file</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Saves data to a given file.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                data_file (str): file name where data should be stored.</span>
+<span class="sd">                sheet_name (str): sheet name where data should be stored.</span>
+<span class="sd">                Defaults to &quot;Data&quot;.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span>
+                      <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_cols</span><span class="p">)]</span>
+        <span class="n">save_data_to_xls</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">sheet_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.on_data_modify"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.on_data_modify">[docs]</a>    <span class="k">def</span> <span class="nf">on_data_modify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds star to label frame when data was modified.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                *args: are not used in this method, but are provided by</span>
+<span class="sd">                    StringVar trace routine.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data_file</span> <span class="ow">and</span> <span class="s1">&#39;*&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">data_file</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.load_file"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.load_file">[docs]</a>    <span class="k">def</span> <span class="nf">load_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Asks user which data file should be loaded and loads specified file.</span>
+
+<span class="sd">            Only xls, xlsx and csv files are allowed.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_open_file_dialogue</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_loaded_data</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_call_open_file_dialogue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Calls open file dialogue. This method is overridden in unit tests.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                (str): file name of file that should be loaded or empty string</span>
+<span class="sd">                    if the user pressed cancel</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="n">askopenfilename</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Choose a file&#39;</span><span class="p">,</span> <span class="n">filetypes</span><span class="o">=</span><span class="n">FILE_TYPES</span><span class="p">)</span>
+
+<div class="viewcode-block" id="DataTabFrame.clear_all_on_btn_click"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.clear_all_on_btn_click">[docs]</a>    <span class="k">def</span> <span class="nf">clear_all_on_btn_click</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Clears all data if user agrees.</span>
+
+<span class="sd">            Asks the user if he/she wants to clear all data, clears all data</span>
+<span class="sd">            if user agrees.</span>
+<span class="sd">            This method is called when user presses button &quot;Clear all&quot;.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span>
+            <span class="n">askyesno</span><span class="p">(</span><span class="s2">&quot;Verify&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;Are sure you want to delete all input data?&quot;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear_all</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.clear_all"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.clear_all">[docs]</a>    <span class="k">def</span> <span class="nf">clear_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Clears all data.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">clear_all_data</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">deselect_all_boxes</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span><span class="o">.</span><span class="n">clear_all</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">reset_progress_bar</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span><span class="o">.</span><span class="n">reset_navigation</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.on_params_file_change"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.on_params_file_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_params_file_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Loads data or clears all after parameters are loaded from file.</span>
+
+<span class="sd">            If file with parameters contains data file, then this data</span>
+<span class="sd">            will be attempted to load.</span>
+<span class="sd">            If file with parameters doesn&#39;t contain data file</span>
+<span class="sd">            (or user specified to load parameters</span>
+<span class="sd">            without data), then all previously loaded data will remain.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                *args: are not used in this methods and are provided by</span>
+<span class="sd">                    trace method of StringVar</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">params_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_from_params_file</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">params_file</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_loaded_data</span><span class="p">(</span><span class="n">params_file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.show_loaded_data"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.show_loaded_data">[docs]</a>    <span class="k">def</span> <span class="nf">show_loaded_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Loads data file.</span>
+
+<span class="sd">            This method asks user from what sheet data must be loaded if</span>
+<span class="sd">            there are more then 1 sheet</span>
+<span class="sd">            in data file. Changes name of data file in label frame and</span>
+<span class="sd">            calls method that displays</span>
+<span class="sd">            data in the table.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                file_name (str): data file</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">just_name</span><span class="p">,</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+        <span class="n">should_proceed</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">if</span> <span class="n">extension</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;.xls&#39;</span><span class="p">,</span> <span class="s1">&#39;.xlsx&#39;</span><span class="p">]:</span>
+            <span class="n">book</span> <span class="o">=</span> <span class="n">xlrd</span><span class="o">.</span><span class="n">open_workbook</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+            <span class="n">names</span> <span class="o">=</span> <span class="n">book</span><span class="o">.</span><span class="n">sheet_names</span><span class="p">()</span>
+            <span class="n">nb_names</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">nb_names</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">elif</span> <span class="n">nb_names</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_dialog</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span> <span class="o">=</span> <span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span><span class="p">:</span>
+                <span class="n">should_proceed</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>  <span class="c1"># csv does not support sheets</span>
+            <span class="n">should_proceed</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="n">should_proceed</span><span class="p">:</span>
+            <span class="n">sheet_name_copy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear_all</span><span class="p">()</span>
+            <span class="c1"># set data file name in parameters</span>
+            <span class="c1"># (this field is cleared in clear_all())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="s1">&#39;DATA_FILE&#39;</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span> <span class="o">=</span> <span class="n">sheet_name_copy</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">)</span>
+            <span class="n">categories</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span>
+                <span class="n">file_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_data</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_star_from_panel</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.call_dialog"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.call_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">call_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Calls dialogue that asks user to specify sheet name from where</span>
+<span class="sd">            data should be loaded.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                names (list of str): list of sheet names</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                (str): name of the selected sheet if sheet was selected,</span>
+<span class="sd">                    empty string if user pressed cancel</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">win</span> <span class="o">=</span> <span class="n">Toplevel</span><span class="p">()</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">withdraw</span><span class="p">()</span>
+        <span class="n">ask_sheet_name_frame</span> <span class="o">=</span> <span class="n">AskSheetName</span><span class="p">(</span><span class="n">win</span><span class="p">,</span> <span class="n">names</span><span class="p">)</span>
+        <span class="n">var</span> <span class="o">=</span> <span class="n">ask_sheet_name_frame</span><span class="o">.</span><span class="n">sheet_name_str</span>
+        <span class="n">ask_sheet_name_frame</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
+        <span class="n">center_window</span><span class="p">(</span><span class="n">win</span><span class="p">)</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">grab_set</span><span class="p">()</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">focus_set</span><span class="p">()</span>
+        <span class="n">win</span><span class="o">.</span><span class="n">wait_window</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.show_data"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.show_data">[docs]</a>    <span class="k">def</span> <span class="nf">show_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Fills table with data.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                categories (list of str): list with categories that will</span>
+<span class="sd">                appear in the first table row</span>
+<span class="sd">                coefficients (list of list of str or float): data that will</span>
+<span class="sd">                    appear after categories.</span>
+<span class="sd">                    Each contained list will be displayed on a new table row</span>
+<span class="sd">                dmu_name (str): text that appear in the same line with</span>
+<span class="sd">                    categories before the categories appear</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">)</span>
+
+        <span class="n">nb_needed_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">categories</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_cols</span><span class="p">,</span> <span class="n">nb_needed_cols</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">()</span>
+
+        <span class="c1"># print categories</span>
+        <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">category</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">categories</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
+
+        <span class="c1"># print data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">coefficients</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">load_visible_data</span><span class="p">()</span>
+
+        <span class="n">nb_data_pages</span> <span class="o">=</span> <span class="n">calculate_nb_pages</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_rows</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span><span class="o">.</span><span class="n">set_navigation</span><span class="p">(</span><span class="n">nb_data_pages</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DataTabFrame.read_coefficients"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.read_coefficients">[docs]</a>    <span class="k">def</span> <span class="nf">read_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Converts coefficients into a proper data structure</span>
+<span class="sd">            used for running algorithms.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                see read_data_from_xls for details</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">read_coefficients</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
