@@ -24,7 +24,7 @@ along with documentation of the software, which includes information on how to i
 ::
    https://opensource.org/licenses/MIT
 
-Copyright (c) 2016 Andrea Raith, Fariza Fauzi, Olga Perederieieva
+Copyright (c) 2016 Andrea Raith, Olga Perederieieva, Fariza Fauzi
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files, to deal
