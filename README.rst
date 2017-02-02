@@ -10,7 +10,7 @@
 :Documentation: 
 :Platforms: All
 :Date: 
-Copyright (c) 2016 Andrea Raith, Fariza Fauzi, Olga Perederieieva
+Copyright (c) 2016 Andrea Raith, Olga Perederieieva, Fariza Fauzi
 
 *pyDEA* is a software package developed in Python for conducting data envelopment analysis (DEA). 
    
