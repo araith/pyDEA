@@ -1,0 +1,3 @@
+pulp>=1.6.1
+xlrd
+xlwt-future
