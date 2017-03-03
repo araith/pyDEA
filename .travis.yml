@@ -6,6 +6,6 @@ python:
   - "3.5"
   - "3.6"
 env:
-  - DISPLAY=0
+  - DISPLAY=$DISPLAY
 install: "pip install -r requirements.txt"
 script: py.test
