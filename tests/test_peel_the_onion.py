@@ -100,7 +100,7 @@ def test_peel_the_onion_unbounded():
 
     ranks = None
     model_solution, ranks, state = peel_the_onion_method(model)
-    assert state is False
+    assert state is True
     clean_up_pickled_files()
 
 
