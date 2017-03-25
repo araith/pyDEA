@@ -26,7 +26,7 @@ class PyTest(TestCommand):
 
 setup(
     name = "pyDEA",
-    version = "0.3",
+    version = "0.31",
     author = "Andrea Raith, Olga Perederieieva",
     author_email = "peredereeva@gmail.com",
     description = ("Package for conducting data envelopment analysis"),
@@ -52,8 +52,6 @@ setup(
         ],
     },
     include_package_data=True,
-    package_data={'pyDEA' : ['logging_config.ini', 'pyDEAlogo.gif',
-            'pyDEAlogo.ico']},
     tests_require=['pytest'],
     cmdclass = {'test': PyTest},
     test_suite='tests',
