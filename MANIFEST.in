@@ -1,0 +1,9 @@
+include pyDEA/logging_config.ini
+include pyDEA/pyDEAlogo.gif
+include pyDEA/pyDEAlogo.ico
+include License.txt
+include README.rst
+include tests/*.xls
+include tests/*.xlsx
+include tests/*.csv
+include tests/*.txt
