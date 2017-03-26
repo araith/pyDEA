@@ -23,7 +23,7 @@ class TabParentMock(Frame):
 
 class SolutionTabFrameMock(SolutionTabFrame):
 
-    def ask_file_name_to_save(self):
+    def ask_file_name_to_save(self, ext_code):
         return "test_solution_output.xls"
 
 
@@ -62,5 +62,5 @@ def test_on_save_solution_ok(solution_tab, model):
     assert solution_tab.total_seconds == 5
 
     solution_tab.on_save_solution()
-    assert os.path.isfile(solution_tab.ask_file_name_to_save())
-    os.remove(solution_tab.ask_file_name_to_save())
+    assert os.path.isfile(solution_tab.ask_file_name_to_save(1))
+    os.remove(solution_tab.ask_file_name_to_save(1))

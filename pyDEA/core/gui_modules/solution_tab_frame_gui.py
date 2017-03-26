@@ -12,10 +12,11 @@ from tkinter import LEFT, W, N, E, S, IntVar
 from tkinter.ttk import Frame, Label, Button, Progressbar, Radiobutton
 from tkinter.filedialog import asksaveasfilename, askdirectory
 
-from pyDEA.core.utils.dea_utils import SOLUTION_FILE_TYPES
+from pyDEA.core.utils.dea_utils import SOLUTION_XLSX_FILE, SOLUTION_XLS_FILE
 from pyDEA.core.utils.dea_utils import TEXT_FOR_FILE_LBL
 from pyDEA.core.gui_modules.solution_frame_gui import SolutionFrameWithText
 from pyDEA.core.data_processing.write_data_to_xls import XLSWriter
+from pyDEA.core.data_processing.xlsx_workbook import XlsxWorkbook
 from pyDEA.core.data_processing.solution_text_writer import TxtWriter
 from pyDEA.core.utils.progress_recorders import GuiProgress
 
@@ -136,15 +137,19 @@ class SolutionTabFrame(Frame):
             assert(self.param_strs is not None)
             if (self.solution_format_var.get() == 1 or
                     self.solution_format_var.get() == 2):
-                file_name = self.ask_file_name_to_save()
+                file_name = self.ask_file_name_to_save(
+                    self.solution_format_var.get())
                 dir_name = ''
             else:
                 dir_name = askdirectory()
                 file_name = ''
             if file_name or dir_name:
+                print(file_name)
                 self.status_lbl.config(text='Saving solution to file...')
-                if file_name.endswith('.xls') or file_name.endswith('.xlsx'):
+                if file_name.endswith('.xls'):
                     work_book = xlwt.Workbook()
+                elif file_name.endswith('.xlsx'):
+                    work_book = XlsxWorkbook()
                 else:
                     # all not supported formats will be written to csv
                     assert(dir_name)
@@ -183,15 +188,21 @@ class SolutionTabFrame(Frame):
                 self.parent.change_solution_tab_name('Solution')
                 self.status_lbl.config(text='Solution saved')
 
-    def ask_file_name_to_save(self):
+    def ask_file_name_to_save(self, ext_code):
         ''' Calls asksaveasfilename dialogue to ask the user where file
             should be saved.
             If file without extension is entered, default extension
-            will be used (.xls).
+            will be used (.xlsx).
             This method is used to mock this object for unit tests.
+
+            Args:
+                ext_code (int): code for file extension 1 - xlsx, 2 - xls.
         '''
-        return asksaveasfilename(filetypes=SOLUTION_FILE_TYPES,
-                                 defaultextension='.xlsx')
+        if ext_code == 1:
+            filetype = SOLUTION_XLSX_FILE
+        else:
+            filetype = SOLUTION_XLS_FILE
+        return asksaveasfilename(filetypes=filetype, defaultextension='xlsx')
 
     def show_solution(self, solutions, params, param_strs, run_date,
                       total_seconds, ranks=None, categorical=None):

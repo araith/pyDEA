@@ -14,6 +14,7 @@ from pyDEA.core.data_processing.read_data_from_xls import convert_to_dictionary
 from pyDEA.core.utils.dea_utils import create_params_str, auto_name_if_needed
 from pyDEA.core.utils.dea_utils import get_logger
 from pyDEA.core.data_processing.write_data_to_xls import XLSWriter
+from pyDEA.core.data_processing.xlsx_workbook import XlsxWorkbook
 import pyDEA.core.utils.model_builder as model_builder
 from pyDEA.core.models.model_progress_bar_decorator import ProgressBarDecorator
 from pyDEA.core.models.peel_the_onion import peel_the_onion_method
@@ -37,19 +38,19 @@ class RunMethodBase(object):
         logger.info('Parameters: %s', params.get_all_params_as_string())
         categories = self.get_categories()
         coefficients, has_same_dmus = self.get_coefficients()
-        
+
         if has_same_dmus:
             self.show_error('Some DMUs have the same name')
         else:
             if validate_data(categories, coefficients):
                 try:
 
-                    self.validate_weights_if_needed()  # MUST be called 
+                    self.validate_weights_if_needed()  # MUST be called
                     # before model_builder, because it might
                     # update parameters
                     model_input = construct_input_data_instance(categories,
                                                                 coefficients)
-                    
+
                     models, all_params = model_builder.build_models(params,
                                                                     model_input)
 
@@ -264,8 +265,10 @@ class RunMethodTerminal(RunMethodBase):
                 'CATEGORICAL_CATEGORY')
             if not categorical.strip():
                 categorical = None
-            if output_file.endswith('.xls') or output_file.endswith('.xlsx'):
-                    work_book = xlwt.Workbook()
+            if output_file.endswith('.xls'):
+                work_book = xlwt.Workbook()
+            elif output_file.endswith('.xlsx'):
+                work_book = XlsxWorkbook()
             elif output_file.endswith('.csv'):
                 # all not supported formats will be written to csv
                 work_book = TxtWriter(os.path.splitext(output_file)[0])

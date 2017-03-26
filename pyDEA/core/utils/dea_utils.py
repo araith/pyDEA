@@ -4,8 +4,10 @@
 
         FILE_TYPES (list of tuple of str, str): list of supported
             input file parameters.
-        SOLUTION_FILE_TYPES (list of tuple of str, str): list of
-            supported solution file formats.
+        SOLUTION_XLSX_FILE (list of tuple of str, str): list of
+            supported solution file formats (xlsx).
+        SOLUTION_XLS_FILE (list of tuple of str, str): list of
+            supported solution file formats (xls).
 
             Note:
                 This list does not contain csv format since for solution
@@ -47,9 +49,10 @@ from logging.config import fileConfig
 LOG_FILE = 'logging_config.ini'
 PACKAGE = 'pyDEA'
 
-FILE_TYPES = [('Excel files', '*.xls'), ('Excel files', '*.xlsx'),
+FILE_TYPES = [('Excel (xls)', '*.xls'), ('Excel (xlsx)', '*.xlsx'),
               ('Text CSV', '*.csv')]
-SOLUTION_FILE_TYPES = [('Excel files', '*.xls'), ('Excel files', '*.xlsx')]
+SOLUTION_XLSX_FILE = [('Excel (xlsx)', '*.xlsx')]
+SOLUTION_XLS_FILE = [('Excel (xls)', '*.xls')]
 TEXT_FOR_PANEL = 'File: '
 TEXT_FOR_FILE_LBL = 'Data from file: '
 
@@ -91,7 +94,7 @@ def get_logger():
     ''' Gets a logger with all configuration specified in file ini-file.
 
         Returns:
-            logger: configured logger 
+            logger: configured logger
     '''
     logfile = pkg_resources.resource_filename(PACKAGE, LOG_FILE)
     fileConfig(logfile)
@@ -250,7 +253,7 @@ def calculate_start_row_index(curr_page, nb_table_rows):
             int: data row index
     '''
     if (curr_page == 0):
-        return 0 
+        return 0
     return (curr_page - 1) * (nb_table_rows - 1)
 
 

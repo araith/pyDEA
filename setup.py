@@ -45,7 +45,7 @@ setup(
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX :: Linux"
     ],
-    install_requires=['pulp>=1.6.1', 'xlrd', 'xlwt-future'],
+    install_requires=['pulp>=1.6.1', 'xlrd', 'xlwt-future', 'openpyxl'],
     entry_points={
         'gui_scripts': [
             'pyDEA=pyDEA.main_gui:main',
