@@ -34,7 +34,8 @@ class XlsxSheet(object):
                 col (int): column index.
                 value (object): value to write.
         '''
-        cell = self.worksheet.cell(row=row, column=col)
+        # +1 because openpyxl needs rows and cols to start from 1, not from 0
+        cell = self.worksheet.cell(row=row+1, column=col+1)
         cell.value = value
 
 
