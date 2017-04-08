@@ -84,15 +84,15 @@
 <li class="toctree-l2 current"><a class="reference internal" href="pyDEA.html#subpackages">Subpackages</a><ul class="current">
 <li class="toctree-l3 current"><a class="reference internal" href="pyDEA.core.html">pyDEA.core package</a><ul class="current">
 <li class="toctree-l4 current"><a class="reference internal" href="pyDEA.core.html#subpackages">Subpackages</a></li>
-<li class="toctree-l4"><a class="reference internal" href="pyDEA.core.html#module-contents">Module contents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyDEA.core.html#module-pyDEA.core">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pyDEA.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyDEA.html#pydea-main-module">pyDEA.main module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyDEA.html#pydea-main-gui-module">pyDEA.main_gui module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyDEA.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyDEA.html#module-pyDEA.main">pyDEA.main module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyDEA.html#module-pyDEA.main_gui">pyDEA.main_gui module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyDEA.html#module-pyDEA">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -117,7 +117,7 @@
         <div class="rst-content">
           
 
-
+ 
 
 
 
@@ -148,50 +148,2123 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="pydea-core-models-bound-generators-module">
-<h2>pyDEA.core.models.bound_generators module<a class="headerlink" href="#pydea-core-models-bound-generators-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyDEA.core.models.bound_generators">
+<span id="pydea-core-models-bound-generators-module"></span><h2>pyDEA.core.models.bound_generators module<a class="headerlink" href="#module-pyDEA.core.models.bound_generators" title="Permalink to this headline">¶</a></h2>
+<p>This module contains functions that produce proper upper bounds for
+efficiency scores for different envelopment models. Usually efficiency
+score must be within interval [0, 1]. But if a super efficiency model is
+used, then the efficiency score might be greater than 1.</p>
+<dl class="function">
+<dt id="pyDEA.core.models.bound_generators.generate_lower_bound_for_efficiency_score">
+<code class="descclassname">pyDEA.core.models.bound_generators.</code><code class="descname">generate_lower_bound_for_efficiency_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.bound_generators.generate_lower_bound_for_efficiency_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns lower bound of the inverse of efficiency score for
+usual envelopment model.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function only works with output-oriented envelopment models.</p>
 </div>
-<div class="section" id="pydea-core-models-categorical-dmus-module">
-<h2>pyDEA.core.models.categorical_dmus module<a class="headerlink" href="#pydea-core-models-categorical-dmus-module" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">1, since inverse of efficiency score must be &gt; 1 for
+usual output-oriented envelopment model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyDEA.core.models.bound_generators.generate_supper_efficiency_lower_bound">
+<code class="descclassname">pyDEA.core.models.bound_generators.</code><code class="descname">generate_supper_efficiency_lower_bound</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.bound_generators.generate_supper_efficiency_lower_bound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns lower bound of the inverse of efficiency score for
+a super efficiency envelopment model.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function only works with output-oriented envelopment models.</p>
 </div>
-<div class="section" id="pydea-core-models-envelopment-model-module">
-<h2>pyDEA.core.models.envelopment_model module<a class="headerlink" href="#pydea-core-models-envelopment-model-module" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">0, since efficiency score might be greater
+than 1 for super efficient output-oriented envelopment model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyDEA.core.models.bound_generators.generate_supper_efficiency_upper_bound">
+<code class="descclassname">pyDEA.core.models.bound_generators.</code><code class="descname">generate_supper_efficiency_upper_bound</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.bound_generators.generate_supper_efficiency_upper_bound" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns upper bound for efficiency score for a super efficiency
+model.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function only works with input-oriented envelopment models.</p>
 </div>
-<div class="section" id="pydea-core-models-envelopment-model-base-module">
-<h2>pyDEA.core.models.envelopment_model_base module<a class="headerlink" href="#pydea-core-models-envelopment-model-base-module" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None, since efficiency score might be greater than 1 for
+super efficiency input-oriented envelopment model.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyDEA.core.models.bound_generators.generate_upper_bound_for_efficiency_score">
+<code class="descclassname">pyDEA.core.models.bound_generators.</code><code class="descname">generate_upper_bound_for_efficiency_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.bound_generators.generate_upper_bound_for_efficiency_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns upper bound for efficiency score for usual envelopment model.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function only works with input-oriented envelopment models.</p>
 </div>
-<div class="section" id="pydea-core-models-envelopment-model-decorators-module">
-<h2>pyDEA.core.models.envelopment_model_decorators module<a class="headerlink" href="#pydea-core-models-envelopment-model-decorators-module" title="Permalink to this headline">¶</a></h2>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">1, since efficiency score must be &lt;= 1 for usual
+input-oriented envelopment model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
-<div class="section" id="pydea-core-models-input-output-model-bases-module">
-<h2>pyDEA.core.models.input_output_model_bases module<a class="headerlink" href="#pydea-core-models-input-output-model-bases-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyDEA.core.models.categorical_dmus">
+<span id="pydea-core-models-categorical-dmus-module"></span><h2>pyDEA.core.models.categorical_dmus module<a class="headerlink" href="#module-pyDEA.core.models.categorical_dmus" title="Permalink to this headline">¶</a></h2>
+<p>This module contains class for performing DEA analysis with categorical DMUs
+and some helper functions.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.categorical_dmus.</code><code class="descname">ModelWithCategoricalDMUs</code><span class="sig-paren">(</span><em>model</em>, <em>category_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.model_base.ModelBase</span></code></a></p>
+<p>This class implements DEA categorical analysis.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.model">
+<code class="descname">model</code><a class="headerlink" href="#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.model" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ModelBase</em></p>
+<p>a concrete model that is used for categorical
+analysis.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.category_name">
+<code class="descname">category_name</code><a class="headerlink" href="#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.category_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em></p>
+<p>name of the category with hierarchical
+order of DMUs.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><em>ModelBase</em></a>) &#8211; model that should be used for every
+hierarchical category.</li>
+<li><strong>category_name</strong> (<em>str</em>) &#8211; name of the category with hierarchical
+order of DMUs.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.__getattr__">
+<code class="descname">__getattr__</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.__getattr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redirects calls to all undefined methods or attributes
+to self.model.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.name">
+<code class="descname">name</code><a class="headerlink" href="#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.name" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>str</em></p>
+<p>attribute name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs categorical analysis.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">All categorical values must be integers.</p>
 </div>
-<div class="section" id="pydea-core-models-maximize-slacks-module">
-<h2>pyDEA.core.models.maximize_slacks module<a class="headerlink" href="#pydea-core-models-maximize-slacks-module" title="Permalink to this headline">¶</a></h2>
+<p>DMUs with category 1 are considered first and compared
+only to each other. Then DMUs with category 1 and 2 are considered,
+and so on. Hence, category 1 is least favourable, category 2 is more
+favourable and so on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">solution of the problem.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution" title="pyDEA.core.data_processing.solution.Solution">Solution</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">All floating point values of categorical category will be
+truncated to integer values.</p>
 </div>
-<div class="section" id="pydea-core-models-model-base-module">
-<h2>pyDEA.core.models.model_base module<a class="headerlink" href="#pydea-core-models-model-base-module" title="Permalink to this headline">¶</a></h2>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.run_for_one_DMU">
+<code class="descname">run_for_one_DMU</code><span class="sig-paren">(</span><em>dmu_code</em>, <em>model_solution</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.run_for_one_DMU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves LP for a given DMU.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>model_solution</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution" title="pyDEA.core.data_processing.solution.Solution"><em>Solution</em></a>) &#8211; model solution, it will be
+filled by this method.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyDEA.core.models.categorical_dmus.get_dmus_with_fixed_hierarchical_category">
+<code class="descclassname">pyDEA.core.models.categorical_dmus.</code><code class="descname">get_dmus_with_fixed_hierarchical_category</code><span class="sig-paren">(</span><em>coefficients</em>, <em>hierarchical_category</em>, <em>category_name</em>, <em>dmu_codes</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.categorical_dmus.get_dmus_with_fixed_hierarchical_category" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructs a set of DMU codes that have the value of hierarchical
+category equal to the specified category value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>coefficients</strong> (<em>dict of tuple of str, str to double</em>) &#8211; dictionary
+that maps DMU codes and categories to values.</li>
+<li><strong>hierarchical_category</strong> (<em>int</em>) &#8211; specified value of hierarchical
+category.</li>
+<li><strong>category_name</strong> (<em>str</em>) &#8211; name of the category with hierarchical
+order of DMUs.</li>
+<li><strong>dmu_codes</strong> (<em>set of str</em>) &#8211; set of DMU codes.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a set of DMU codes that have the value of hierarchical
+category equal to given input parameter hierarchical_category.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">set of str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
-<div class="section" id="pydea-core-models-model-progress-bar-decorator-module">
-<h2>pyDEA.core.models.model_progress_bar_decorator module<a class="headerlink" href="#pydea-core-models-model-progress-bar-decorator-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyDEA.core.models.envelopment_model">
+<span id="pydea-core-models-envelopment-model-module"></span><h2>pyDEA.core.models.envelopment_model module<a class="headerlink" href="#module-pyDEA.core.models.envelopment_model" title="Permalink to this headline">¶</a></h2>
+<p>This module contains concrete implementations of input- and
+output-oriented envelopment models as well as the model with
+non-discretionary variables.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model.</code><code class="descname">EnvelopmentModelInputOriented</code><span class="sig-paren">(</span><em>upper_bound_generator</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.input_output_model_bases.InputOrientedModel" title="pyDEA.core.models.input_output_model_bases.InputOrientedModel"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.input_output_model_bases.InputOrientedModel</span></code></a></p>
+<p>This class defines methods specific to input-oriented envelopment
+model.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.upper_bound_generator">
+<code class="descname">upper_bound_generator</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.upper_bound_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>function</em></p>
+<p>function that
+generates an upper bound on efficiency scores for
+envelopment model, see <code class="xref py py-mod docutils literal"><span class="pre">refactored.bound_generators</span></code></p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>upper_bound_generator</strong> (<em>function</em>) &#8211; function that
+generates an upper bound on efficiency scores for
+envelopment
+model, see <code class="xref py py-mod docutils literal"><span class="pre">refactored.bound_generators</span></code>.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_input_variable_coefficient">
+<code class="descname">get_input_variable_coefficient</code><span class="sig-paren">(</span><em>obj_variable</em>, <em>input_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_input_variable_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns obj_variable, since in input-oriented model we multiply
+current input by efficiency spyDEA.core.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj_variable</strong> (<em>pulp.LpVariable</em>) &#8211; pulp variable that corresponds
+to input category of current DMU.</li>
+<li><strong>input_category</strong> (<em>str</em>) &#8211; input category for which current
+constraint is being created.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">input variable coefficient.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pulp.LpVariable</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_lower_bound_for_objective_variable">
+<code class="descname">get_lower_bound_for_objective_variable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_lower_bound_for_objective_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 0 which is the lower bound on efficiency score which
+is minimized in the case of input-oriented envelopment model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">zero.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_objective_type">
+<code class="descname">get_objective_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_objective_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pulp.LpMinimize - we minimize objective function in case
+of input-oriented envelopment model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">type of objective function.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pulp.LpMaximize</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_output_variable_coefficient">
+<code class="descname">get_output_variable_coefficient</code><span class="sig-paren">(</span><em>obj_variable</em>, <em>output_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_output_variable_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 1, since in input-oriented model we do not multiply
+current output by anything.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj_variable</strong> (<em>pulp.LpVariable</em>) &#8211; pulp variable that corresponds
+to output category of the current DMU.</li>
+<li><strong>output_category</strong> (<em>str</em>) &#8211; output category for which current
+constraint is being created.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">output variable coefficient.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">double</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_upper_bound_for_objective_variable">
+<code class="descname">get_upper_bound_for_objective_variable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_upper_bound_for_objective_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a proper upper bound on efficiency score which
+is minimized in the case of input-oriented envelopment model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">upper bound on efficiency spyDEA.core.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.update_input_category_coefficient">
+<code class="descname">update_input_category_coefficient</code><span class="sig-paren">(</span><em>current_input</em>, <em>constraint</em>, <em>obj_var</em>, <em>input_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.update_input_category_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficient of a given input category with a new
+value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current_output</strong> (<em>double</em>) &#8211; new value for the coefficient.</li>
+<li><strong>constraint</strong> (<em>pulp.LpConstraint</em>) &#8211; constraint whose coefficient
+should be updated.</li>
+<li><strong>obj_var</strong> (<em>pulp.LpVariable</em>) &#8211; variable of the envelopment
+model that is optimised in the objective function.</li>
+<li><strong>output_category</strong> (<em>str</em>) &#8211; input category name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.update_output_category_coefficient">
+<code class="descname">update_output_category_coefficient</code><span class="sig-paren">(</span><em>current_output</em>, <em>constraint</em>, <em>obj_var</em>, <em>output_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.update_output_category_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficient of a given output category with a new
+value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current_output</strong> (<em>double</em>) &#8211; new value for the coefficient.</li>
+<li><strong>constraint</strong> (<em>pulp.LpConstraint</em>) &#8211; constraint whose coefficient
+should be updated.</li>
+<li><strong>obj_var</strong> (<em>pulp.LpVariable</em>) &#8211; variable of the envelopment
+model that is optimised in the objective function.</li>
+<li><strong>output_category</strong> (<em>str</em>) &#8211; output category name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model.</code><code class="descname">EnvelopmentModelInputOrientedWithNonDiscVars</code><span class="sig-paren">(</span><em>non_disc_inputs</em>, <em>upper_bound_generator</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented" title="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented</span></code></a></p>
+<p>This class redefines some methods of EnvelopmentModelInputOriented
+in order to take into account non-discretionary variables.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This class does not have a reference
+to InputData object. Hence, it cannot check if supplied
+non-discretionary categories are valid input categories.</p>
 </div>
-<div class="section" id="pydea-core-models-multiplier-model-module">
-<h2>pyDEA.core.models.multiplier_model module<a class="headerlink" href="#pydea-core-models-multiplier-model-module" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars.non_disc_inputs">
+<code class="descname">non_disc_inputs</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars.non_disc_inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of str</em></p>
+<p>list of non-discretionary input
+categories.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>non_disc_inputs</strong> (<em>list of str</em>) &#8211; list of non-discretionary input
+categories.</li>
+<li><strong>upper_bound_generator</strong> (<em>function</em>) &#8211; function that
+generates an upper bound on efficiency scores for envelopment
+model, see <code class="xref py py-mod docutils literal"><span class="pre">refactored.bound_generators</span></code></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars.get_input_variable_coefficient">
+<code class="descname">get_input_variable_coefficient</code><span class="sig-paren">(</span><em>obj_variable</em>, <em>input_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars.get_input_variable_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns proper coefficient depending on the fact if variable
+is discretionary or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj_variable</strong> (<em>pulp.LpVariable</em>) &#8211; pulp variable that corresponds
+to input category of current DMU.</li>
+<li><strong>input_category</strong> (<em>str</em>) &#8211; input category for which current
+constraint is being created.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">input variable coefficient.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">double or pulp.LpVariable</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars.update_input_category_coefficient">
+<code class="descname">update_input_category_coefficient</code><span class="sig-paren">(</span><em>current_input</em>, <em>constraint</em>, <em>obj_var</em>, <em>input_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars.update_input_category_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficient of a given input category with a new
+value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current_output</strong> (<em>double</em>) &#8211; new value for the coefficient.</li>
+<li><strong>constraint</strong> (<em>pulp.LpConstraint</em>) &#8211; constraint whose coefficient
+should be updated.</li>
+<li><strong>obj_var</strong> (<em>pulp.LpVariable</em>) &#8211; variable of the envelopment
+model that is optimised in the objective function.</li>
+<li><strong>output_category</strong> (<em>str</em>) &#8211; input category name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model.</code><code class="descname">EnvelopmentModelOutputOriented</code><span class="sig-paren">(</span><em>lower_bound_generator</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.input_output_model_bases.OutputOrientedModel" title="pyDEA.core.models.input_output_model_bases.OutputOrientedModel"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.input_output_model_bases.OutputOrientedModel</span></code></a></p>
+<p>This class defines methods specific
+to output-oriented envelopment model.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.lower_bound_generator">
+<code class="descname">lower_bound_generator</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.lower_bound_generator" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>function</em></p>
+<p>function that
+generates a lower bound on inverse of efficiency scores
+for envelopment
+model, see <code class="xref py py-mod docutils literal"><span class="pre">refactored.bound_generators</span></code></p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lower_bound_generator</strong> (<em>function</em>) &#8211; function that
+generates a lower bound on inverse of efficiency scores for
+envelopment
+model, see <code class="xref py py-mod docutils literal"><span class="pre">refactored.bound_generators</span></code></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_input_variable_coefficient">
+<code class="descname">get_input_variable_coefficient</code><span class="sig-paren">(</span><em>obj_variable</em>, <em>input_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_input_variable_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns 1, since in output-oriented model we do not multiply
+current input by anything.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj_variable</strong> (<em>pulp.LpVariable</em>) &#8211; pulp variable that corresponds
+to input category of current DMU.</li>
+<li><strong>input_category</strong> (<em>str</em>) &#8211; input category for which current
+constraint is being created.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">input variable coefficient.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">double</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_lower_bound_for_objective_variable">
+<code class="descname">get_lower_bound_for_objective_variable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_lower_bound_for_objective_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a proper lower bound on the variables corresponding
+to output-oriented envelopment model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">lower bound on variables.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_objective_type">
+<code class="descname">get_objective_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_objective_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pulp.LpMinimize - we maximize objective function in case
+of output-oriented envelopment model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">objective function type.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">pulp.LpMaximize</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_output_variable_coefficient">
+<code class="descname">get_output_variable_coefficient</code><span class="sig-paren">(</span><em>obj_variable</em>, <em>output_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_output_variable_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns obj_variable, since in output-oriented model we multiply
+current output by inverse efficiency spyDEA.core.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj_variable</strong> (<em>pulp.LpVariable</em>) &#8211; pulp variable that corresponds
+to output category of current DMU.</li>
+<li><strong>output_category</strong> (<em>str</em>) &#8211; output category for which current
+constraint is being created.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">output variable coefficient.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pulp.LpVariable</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_upper_bound_for_objective_variable">
+<code class="descname">get_upper_bound_for_objective_variable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_upper_bound_for_objective_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns None, since variables of output-oriented envelopment
+model are not bounded.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.update_input_category_coefficient">
+<code class="descname">update_input_category_coefficient</code><span class="sig-paren">(</span><em>current_input</em>, <em>constraint</em>, <em>obj_var</em>, <em>input_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.update_input_category_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficient of a given input category with a new
+value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current_output</strong> (<em>double</em>) &#8211; new value for the coefficient.</li>
+<li><strong>constraint</strong> (<em>pulp.LpConstraint</em>) &#8211; constraint whose coefficient
+should be updated.</li>
+<li><strong>obj_var</strong> (<em>pulp.LpVariable</em>) &#8211; variable of the envelopment
+model that is optimised in the objective function.</li>
+<li><strong>output_category</strong> (<em>str</em>) &#8211; input category name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.update_output_category_coefficient">
+<code class="descname">update_output_category_coefficient</code><span class="sig-paren">(</span><em>current_output</em>, <em>constraint</em>, <em>obj_var</em>, <em>output_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.update_output_category_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficient of a given output category with a new
+value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current_output</strong> (<em>double</em>) &#8211; new value for the coefficient.</li>
+<li><strong>constraint</strong> (<em>pulp.LpConstraint</em>) &#8211; constraint whose coefficient
+should be updated.</li>
+<li><strong>obj_var</strong> (<em>pulp.LpVariable</em>) &#8211; variable of the envelopment
+model that is optimised in the objective function.</li>
+<li><strong>output_category</strong> (<em>str</em>) &#8211; output category name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model.</code><code class="descname">EnvelopmentModelOutputOrientedWithNonDiscVars</code><span class="sig-paren">(</span><em>non_disc_outputs</em>, <em>lower_bound_generator</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented" title="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented</span></code></a></p>
+<p>This class redefines some methods of EnvelopmentModelOutputOriented
+in order to take into account non-discretionary variables.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This class does not have a reference
+to InputData object. Hence, it cannot check if supplied
+non-discretionary categories are valid output categories.</p>
 </div>
-<div class="section" id="pydea-core-models-multiplier-model-base-module">
-<h2>pyDEA.core.models.multiplier_model_base module<a class="headerlink" href="#pydea-core-models-multiplier-model-base-module" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars.non_disc_outputs">
+<code class="descname">non_disc_outputs</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars.non_disc_outputs" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of str</em></p>
+<p>list of non-discretionary output
+categories.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>non_disc_outputs</strong> (<em>list of str</em>) &#8211; list of non-discretionary output
+categories.</li>
+<li><strong>lower_bound_generator</strong> (<em>function</em>) &#8211; objects that
+generates a lower bound on inverse of efficiency scores for
+envelopment model, see <code class="xref py py-mod docutils literal"><span class="pre">refactored.bound_generators</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars.get_output_variable_coefficient">
+<code class="descname">get_output_variable_coefficient</code><span class="sig-paren">(</span><em>obj_variable</em>, <em>output_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars.get_output_variable_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a proper coefficient depending on the fact if the variable
+is discretionary or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>obj_variable</strong> (<em>pulp.LpVariable</em>) &#8211; pulp variable that corresponds
+to output category of current DMU.</li>
+<li><strong>input_category</strong> (<em>str</em>) &#8211; output category for which current
+constraint is being created.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">output variable coefficient.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">double or pulp.LpVariable</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars.update_output_category_coefficient">
+<code class="descname">update_output_category_coefficient</code><span class="sig-paren">(</span><em>current_output</em>, <em>constraint</em>, <em>obj_var</em>, <em>output_category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars.update_output_category_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficient of a given output category with a new
+value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>current_output</strong> (<em>double</em>) &#8211; new value for the coefficient.</li>
+<li><strong>constraint</strong> (<em>pulp.LpConstraint</em>) &#8211; constraint whose coefficient
+should be updated.</li>
+<li><strong>obj_var</strong> (<em>pulp.LpVariable</em>) &#8211; variable of the envelopment
+model that is optimised in the objective function.</li>
+<li><strong>output_category</strong> (<em>str</em>) &#8211; output category name.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="pydea-core-models-multiplier-model-decorators-module">
-<h2>pyDEA.core.models.multiplier_model_decorators module<a class="headerlink" href="#pydea-core-models-multiplier-model-decorators-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyDEA.core.models.envelopment_model_base">
+<span id="pydea-core-models-envelopment-model-base-module"></span><h2>pyDEA.core.models.envelopment_model_base module<a class="headerlink" href="#module-pyDEA.core.models.envelopment_model_base" title="Permalink to this headline">¶</a></h2>
+<p>This module contains a base class that implements envelopment model.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model_base.</code><code class="descname">EnvelopmentModelBase</code><span class="sig-paren">(</span><em>input_data</em>, <em>concrete_model</em>, <em>constraint_creator</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.model_base.ModelBase</span></code></a></p>
+<p>This class is a base class for different envelopment models.
+It implements general structure of all envelopment models.
+Concrete variations of envelopment models are passed in the
+class constructor.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._concrete_model">
+<code class="descname">_concrete_model</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._concrete_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>concrete implementation of the envelopment
+model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._constraint_creator">
+<code class="descname">_constraint_creator</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._constraint_creator" title="Permalink to this definition">¶</a></dt>
+<dd><p>object that creates a proper
+constraint depending on presence of
+disposable variables.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._variables">
+<code class="descname">_variables</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._variables" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str to pulp.LpVariable</em></p>
+<p>dictionary of pulp
+variables than maps variable names to pulp variables.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._constraints">
+<code class="descname">_constraints</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._constraints" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str to str</em></p>
+<p>dictionary that maps name of
+the category to the name of the corresponding constraint.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._should_add_efficiency">
+<code class="descname">_should_add_efficiency</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase._should_add_efficiency" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em></p>
+<p>if set to False, previously
+stored efficiency score is used. This variable is changed
+in two phase model.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores all data of
+a DEA instance.</li>
+<li><strong>concrete_model</strong> &#8211; concrete implementation of the envelopment
+model.</li>
+<li><strong>constraint_creator</strong> &#8211; object that creates a proper
+constraint depending on presence of disposable variables.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
-<div class="section" id="pydea-core-models-peel-the-onion-module">
-<h2>pyDEA.core.models.peel_the_onion module<a class="headerlink" href="#pydea-core-models-peel-the-onion-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyDEA.core.models.envelopment_model_decorators">
+<span id="pydea-core-models-envelopment-model-decorators-module"></span><h2>pyDEA.core.models.envelopment_model_decorators module<a class="headerlink" href="#module-pyDEA.core.models.envelopment_model_decorators" title="Permalink to this headline">¶</a></h2>
+<p>This module contains classes that implement VRS envelopment model,
+envelopment model with disposable variables and with various
+kind of weight restrictions.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model_decorators.DefaultConstraintCreator">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model_decorators.</code><code class="descname">DefaultConstraintCreator</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.DefaultConstraintCreator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>This is a helper class that creates constraints for envelopment model
+with strongly disposable categories.</p>
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model_decorators.DefaultConstraintCreator.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>lhs</em>, <em>rhs</em>, <em>category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.DefaultConstraintCreator.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>By default all categories are strongly disposable.
+Hence all constraints have the form lhs &gt;= rhs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lhs</strong> (<em>pulp.LpAffineExpression</em>) &#8211; left hand side of the constraint.</li>
+<li><strong>rhs</strong> (<em>pulp.LpAffineExpression</em>) &#8211; right hand side of the
+constraint.</li>
+<li><strong>category</strong> (<em>str</em>) &#8211; input or output category (it is not used by
+this class).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model_decorators.DisposableVarsConstraintCreator">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model_decorators.</code><code class="descname">DisposableVarsConstraintCreator</code><span class="sig-paren">(</span><em>weakly_disposable_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.DisposableVarsConstraintCreator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>This is a helper class that creates constraints for envelopment model
+with weakly disposable categories.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_decorators.DisposableVarsConstraintCreator.weakly_disposable_categories">
+<code class="descname">weakly_disposable_categories</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.DisposableVarsConstraintCreator.weakly_disposable_categories" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>set of str</em></p>
+<p>list of weakly
+disposable categories.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>weakly_disposable_categories</strong> (<em>list of str</em>) &#8211; list of weakly
+disposable categories.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.envelopment_model_decorators.DisposableVarsConstraintCreator.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>lhs</em>, <em>rhs</em>, <em>category</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.DisposableVarsConstraintCreator.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>If category is weakly disposable, returns constraint of the form
+lhs == rhs, otherwise: lhs &gt;= rhs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>lhs</strong> (<em>pulp.LpAffineExpression</em>) &#8211; left hand side of the constraint.</li>
+<li><strong>rhs</strong> (<em>pulp.LpAffineExpression</em>) &#8211; right hand side of the
+constraint.</li>
+<li><strong>category</strong> (<em>str</em>) &#8211; input or output category.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelVRSDecorator">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model_decorators.</code><code class="descname">EnvelopmentModelVRSDecorator</code><span class="sig-paren">(</span><em>model_to_decorate</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelVRSDecorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase" title="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase</span></code></a></p>
+<p>This class is a concrete implementation of VRS envelopment model.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelVRSDecorator._model_to_decorate">
+<code class="descname">_model_to_decorate</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelVRSDecorator._model_to_decorate" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>EnvelopmentModelBase</em></p>
+<p>envelopment model.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase" title="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase"><em>EnvelopmentModelBase</em></a>) &#8211; envelopment model
+that needs to be decorated with VRS constraint.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model_decorators.</code><code class="descname">EnvelopmentModelWithAbsoluteWeightRestrictions</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase" title="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase</span></code></a></p>
+<p>This class implements envelopment model with absolute weight
+restrictions.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions.model">
+<code class="descname">model</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions.model" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>EnvelopmentModelBase</em></p>
+<p>envelopment model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">bounds (dict of str to tuple of double,</code></dt>
+<dd><p>double or dict of tuple of str, str to tuple of double, double:
+dictionary with parsed values of constraints):
+dictionary with parsed values of constraints.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions.new_vars_lb">
+<code class="descname">new_vars_lb</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions.new_vars_lb" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str to pulp.LpVariable</em></p>
+<p>dictionary that maps
+category name to a pulp variable.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions.new_vars_ub">
+<code class="descname">new_vars_ub</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions.new_vars_ub" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str to pulp.LpVariable</em></p>
+<p>dictionary that maps
+category name to a pulp variable.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase" title="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase"><em>EnvelopmentModelBase</em></a>) &#8211; envelopment model.</li>
+<li><strong>(dict of str to tuple of double,</strong> (<em>bounds</em>) &#8211; double or dict of tuple of str, str to tuple of double, double:
+dictionary with parsed values of constraints):
+dictionary with parsed values of constraints.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithPriceRatioConstraints">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model_decorators.</code><code class="descname">EnvelopmentModelWithPriceRatioConstraints</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithPriceRatioConstraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase" title="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase</span></code></a></p>
+<p>This class implements envelopment model with price ratio weight
+restrictions.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithPriceRatioConstraints.model">
+<code class="descname">model</code><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithPriceRatioConstraints.model" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>EnvelopmentModelBase</em></p>
+<p>envelopment model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">bounds (dict of str to tuple of double,</code></dt>
+<dd><p>double or dict of tuple of str, str to tuple of double, double:
+dictionary with parsed values of constraints):
+dictionary with parsed values of constraints.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase" title="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase"><em>EnvelopmentModelBase</em></a>) &#8211; envelopment model.</li>
+<li><strong>(dict of str to tuple of double,</strong> (<em>bounds</em>) &#8211; double or dict of tuple of str, str to tuple of double, double:
+dictionary with parsed values of constraints):
+dictionary with parsed values of constraints.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithVirtualWeightRestrictions">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.envelopment_model_decorators.</code><code class="descname">EnvelopmentModelWithVirtualWeightRestrictions</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithVirtualWeightRestrictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions" title="pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.envelopment_model_decorators.EnvelopmentModelWithAbsoluteWeightRestrictions</span></code></a></p>
+<p>This class implements envelopment model with virtual weight
+restrictions.</p>
+</dd></dl>
+
 </div>
-<div class="section" id="pydea-core-models-super-efficiency-model-module">
-<h2>pyDEA.core.models.super_efficiency_model module<a class="headerlink" href="#pydea-core-models-super-efficiency-model-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyDEA.core.models.input_output_model_bases">
+<span id="pydea-core-models-input-output-model-bases-module"></span><h2>pyDEA.core.models.input_output_model_bases module<a class="headerlink" href="#module-pyDEA.core.models.input_output_model_bases" title="Permalink to this headline">¶</a></h2>
+<p>This module contains classes that implement methods common for input- and
+output-oriented models.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.input_output_model_bases.InputOrientedModel">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.input_output_model_bases.</code><code class="descname">InputOrientedModel</code><a class="headerlink" href="#pyDEA.core.models.input_output_model_bases.InputOrientedModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>This class implements methods that are the same for all input-oriented
+models.</p>
+<dl class="method">
+<dt id="pyDEA.core.models.input_output_model_bases.InputOrientedModel.get_orientation">
+<code class="descname">get_orientation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.input_output_model_bases.InputOrientedModel.get_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns orientation of the model as a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a string &#8216;input&#8217;.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.input_output_model_bases.InputOrientedModel.process_dual_value">
+<code class="descname">process_dual_value</code><span class="sig-paren">(</span><em>dual_value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.input_output_model_bases.InputOrientedModel.process_dual_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post-process given value of a dual variable if necessary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dual_value</strong> (<em>double</em>) &#8211; value of the dual variable.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">dual_value since in input-oriented model we do nothing
+with duals.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.input_output_model_bases.InputOrientedModel.process_obj_var">
+<code class="descname">process_obj_var</code><span class="sig-paren">(</span><em>obj_value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.input_output_model_bases.InputOrientedModel.process_obj_var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post-process objective function value if necessary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj_value</strong> (<em>double</em>) &#8211; value of the objective function.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">value of obj_variable, since efficiency score is in
+the interval [0, 1] for input-oriented model.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.input_output_model_bases.OutputOrientedModel">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.input_output_model_bases.</code><code class="descname">OutputOrientedModel</code><a class="headerlink" href="#pyDEA.core.models.input_output_model_bases.OutputOrientedModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>This class implements methods that are the same for all output-oriented
+models.</p>
+<dl class="method">
+<dt id="pyDEA.core.models.input_output_model_bases.OutputOrientedModel.get_orientation">
+<code class="descname">get_orientation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.input_output_model_bases.OutputOrientedModel.get_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns orientation of the model as a string.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a string &#8216;output&#8217;.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.input_output_model_bases.OutputOrientedModel.process_dual_value">
+<code class="descname">process_dual_value</code><span class="sig-paren">(</span><em>dual_value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.input_output_model_bases.OutputOrientedModel.process_dual_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post-process given value of a dual variable if necessary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dual_value</strong> (<em>double</em>) &#8211; value of the dual variable.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">-dual_value if it is non-zero since in output-oriented
+models.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.input_output_model_bases.OutputOrientedModel.process_obj_var">
+<code class="descname">process_obj_var</code><span class="sig-paren">(</span><em>obj_value</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.input_output_model_bases.OutputOrientedModel.process_obj_var" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post-process objective function value if necessary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>obj_value</strong> (<em>double</em>) &#8211; value of the objective function.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">1/obj_variable, since in the case of output-oriented
+models the value of objective function corresponds to
+inverse of efficiency spyDEA.core.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-pyDEA.core.models.maximize_slacks">
+<span id="pydea-core-models-maximize-slacks-module"></span><h2>pyDEA.core.models.maximize_slacks module<a class="headerlink" href="#module-pyDEA.core.models.maximize_slacks" title="Permalink to this headline">¶</a></h2>
+<p>This module contains the class responsible for implementing a
+two-phase model.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.maximize_slacks.MaximizeSlacksModel">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.maximize_slacks.</code><code class="descname">MaximizeSlacksModel</code><span class="sig-paren">(</span><em>model</em>, <em>weakly_disposable_categories=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.maximize_slacks.MaximizeSlacksModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase" title="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase</span></code></a></p>
+<p>Implements a two-phase model.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.strongly_disposal_input_categories">
+<code class="descname">strongly_disposal_input_categories</code><a class="headerlink" href="#pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.strongly_disposal_input_categories" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>set of str</em></p>
+<p>set
+of strongly disposal input categories.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.strongly_disposal_output_categories">
+<code class="descname">strongly_disposal_output_categories</code><a class="headerlink" href="#pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.strongly_disposal_output_categories" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>set of str</em></p>
+<p>set
+of strongly disposal output categories.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.model">
+<code class="descname">model</code><a class="headerlink" href="#pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.model" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>EnvelopmentModelBase</em></p>
+<p>envelopment model used in
+two-phase model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.second_solution">
+<code class="descname">second_solution</code><a class="headerlink" href="#pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.second_solution" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Solution</em></p>
+<p>solution obtained after second
+phase.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.lp_model_max_slack">
+<code class="descname">lp_model_max_slack</code><a class="headerlink" href="#pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.lp_model_max_slack" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>pulp.LpProblem</em></p>
+<p>pulp LP.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<a class="reference internal" href="#pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase" title="pyDEA.core.models.envelopment_model_base.EnvelopmentModelBase"><em>EnvelopmentModelBase</em></a>) &#8211; envelopment model.</li>
+<li><strong>weakly_disposable_categories</strong> (<em>set of str, optional</em>) &#8211; set
+of weakly disposal categories. Defaults to None.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.fill_efficiency">
+<code class="descname">fill_efficiency</code><span class="sig-paren">(</span><em>model_solution</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.fill_efficiency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copies efficiency scores from the solution obtained from
+the first phase to the solution of the second phase.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_solution</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution" title="pyDEA.core.data_processing.solution.Solution"><em>Solution</em></a>) &#8211; solution obtained from the
+first phase.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.run_for_one_DMU">
+<code class="descname">run_for_one_DMU</code><span class="sig-paren">(</span><em>dmu_code</em>, <em>model_solution</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.maximize_slacks.MaximizeSlacksModel.run_for_one_DMU" title="Permalink to this definition">¶</a></dt>
+<dd><p>See base class.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyDEA.core.models.model_base">
+<span id="pydea-core-models-model-base-module"></span><h2>pyDEA.core.models.model_base module<a class="headerlink" href="#module-pyDEA.core.models.model_base" title="Permalink to this headline">¶</a></h2>
+<p>This module contains an abstract base class for all
+models.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.model_base.ModelBase">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.model_base.</code><code class="descname">ModelBase</code><span class="sig-paren">(</span><em>input_data</em>, <em>update_str=&lt;function do_nothing&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.model_base.ModelBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Abstract base class for some of the DEA models.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.model_base.ModelBase.input_data">
+<code class="descname">input_data</code><a class="headerlink" href="#pyDEA.core.models.model_base.ModelBase.input_data" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>InputData</em></p>
+<p>object that stores all input data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.model_base.ModelBase.update_dmu_str_var">
+<code class="descname">update_dmu_str_var</code><a class="headerlink" href="#pyDEA.core.models.model_base.ModelBase.update_dmu_str_var" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>func</em></p>
+<p>function that updates
+solution progress.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.model_base.ModelBase.lp_model">
+<code class="descname">lp_model</code><a class="headerlink" href="#pyDEA.core.models.model_base.ModelBase.lp_model" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>pulp.LpProblem</em></p>
+<p>pulp LP.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores all input data.</li>
+<li><strong>update_str</strong> (<em>func, optional</em>) &#8211; function that updates
+solution progress. Defaults to a function that does nothing.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.model_base.ModelBase.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.model_base.ModelBase.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves a given problem.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.model_base.ModelBase.run_for_one_DMU">
+<code class="descname">run_for_one_DMU</code><span class="sig-paren">(</span><em>dmu_code</em>, <em>model_solution</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.model_base.ModelBase.run_for_one_DMU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves LP for a given DMU and stores solution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>model_solution</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution" title="pyDEA.core.data_processing.solution.Solution"><em>Solution</em></a>) &#8211; solution.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="pyDEA.core.models.model_base.do_nothing">
+<code class="descclassname">pyDEA.core.models.model_base.</code><code class="descname">do_nothing</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.model_base.do_nothing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function. Does nothing.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyDEA.core.models.model_progress_bar_decorator">
+<span id="pydea-core-models-model-progress-bar-decorator-module"></span><h2>pyDEA.core.models.model_progress_bar_decorator module<a class="headerlink" href="#module-pyDEA.core.models.model_progress_bar_decorator" title="Permalink to this headline">¶</a></h2>
+<p>This module contains ProgressBarDecorator class responsible
+for updating progress bar during solving a DEA model.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.model_progress_bar_decorator.</code><code class="descname">ProgressBarDecorator</code><span class="sig-paren">(</span><em>model</em>, <em>current_dmu</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.model_base.ModelBase</span></code></a></p>
+<p>This class is responsible to trigger update of the
+progress bar while a given DEA model is being solved.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.model">
+<code class="descname">model</code><a class="headerlink" href="#pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.model" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ModelBase</em></p>
+<p>given DEA model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.update_dmu_str_var">
+<code class="descname">update_dmu_str_var</code><a class="headerlink" href="#pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.update_dmu_str_var" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>func</em></p>
+<p>function that triggers
+update of the progress bar.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.current_dmu">
+<code class="descname">current_dmu</code><a class="headerlink" href="#pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.current_dmu" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>StringVar</em></p>
+<p>StringVar object that triggers
+progress bar update.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><em>ModelBase</em></a>) &#8211; given DEA model.</li>
+<li><strong>current_dmu</strong> (<em>StringVar</em>) &#8211; StringVar object that triggers
+progress bar update.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>See base class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.run_for_one_DMU">
+<code class="descname">run_for_one_DMU</code><span class="sig-paren">(</span><em>dmu_code</em>, <em>model_solution</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.run_for_one_DMU" title="Permalink to this definition">¶</a></dt>
+<dd><p>See base class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="descname">update_dmu_str_var</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>Calls set method of StringVar object that triggers
+progress bar update.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyDEA.core.models.multiplier_model">
+<span id="pydea-core-models-multiplier-model-module"></span><h2>pyDEA.core.models.multiplier_model module<a class="headerlink" href="#module-pyDEA.core.models.multiplier_model" title="Permalink to this headline">¶</a></h2>
+<p>This module contains classes that implement input- and
+output-oriented multiplier models.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model.</code><code class="descname">MultiplierInputOrientedModel</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.input_output_model_bases.InputOrientedModel" title="pyDEA.core.models.input_output_model_bases.InputOrientedModel"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.input_output_model_bases.InputOrientedModel</span></code></a></p>
+<p>Implements input-oriented multiplier model.</p>
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.get_equality_constraint">
+<code class="descname">get_equality_constraint</code><span class="sig-paren">(</span><em>input_data</em>, <em>dmu_code</em>, <em>input_variables</em>, <em>output_variables</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.get_equality_constraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates equality constraint of input-oriented multiplier model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores input data.</li>
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>input_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to input categories.</li>
+<li><strong>output_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to output categories.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">equality constraint.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pulp.LpConstraint</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.get_objective_function">
+<code class="descname">get_objective_function</code><span class="sig-paren">(</span><em>input_data</em>, <em>dmu_code</em>, <em>input_variables</em>, <em>output_variables</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.get_objective_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates objective function of input-oriented multiplier model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores input data.</li>
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>input_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to input categories.</li>
+<li><strong>output_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to output categories.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">objective function.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pulp.LpSum</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.get_objective_type">
+<code class="descname">get_objective_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.get_objective_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pulp.LpMaximize - we maximize objective function in case
+of input-oriented multiplier model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pulp.LpMaximize.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.update_equality_constraint">
+<code class="descname">update_equality_constraint</code><span class="sig-paren">(</span><em>input_data</em>, <em>dmu_code</em>, <em>input_variables</em>, <em>output_variables</em>, <em>lp_model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.update_equality_constraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficients of the equality constraint of a given model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores input data.</li>
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>input_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to input categories.</li>
+<li><strong>output_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to output categories.</li>
+<li><strong>lp_model</strong> (<em>pulp.LpProblem</em>) &#8211; linear programming model.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.update_objective">
+<code class="descname">update_objective</code><span class="sig-paren">(</span><em>input_data</em>, <em>dmu_code</em>, <em>input_variables</em>, <em>output_variables</em>, <em>lp_model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.update_objective" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficients of the objective function of a given model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores input data.</li>
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>input_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to input categories.</li>
+<li><strong>output_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to output categories.</li>
+<li><strong>lp_model</strong> (<em>pulp.LpProblem</em>) &#8211; linear programming model.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model.</code><code class="descname">MultiplierOutputOrientedModel</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.input_output_model_bases.OutputOrientedModel" title="pyDEA.core.models.input_output_model_bases.OutputOrientedModel"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.input_output_model_bases.OutputOrientedModel</span></code></a></p>
+<p>Implements output-oriented multiplier model.</p>
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.get_equality_constraint">
+<code class="descname">get_equality_constraint</code><span class="sig-paren">(</span><em>input_data</em>, <em>dmu_code</em>, <em>input_variables</em>, <em>output_variables</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.get_equality_constraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates equality constraint of output-oriented multiplier model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores input data.</li>
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>input_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to input categories.</li>
+<li><strong>output_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to output categories.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">equality constraint.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pulp.LpConstraint</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.get_objective_function">
+<code class="descname">get_objective_function</code><span class="sig-paren">(</span><em>input_data</em>, <em>dmu_code</em>, <em>input_variables</em>, <em>output_variables</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.get_objective_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates objective function of output-oriented multiplier model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores input data.</li>
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>input_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to input categories.</li>
+<li><strong>output_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to output categories.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">objective function.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">pulp.LpSum</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.get_objective_type">
+<code class="descname">get_objective_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.get_objective_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pulp.LpMinimize - we minimize objective function in case
+of output-oriented multiplier model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">pulp.LpMinimize.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.update_equality_constraint">
+<code class="descname">update_equality_constraint</code><span class="sig-paren">(</span><em>input_data</em>, <em>dmu_code</em>, <em>input_variables</em>, <em>output_variables</em>, <em>lp_model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.update_equality_constraint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficients of the equality constraint of a given model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores input data.</li>
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>input_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to input categories.</li>
+<li><strong>output_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to output categories.</li>
+<li><strong>lp_model</strong> (<em>pulp.LpProblem</em>) &#8211; linear programming model.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.update_objective">
+<code class="descname">update_objective</code><span class="sig-paren">(</span><em>input_data</em>, <em>dmu_code</em>, <em>input_variables</em>, <em>output_variables</em>, <em>lp_model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.update_objective" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates coefficients of the objective function of a given model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores input data.</li>
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>input_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to input categories.</li>
+<li><strong>output_variables</strong> (<em>dict of str to pulp.LpVariable</em>) &#8211; dictionary
+that maps variable name to pulp variable corresponding
+to output categories.</li>
+<li><strong>lp_model</strong> (<em>pulp.LpProblem</em>) &#8211; linear programming model.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyDEA.core.models.multiplier_model_base">
+<span id="pydea-core-models-multiplier-model-base-module"></span><h2>pyDEA.core.models.multiplier_model_base module<a class="headerlink" href="#module-pyDEA.core.models.multiplier_model_base" title="Permalink to this headline">¶</a></h2>
+<p>This module contains MultiplierModelBase class that
+implements basic functionality of the multiplier model.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_base.MultiplierModelBase">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_base.</code><code class="descname">MultiplierModelBase</code><span class="sig-paren">(</span><em>input_data</em>, <em>tolerance</em>, <em>concrete_model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.model_base.ModelBase</span></code></a></p>
+<p>This class is a base class for different multiplier models.
+It implements general structure of all multiplier models.
+Concrete variations of multiplier models are passed in the
+class constructor.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_base.MultiplierModelBase.tolerance">
+<code class="descname">tolerance</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase.tolerance" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>double</em></p>
+<p>lower bound of the variables of multilier
+model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_base.MultiplierModelBase._concrete_model">
+<code class="descname">_concrete_model</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase._concrete_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>concrete implementation of the multiplier
+model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_base.MultiplierModelBase._input_variables">
+<code class="descname">_input_variables</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase._input_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str to pulp.LpVariable</em></p>
+<p>dictionary of
+pulp variables than maps variable names to pulp variables
+corresponding to input categories.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_base.MultiplierModelBase._output_variables">
+<code class="descname">_output_variables</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase._output_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str to pulp.LpVariable</em></p>
+<p>dictionary of
+pulp variables than maps variable names to pulp variables
+corresponding to output categories.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_base.MultiplierModelBase._dmu_constraint_names">
+<code class="descname">_dmu_constraint_names</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase._dmu_constraint_names" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str to str</em></p>
+<p>dictionary that maps
+constraint names to DMU code.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>input_data</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData" title="pyDEA.core.data_processing.input_data.InputData"><em>InputData</em></a>) &#8211; object that stores all data of
+a DEA instance.</li>
+<li><strong>tolerance</strong> (<em>double</em>) &#8211; lower bound of the variables of multilier
+model.</li>
+<li><strong>concrete_model</strong> &#8211; concrete implementation of the multiplier
+model.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyDEA.core.models.multiplier_model_decorators">
+<span id="pydea-core-models-multiplier-model-decorators-module"></span><h2>pyDEA.core.models.multiplier_model_decorators module<a class="headerlink" href="#module-pyDEA.core.models.multiplier_model_decorators" title="Permalink to this headline">¶</a></h2>
+<p>This module contains classes that implement VRS multiplier model,
+multiplier model with disposable variables and with various
+kind of weight restrictions.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelInputOrientedWithNonDiscVars">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_decorators.</code><code class="descname">MultiplierModelInputOrientedWithNonDiscVars</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelInputOrientedWithNonDiscVars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration" title="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration</span></code></a></p>
+<p>Implements input-oriented multiplier model with non-discretionary
+variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><em>MultiplierModelBase</em></a>) &#8211; multiplier model.</li>
+<li><strong>categories</strong> (<em>set of str</em>) &#8211; set of non-discretionary categories.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211;
+if categories contain more values that total
+number of input categories.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelOutputOrientedWithNonDiscVars">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_decorators.</code><code class="descname">MultiplierModelOutputOrientedWithNonDiscVars</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelOutputOrientedWithNonDiscVars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration" title="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration</span></code></a></p>
+<p>Implements output-oriented multiplier model with non-discretionary
+variables.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><em>MultiplierModelBase</em></a>) &#8211; multiplier model.</li>
+<li><strong>categories</strong> (<em>set of str</em>) &#8211; set of non-discretionary categories.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> &#8211;
+if categories contain more values that total
+number of output categories.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelVRSDecorator">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_decorators.</code><code class="descname">MultiplierModelVRSDecorator</code><span class="sig-paren">(</span><em>model_to_decorate</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelVRSDecorator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.multiplier_model_base.MultiplierModelBase</span></code></a></p>
+<p>This class is a concrete implementation of VRS multiplier model.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelVRSDecorator._model_to_decorate">
+<code class="descname">_model_to_decorate</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelVRSDecorator._model_to_decorate" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>MultiplierModelBase</em></p>
+<p>multiplier model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelVRSDecorator._vrs_variable">
+<code class="descname">_vrs_variable</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelVRSDecorator._vrs_variable" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>pulp.LpVariable</em></p>
+<p>VRS variable.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelVRSDecorator.multiplier">
+<code class="descname">multiplier</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelVRSDecorator.multiplier" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>int</em></p>
+<p>1 for input-oriented model, -1 for output-
+oriented model.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><em>MultiplierModelBase</em></a>) &#8211; multiplier model
+that needs to be decorated with VRS constraint.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithAbsoluteWeightRestrictions">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_decorators.</code><code class="descname">MultiplierModelWithAbsoluteWeightRestrictions</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithAbsoluteWeightRestrictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase" title="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase</span></code></a></p>
+<p>Implements multiplier model with absolute weight restrictions.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithDisposableCategories">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_decorators.</code><code class="descname">MultiplierModelWithDisposableCategories</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>weakly_disposable_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithDisposableCategories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.multiplier_model_base.MultiplierModelBase</span></code></a></p>
+<p>Implements multiplier model with disposable categories.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithDisposableCategories._model_to_decorate">
+<code class="descname">_model_to_decorate</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithDisposableCategories._model_to_decorate" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>MultiplierModelBase</em></p>
+<p>multiplier model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithDisposableCategories.weakly_disposable_categories">
+<code class="descname">weakly_disposable_categories</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithDisposableCategories.weakly_disposable_categories" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>set of str</em></p>
+<p>set of weakly
+disposable categories.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><em>MultiplierModelBase</em></a>) &#8211; multiplier model.</li>
+<li><strong>weakly_disposable_categories</strong> (<em>set of str</em>) &#8211; set of weakly
+disposable categories.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_decorators.</code><code class="descname">MultiplierModelWithNonDiscVarsForDecoration</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.multiplier_model_base.MultiplierModelBase</span></code></a></p>
+<p>Abstract base class that implements multiplier model with
+non-discretionary variables.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration._model_to_decorate">
+<code class="descname">_model_to_decorate</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration._model_to_decorate" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>MultiplierModelBase</em></p>
+<p>multiplier model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration.categories">
+<code class="descname">categories</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration.categories" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>set of str</em></p>
+<p>set of non-discretionary categories.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><em>MultiplierModelBase</em></a>) &#8211; multiplier model.</li>
+<li><strong>categories</strong> (<em>set of str</em>) &#8211; set of non-discretionary categories.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithPriceRatioConstraints">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_decorators.</code><code class="descname">MultiplierModelWithPriceRatioConstraints</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithPriceRatioConstraints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.multiplier_model_base.MultiplierModelBase</span></code></a></p>
+<p>Implements multiplier model with price ratio restrictions.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithPriceRatioConstraints._model_to_decorate">
+<code class="descname">_model_to_decorate</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithPriceRatioConstraints._model_to_decorate" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>MultiplierModelBase</em></p>
+<p>multiplier model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">bounds (dict of str to tuple of double,</code></dt>
+<dd><p>double or dict of tuple of str, str to tuple of double, double:
+dictionary with parsed values of constraints):
+dictionary with parsed values of constraints.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><em>MultiplierModelBase</em></a>) &#8211; multiplier model.</li>
+<li><strong>(dict of str to tuple of double,</strong> (<em>bounds</em>) &#8211; double or dict of tuple of str, str to tuple of double, double:
+dictionary with parsed values of constraints):
+dictionary with parsed values of constraints.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithVirtualWeightRestrictions">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_decorators.</code><code class="descname">MultiplierModelWithVirtualWeightRestrictions</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithVirtualWeightRestrictions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase" title="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase</span></code></a></p>
+<p>Implements multiplier model with virtual weight restrictions.</p>
+<dl class="attribute">
+<dt>
+<code class="descname">lb_weight_rest_variables (dict of str to tuple of pulp.LpVariable,</code></dt>
+<dd><p>str): dictionary that maps category name to a tuple of pulp
+variable and constraint name.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">ub_weight_rest_variables (dict of str to tuple of pulp.LpVariable,</code></dt>
+<dd><p>str): dictionary that maps category name to a tuple of pulp
+variable and constraint name.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><em>MultiplierModelBase</em></a>) &#8211; multiplier model.</li>
+<li><strong>(dict of str to tuple of double,</strong> (<em>bounds</em>) &#8211; double or dict of tuple of str, str to tuple of double, double:
+dictionary with parsed values of constraints):
+dictionary with parsed values of constraints.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.multiplier_model_decorators.</code><code class="descname">MultiplierModelWithWeigthRestrictionsBase</code><span class="sig-paren">(</span><em>model_to_decorate</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.multiplier_model_base.MultiplierModelBase</span></code></a></p>
+<p>Abstract base class that implements basic operations
+of multiplier model with weight restrictions.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase._model_to_decorate">
+<code class="descname">_model_to_decorate</code><a class="headerlink" href="#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase._model_to_decorate" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>MultiplierModelBase</em></p>
+<p>multiplier model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">bounds (dict of str to tuple of double,</code></dt>
+<dd><p>double or dict of tuple of str, str to tuple of double, double:
+dictionary with parsed values of constraints):
+dictionary with parsed values of constraints.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model_to_decorate</strong> (<a class="reference internal" href="#pyDEA.core.models.multiplier_model_base.MultiplierModelBase" title="pyDEA.core.models.multiplier_model_base.MultiplierModelBase"><em>MultiplierModelBase</em></a>) &#8211; multiplier model.</li>
+<li><strong>(dict of str to tuple of double,</strong> (<em>bounds</em>) &#8211; double or dict of tuple of str, str to tuple of double, double:
+dictionary with parsed values of constraints):
+dictionary with parsed values of constraints.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyDEA.core.models.peel_the_onion">
+<span id="pydea-core-models-peel-the-onion-module"></span><h2>pyDEA.core.models.peel_the_onion module<a class="headerlink" href="#module-pyDEA.core.models.peel_the_onion" title="Permalink to this headline">¶</a></h2>
+<p>This module contains peel the onion model.</p>
+<dl class="function">
+<dt id="pyDEA.core.models.peel_the_onion.peel_the_onion_method">
+<code class="descclassname">pyDEA.core.models.peel_the_onion.</code><code class="descname">peel_the_onion_method</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.peel_the_onion.peel_the_onion_method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the peel the onion model and returns solution that corresponds to
+the first run and ranking of all DMUs.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> (<a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><em>ModelBase</em></a>) &#8211; DEA model that must be called in the peel
+the onion.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">tuple with the first
+solution of the problem, dictionary that maps DMU code to peel
+the onion rank, boolean value which is true if all peel the
+onion runs were successful, false otherwise.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">tuple of Solution, dict of str to int, bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyDEA.core.models.peel_the_onion.restore_base">
+<code class="descclassname">pyDEA.core.models.peel_the_onion.</code><code class="descname">restore_base</code><span class="sig-paren">(</span><em>model</em>, <em>first_solution</em>, <em>copy_of_dmu_codes</em>, <em>max_slack_solution</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.peel_the_onion.restore_base" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper function used for restoring DMU codes and first solution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> (<a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><em>ModelBase</em></a>) &#8211; model used in the peel the onion.</li>
+<li><strong>first_solution</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution" title="pyDEA.core.data_processing.solution.Solution"><em>Solution</em></a>) &#8211; first solution of the peel the
+onion.</li>
+<li><strong>copy_of_dmu_codes</strong> (<em>list of str</em>) &#8211; list of original DMU codes.</li>
+<li><strong>max_slack_solution</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution" title="pyDEA.core.data_processing.solution.Solution"><em>Solution</em></a>) &#8211; solution obtained by two phase
+model if any.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyDEA.core.models.super_efficiency_model">
+<span id="pydea-core-models-super-efficiency-model-module"></span><h2>pyDEA.core.models.super_efficiency_model module<a class="headerlink" href="#module-pyDEA.core.models.super_efficiency_model" title="Permalink to this headline">¶</a></h2>
+<p>This module contains SupperEfficiencyModel class that
+implements super efficiency model.</p>
+<dl class="class">
+<dt id="pyDEA.core.models.super_efficiency_model.SupperEfficiencyModel">
+<em class="property">class </em><code class="descclassname">pyDEA.core.models.super_efficiency_model.</code><code class="descname">SupperEfficiencyModel</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.super_efficiency_model.SupperEfficiencyModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.models.model_base.ModelBase</span></code></a></p>
+<p>This class implements super efficiency model.</p>
+<dl class="attribute">
+<dt id="pyDEA.core.models.super_efficiency_model.SupperEfficiencyModel.model">
+<code class="descname">model</code><a class="headerlink" href="#pyDEA.core.models.super_efficiency_model.SupperEfficiencyModel.model" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>ModelBase</em></p>
+<p>model that should be decorated
+with super efficiency model.</p>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>model</strong> (<a class="reference internal" href="#pyDEA.core.models.model_base.ModelBase" title="pyDEA.core.models.model_base.ModelBase"><em>ModelBase</em></a>) &#8211; model that should be decorated
+with super efficiency model.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="pyDEA.core.models.super_efficiency_model.SupperEfficiencyModel.run_for_one_DMU">
+<code class="descname">run_for_one_DMU</code><span class="sig-paren">(</span><em>dmu_code</em>, <em>model_solution</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.models.super_efficiency_model.SupperEfficiencyModel.run_for_one_DMU" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solves LP for a given DMU and stores solution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dmu_code</strong> (<em>str</em>) &#8211; DMU code.</li>
+<li><strong>model_solution</strong> (<a class="reference internal" href="pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution" title="pyDEA.core.data_processing.solution.Solution"><em>Solution</em></a>) &#8211; solution.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-pyDEA.core.models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyDEA.core.models" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
