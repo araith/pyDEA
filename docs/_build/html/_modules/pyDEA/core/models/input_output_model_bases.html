@@ -124,11 +124,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.core.models.input_output_model_bases</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains classes that implement methods common for input- and</span>
+<span class="sd">&#39;&#39;&#39; This module contains classes that implement methods common for input- and</span>
 <span class="sd">    output-oriented models.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ZERO_TOLERANCE</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ZERO_TOLERANCE</span>
 
 
 <div class="viewcode-block" id="InputOrientedModel"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.InputOrientedModel">[docs]</a><span class="k">class</span> <span class="nc">InputOrientedModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -192,7 +192,7 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: 1/obj_variable, since in the case of output-oriented</span>
 <span class="sd">                    models the value of objective function corresponds to</span>
-<span class="sd">                    inverse of efficiency score.</span>
+<span class="sd">                    inverse of efficiency spyDEA.core.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">obj_value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>

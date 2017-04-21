@@ -1,7 +1,4 @@
-''' This module contains method for running pyDEA from terminal.
-
-    Warning:
-        This module must be run from trunk folder.
+''' This module contains methods for running pyDEA from terminal.
 '''
 import sys
 
@@ -22,6 +19,8 @@ def main(filename, output_format='xlsx', output_dir='', sheet_name_usr=''):
             output_dir (str, optional): directory where solution must
                 be written.
                 If it is not given, solution will be written to current folder.
+                This value is used
+                only if OUTPUT_FILE in parameters is empty or set to auto.
             sheet_name_usr (str, optional): name of the sheet in xls- or
                 xlsx-file with
                 input data from which data will be read. If input data file is

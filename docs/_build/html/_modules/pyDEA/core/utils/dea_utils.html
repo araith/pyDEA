@@ -124,14 +124,16 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.core.utils.dea_utils</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains various utility functions and constants.</span>
+<span class="sd">&#39;&#39;&#39; This module contains various utility functions and constants.</span>
 
 <span class="sd">    Attributes:</span>
 
 <span class="sd">        FILE_TYPES (list of tuple of str, str): list of supported</span>
 <span class="sd">            input file parameters.</span>
-<span class="sd">        SOLUTION_FILE_TYPES (list of tuple of str, str): list of</span>
-<span class="sd">            supported solution file formats.</span>
+<span class="sd">        SOLUTION_XLSX_FILE (list of tuple of str, str): list of</span>
+<span class="sd">            supported solution file formats (xlsx).</span>
+<span class="sd">        SOLUTION_XLS_FILE (list of tuple of str, str): list of</span>
+<span class="sd">            supported solution file formats (xls).</span>
 
 <span class="sd">            Note:</span>
 <span class="sd">                This list does not contain csv format since for solution</span>
@@ -166,14 +168,17 @@
 <span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">StringVar</span>
 <span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">ALL</span>
 <span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">from</span> <span class="nn">logging.config</span> <span class="kn">import</span> <span class="n">fileConfig</span>
 
-<span class="n">LOG_FILE</span> <span class="o">=</span> <span class="s1">&#39;pyDEA/logging_config.ini&#39;</span>
+<span class="n">LOG_FILE</span> <span class="o">=</span> <span class="s1">&#39;logging_config.ini&#39;</span>
+<span class="n">PACKAGE</span> <span class="o">=</span> <span class="s1">&#39;pyDEA&#39;</span>
 
-<span class="n">FILE_TYPES</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Excel files&#39;</span><span class="p">,</span> <span class="s1">&#39;*.xls&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Excel files&#39;</span><span class="p">,</span> <span class="s1">&#39;*.xlsx&#39;</span><span class="p">),</span>
+<span class="n">FILE_TYPES</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Excel (xls)&#39;</span><span class="p">,</span> <span class="s1">&#39;*.xls&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Excel (xlsx)&#39;</span><span class="p">,</span> <span class="s1">&#39;*.xlsx&#39;</span><span class="p">),</span>
               <span class="p">(</span><span class="s1">&#39;Text CSV&#39;</span><span class="p">,</span> <span class="s1">&#39;*.csv&#39;</span><span class="p">)]</span>
-<span class="n">SOLUTION_FILE_TYPES</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Excel files&#39;</span><span class="p">,</span> <span class="s1">&#39;*.xls&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;Excel files&#39;</span><span class="p">,</span> <span class="s1">&#39;*.xlsx&#39;</span><span class="p">)]</span>
+<span class="n">SOLUTION_XLSX_FILE</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Excel (xlsx)&#39;</span><span class="p">,</span> <span class="s1">&#39;*.xlsx&#39;</span><span class="p">)]</span>
+<span class="n">SOLUTION_XLS_FILE</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Excel (xls)&#39;</span><span class="p">,</span> <span class="s1">&#39;*.xls&#39;</span><span class="p">)]</span>
 <span class="n">TEXT_FOR_PANEL</span> <span class="o">=</span> <span class="s1">&#39;File: &#39;</span>
 <span class="n">TEXT_FOR_FILE_LBL</span> <span class="o">=</span> <span class="s1">&#39;Data from file: &#39;</span>
 
@@ -215,9 +220,10 @@
     <span class="sd">&#39;&#39;&#39; Gets a logger with all configuration specified in file ini-file.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            logger: configured logger </span>
+<span class="sd">            logger: configured logger</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">fileConfig</span><span class="p">(</span><span class="n">LOG_FILE</span><span class="p">)</span>
+    <span class="n">logfile</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="n">PACKAGE</span><span class="p">,</span> <span class="n">LOG_FILE</span><span class="p">)</span>
+    <span class="n">fileConfig</span><span class="p">(</span><span class="n">logfile</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span></div>
 
 
@@ -373,7 +379,7 @@
 <span class="sd">            int: data row index</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">curr_page</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="k">return</span> <span class="mi">0</span> 
+        <span class="k">return</span> <span class="mi">0</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">curr_page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">nb_table_rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
 
 
@@ -498,7 +504,7 @@
 <span class="sd">        lambda variable is efficient.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">            efficiency_score (double): efficiency score.</span>
+<span class="sd">            efficiency_score (double): efficiency spyDEA.core.</span>
 <span class="sd">            lambda_variable (double): value of lambda variable corresponding</span>
 <span class="sd">                to DMU under consideration.</span>
 

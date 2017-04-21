@@ -68,6 +68,14 @@ pyDEA.core.data_processing.write_data_to_xls module
     :undoc-members:
     :show-inheritance:
 
+pyDEA.core.data_processing.xlsx_workbook module
+-----------------------------------------------
+
+.. automodule:: pyDEA.core.data_processing.xlsx_workbook
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

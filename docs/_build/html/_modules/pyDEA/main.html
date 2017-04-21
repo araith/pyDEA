@@ -124,16 +124,13 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.main</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains method for running pyDEA from terminal.</span>
-
-<span class="sd">    Warning:</span>
-<span class="sd">        This module must be run from trunk folder.</span>
+<span class="sd">&#39;&#39;&#39; This module contains methods for running pyDEA from terminal.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="kn">from</span> <span class="nn">core.data_processing.parameters</span> <span class="kn">import</span> <span class="n">parse_parameters_from_file</span>
-<span class="kn">from</span> <span class="nn">core.utils.run_routine</span> <span class="kn">import</span> <span class="n">RunMethodTerminal</span>
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">clean_up_pickled_files</span><span class="p">,</span> <span class="n">get_logger</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.data_processing.parameters</span> <span class="kn">import</span> <span class="n">parse_parameters_from_file</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.run_routine</span> <span class="kn">import</span> <span class="n">RunMethodTerminal</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">clean_up_pickled_files</span><span class="p">,</span> <span class="n">get_logger</span>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">output_format</span><span class="o">=</span><span class="s1">&#39;xlsx&#39;</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sheet_name_usr</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
@@ -148,6 +145,8 @@
 <span class="sd">            output_dir (str, optional): directory where solution must</span>
 <span class="sd">                be written.</span>
 <span class="sd">                If it is not given, solution will be written to current folder.</span>
+<span class="sd">                This value is used</span>
+<span class="sd">                only if OUTPUT_FILE in parameters is empty or set to auto.</span>
 <span class="sd">            sheet_name_usr (str, optional): name of the sheet in xls- or</span>
 <span class="sd">                xlsx-file with</span>
 <span class="sd">                input data from which data will be read. If input data file is</span>

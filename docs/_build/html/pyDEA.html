@@ -152,6 +152,7 @@
 <li class="toctree-l4"><a class="reference internal" href="pyDEA.core.data_processing.html#module-pyDEA.core.data_processing.solution_text_writer">pyDEA.core.data_processing.solution_text_writer module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyDEA.core.data_processing.html#module-pyDEA.core.data_processing.targets_and_slacks">pyDEA.core.data_processing.targets_and_slacks module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyDEA.core.data_processing.html#module-pyDEA.core.data_processing.write_data_to_xls">pyDEA.core.data_processing.write_data_to_xls module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyDEA.core.data_processing.html#module-pyDEA.core.data_processing.xlsx_workbook">pyDEA.core.data_processing.xlsx_workbook module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="pyDEA.core.data_processing.html#module-pyDEA.core.data_processing">Module contents</a></li>
 </ul>
 </li>
@@ -218,14 +219,10 @@
 </div>
 <div class="section" id="module-pyDEA.main">
 <span id="pydea-main-module"></span><h2>pyDEA.main module<a class="headerlink" href="#module-pyDEA.main" title="Permalink to this headline">¶</a></h2>
-<p>This module contains method for running pyDEA from terminal.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This module must be run from trunk folder.</p>
-</div>
+<p>This module contains methods for running pyDEA from terminal.</p>
 <dl class="function">
 <dt id="pyDEA.main.main">
-<code class="descclassname">pyDEA.main.</code><code class="descname">main</code><span class="sig-paren">(</span><em>filename</em>, <em>output_format='xlsx'</em>, <em>output_dir=''</em>, <em>sheet_name_usr=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main.main" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.main.</code><code class="descname">main</code><span class="sig-paren">(</span><em>filename</em>, <em>output_format='xlsx'</em>, <em>output_dir=''</em>, <em>sheet_name_usr=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Main function to run DEA models from terminal.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -239,7 +236,9 @@ only if OUTPUT_FILE in parameters is empty or set to auto.
 Defaults to xlsx.</li>
 <li><strong>output_dir</strong> (<em>str, optional</em>) &#8211; directory where solution must
 be written.
-If it is not given, solution will be written to current folder.</li>
+If it is not given, solution will be written to current folder.
+This value is used
+only if OUTPUT_FILE in parameters is empty or set to auto.</li>
 <li><strong>sheet_name_usr</strong> (<em>str, optional</em>) &#8211; name of the sheet in xls- or
 xlsx-file with
 input data from which data will be read. If input data file is
@@ -258,7 +257,7 @@ this value is ignored.</li>
 <p>This module should be used for running application GUI.</p>
 <dl class="class">
 <dt id="pyDEA.main_gui.MainFrame">
-<em class="property">class </em><code class="descclassname">pyDEA.main_gui.</code><code class="descname">MainFrame</code><span class="sig-paren">(</span><em>parent</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main_gui.MainFrame" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.main_gui.</code><code class="descname">MainFrame</code><span class="sig-paren">(</span><em>parent</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main_gui.html#MainFrame"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main_gui.MainFrame" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">tkinter.ttk.Frame</span></code></p>
 <p>This class implements main GUI of the application.</p>
 <dl class="attribute">
@@ -331,7 +330,7 @@ tracking if weight restrictions are feasible.</p>
 </table>
 <dl class="method">
 <dt id="pyDEA.main_gui.MainFrame.construct_categories">
-<code class="descname">construct_categories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main_gui.MainFrame.construct_categories" title="Permalink to this definition">¶</a></dt>
+<code class="descname">construct_categories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main_gui.html#MainFrame.construct_categories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main_gui.MainFrame.construct_categories" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns current categories.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -347,25 +346,25 @@ tracking if weight restrictions are feasible.</p>
 
 <dl class="method">
 <dt id="pyDEA.main_gui.MainFrame.create_widgets">
-<code class="descname">create_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main_gui.MainFrame.create_widgets" title="Permalink to this definition">¶</a></dt>
+<code class="descname">create_widgets</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main_gui.html#MainFrame.create_widgets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main_gui.MainFrame.create_widgets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates all widgets that belong to this frame.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.main_gui.MainFrame.on_dmu_change">
-<code class="descname">on_dmu_change</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main_gui.MainFrame.on_dmu_change" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_dmu_change</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main_gui.html#MainFrame.on_dmu_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main_gui.MainFrame.on_dmu_change" title="Permalink to this definition">¶</a></dt>
 <dd><p>Updates progress bar.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.main_gui.MainFrame.on_weights_status_change">
-<code class="descname">on_weights_status_change</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main_gui.MainFrame.on_weights_status_change" title="Permalink to this definition">¶</a></dt>
+<code class="descname">on_weights_status_change</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main_gui.html#MainFrame.on_weights_status_change"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main_gui.MainFrame.on_weights_status_change" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is called when weight restrictions status is changed.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.main_gui.MainFrame.run">
-<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main_gui.MainFrame.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main_gui.html#MainFrame.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main_gui.MainFrame.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is called when the user presses Run button.
 Solves the problem and displays solution.</p>
 </dd></dl>
@@ -374,7 +373,7 @@ Solves the problem and displays solution.</p>
 
 <dl class="function">
 <dt id="pyDEA.main_gui.ask_quit">
-<code class="descclassname">pyDEA.main_gui.</code><code class="descname">ask_quit</code><span class="sig-paren">(</span><em>main_frame</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main_gui.ask_quit" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.main_gui.</code><code class="descname">ask_quit</code><span class="sig-paren">(</span><em>main_frame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main_gui.html#ask_quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main_gui.ask_quit" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is called before application is closed if there is
 an unsaved solution to verify if the user wants to safe solution
 before quitting.</p>
@@ -390,13 +389,13 @@ before quitting.</p>
 
 <dl class="function">
 <dt id="pyDEA.main_gui.main">
-<code class="descclassname">pyDEA.main_gui.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main_gui.main" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.main_gui.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main_gui.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main_gui.main" title="Permalink to this definition">¶</a></dt>
 <dd><p>Runs main application GUI.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyDEA.main_gui.show_error">
-<code class="descclassname">pyDEA.main_gui.</code><code class="descname">show_error</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.main_gui.show_error" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.main_gui.</code><code class="descname">show_error</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/main_gui.html#show_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.main_gui.show_error" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

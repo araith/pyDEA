@@ -124,7 +124,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.core.data_processing.write_data_to_xls</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains functions and classes responsible for</span>
+<span class="sd">&#39;&#39;&#39; This module contains functions and classes responsible for</span>
 <span class="sd">    writing solutions into different outputs (files, screen, GUI, etc).</span>
 <span class="sd">    All names start with XLS because originally only xls-files were supported.</span>
 
@@ -138,11 +138,11 @@
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ZERO_TOLERANCE</span>
-<span class="kn">from</span> <span class="nn">core.data_processing.targets_and_slacks</span> <span class="kn">import</span> <span class="n">calculate_target</span>
-<span class="kn">from</span> <span class="nn">core.data_processing.targets_and_slacks</span> <span class="kn">import</span> <span class="n">calculate_radial_reduction</span>
-<span class="kn">from</span> <span class="nn">core.data_processing.targets_and_slacks</span> <span class="kn">import</span> <span class="n">calculate_non_radial_reduction</span>
-<span class="kn">from</span> <span class="nn">core.utils.progress_recorders</span> <span class="kn">import</span> <span class="n">NullProgress</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ZERO_TOLERANCE</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.data_processing.targets_and_slacks</span> <span class="kn">import</span> <span class="n">calculate_target</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.data_processing.targets_and_slacks</span> <span class="kn">import</span> <span class="n">calculate_radial_reduction</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.data_processing.targets_and_slacks</span> <span class="kn">import</span> <span class="n">calculate_non_radial_reduction</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.progress_recorders</span> <span class="kn">import</span> <span class="n">NullProgress</span>
 
 
 <div class="viewcode-block" id="XLSSheetWithParameters"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithParameters">[docs]</a><span class="k">class</span> <span class="nc">XLSSheetWithParameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>

@@ -29,7 +29,9 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('../source/refactored'))
+sys.path.insert(0, os.path.abspath('../pyDEA'))
+sys.path.append(os.path.abspath('..'))
+sys.path.append(os.path.abspath('../pyDEA/core'))
 sys.path.append(os.path.abspath('_themes'))
 
 # -- General configuration ------------------------------------------------

@@ -124,7 +124,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.core.data_processing.solution</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains classes that implement various</span>
+<span class="sd">&#39;&#39;&#39; This module contains classes that implement various</span>
 <span class="sd">    objects for storing solutions.</span>
 
 <span class="sd">    Attributes:</span>
@@ -136,7 +136,7 @@
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">is_efficient</span><span class="p">,</span> <span class="n">TMP_FOLDER</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">is_efficient</span><span class="p">,</span> <span class="n">TMP_FOLDER</span>
 
 <span class="n">_solution_id</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -150,7 +150,7 @@
 <span class="sd">                input or output.</span>
 <span class="sd">            _input_data (InputData): object that stores input data.</span>
 <span class="sd">            efficiency_scores (dict of str to double): dictionary that maps</span>
-<span class="sd">                DMU code to efficiency score.</span>
+<span class="sd">                DMU code to efficiency spyDEA.core.</span>
 <span class="sd">            lp_status (dict of str to pulp.LpStatus): dictionary that maps</span>
 <span class="sd">                DMU code to LP status (optimal, unbounded, etc).</span>
 <span class="sd">            input_duals (dict of str to dict of str to double): dictionary</span>
@@ -188,7 +188,7 @@
 
 <span class="sd">            Args:</span>
 <span class="sd">                dmu_code (str): DMU code.</span>
-<span class="sd">                efficiency_score (double): efficiency score.</span>
+<span class="sd">                efficiency_score (double): efficiency spyDEA.core.</span>
 
 <span class="sd">            Raises:</span>
 <span class="sd">                ValueError: if dmu_code does not exist or has invalid</span>
@@ -202,7 +202,7 @@
         <span class="sd">&#39;&#39;&#39; Checks if efficiency score has a valid value.</span>
 
 <span class="sd">            Args:</span>
-<span class="sd">                efficiency_score (double): efficiency score.</span>
+<span class="sd">                efficiency_score (double): efficiency spyDEA.core.</span>
 
 <span class="sd">            Raises:</span>
 <span class="sd">                ValueError: if efficiency score has invalid value.</span>
@@ -217,7 +217,7 @@
 <span class="sd">                dmu_code (str): DMU code.</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                double: efficiency score.</span>
+<span class="sd">                double: efficiency spyDEA.core.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">efficiency_scores</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span></div>
 

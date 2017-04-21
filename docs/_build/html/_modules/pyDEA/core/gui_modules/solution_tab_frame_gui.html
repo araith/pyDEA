@@ -124,7 +124,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.core.gui_modules.solution_tab_frame_gui</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains class responsible for displaying solution</span>
+<span class="sd">&#39;&#39;&#39; This module contains class responsible for displaying solution</span>
 <span class="sd">    on the screen.</span>
 
 <span class="sd">    Attributes:</span>
@@ -138,12 +138,13 @@
 <span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Progressbar</span><span class="p">,</span> <span class="n">Radiobutton</span>
 <span class="kn">from</span> <span class="nn">tkinter.filedialog</span> <span class="kn">import</span> <span class="n">asksaveasfilename</span><span class="p">,</span> <span class="n">askdirectory</span>
 
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">SOLUTION_FILE_TYPES</span>
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">TEXT_FOR_FILE_LBL</span>
-<span class="kn">from</span> <span class="nn">core.gui_modules.solution_frame_gui</span> <span class="kn">import</span> <span class="n">SolutionFrameWithText</span>
-<span class="kn">from</span> <span class="nn">core.data_processing.write_data_to_xls</span> <span class="kn">import</span> <span class="n">XLSWriter</span>
-<span class="kn">from</span> <span class="nn">core.data_processing.solution_text_writer</span> <span class="kn">import</span> <span class="n">TxtWriter</span>
-<span class="kn">from</span> <span class="nn">core.utils.progress_recorders</span> <span class="kn">import</span> <span class="n">GuiProgress</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">SOLUTION_XLSX_FILE</span><span class="p">,</span> <span class="n">SOLUTION_XLS_FILE</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">TEXT_FOR_FILE_LBL</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.gui_modules.solution_frame_gui</span> <span class="kn">import</span> <span class="n">SolutionFrameWithText</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.data_processing.write_data_to_xls</span> <span class="kn">import</span> <span class="n">XLSWriter</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.data_processing.xlsx_workbook</span> <span class="kn">import</span> <span class="n">XlsxWorkbook</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.data_processing.solution_text_writer</span> <span class="kn">import</span> <span class="n">TxtWriter</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.progress_recorders</span> <span class="kn">import</span> <span class="n">GuiProgress</span>
 
 <span class="n">MAX_FILE_PARAMS_LBL_LENGTH</span> <span class="o">=</span> <span class="mi">500</span>
 
@@ -262,15 +263,19 @@
             <span class="k">assert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">param_strs</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
             <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">solution_format_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">or</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">solution_format_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span><span class="p">):</span>
-                <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ask_file_name_to_save</span><span class="p">()</span>
+                <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ask_file_name_to_save</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">solution_format_var</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
                 <span class="n">dir_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">dir_name</span> <span class="o">=</span> <span class="n">askdirectory</span><span class="p">()</span>
                 <span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
             <span class="k">if</span> <span class="n">file_name</span> <span class="ow">or</span> <span class="n">dir_name</span><span class="p">:</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">status_lbl</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Saving solution to file...&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">file_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.xls&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">file_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">file_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.xls&#39;</span><span class="p">):</span>
                     <span class="n">work_book</span> <span class="o">=</span> <span class="n">xlwt</span><span class="o">.</span><span class="n">Workbook</span><span class="p">()</span>
+                <span class="k">elif</span> <span class="n">file_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">):</span>
+                    <span class="n">work_book</span> <span class="o">=</span> <span class="n">XlsxWorkbook</span><span class="p">()</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="c1"># all not supported formats will be written to csv</span>
                     <span class="k">assert</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
@@ -309,15 +314,21 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">change_solution_tab_name</span><span class="p">(</span><span class="s1">&#39;Solution&#39;</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">status_lbl</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Solution saved&#39;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="SolutionTabFrame.ask_file_name_to_save"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_tab_frame_gui.SolutionTabFrame.ask_file_name_to_save">[docs]</a>    <span class="k">def</span> <span class="nf">ask_file_name_to_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SolutionTabFrame.ask_file_name_to_save"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_tab_frame_gui.SolutionTabFrame.ask_file_name_to_save">[docs]</a>    <span class="k">def</span> <span class="nf">ask_file_name_to_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ext_code</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Calls asksaveasfilename dialogue to ask the user where file</span>
 <span class="sd">            should be saved.</span>
 <span class="sd">            If file without extension is entered, default extension</span>
-<span class="sd">            will be used (.xls).</span>
+<span class="sd">            will be used (.xlsx).</span>
 <span class="sd">            This method is used to mock this object for unit tests.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                ext_code (int): code for file extension 1 - xlsx, 2 - xls.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">asksaveasfilename</span><span class="p">(</span><span class="n">filetypes</span><span class="o">=</span><span class="n">SOLUTION_FILE_TYPES</span><span class="p">,</span>
-                                 <span class="n">defaultextension</span><span class="o">=</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="n">ext_code</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">filetype</span> <span class="o">=</span> <span class="n">SOLUTION_XLSX_FILE</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filetype</span> <span class="o">=</span> <span class="n">SOLUTION_XLS_FILE</span>
+        <span class="k">return</span> <span class="n">asksaveasfilename</span><span class="p">(</span><span class="n">filetypes</span><span class="o">=</span><span class="n">filetype</span><span class="p">,</span> <span class="n">defaultextension</span><span class="o">=</span><span class="s1">&#39;xlsx&#39;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SolutionTabFrame.show_solution"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_tab_frame_gui.SolutionTabFrame.show_solution">[docs]</a>    <span class="k">def</span> <span class="nf">show_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">param_strs</span><span class="p">,</span> <span class="n">run_date</span><span class="p">,</span>
                       <span class="n">total_seconds</span><span class="p">,</span> <span class="n">ranks</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>

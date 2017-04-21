@@ -124,40 +124,40 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.core.utils.model_factory</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains classes responsible for creating a</span>
+<span class="sd">&#39;&#39;&#39; This module contains classes responsible for creating a</span>
 <span class="sd">    proper DEA model.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model_base</span> <span class="kn">import</span> <span class="n">EnvelopmentModelBase</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model</span> <span class="kn">import</span> <span class="n">EnvelopmentModelInputOriented</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model</span> <span class="kn">import</span> <span class="n">EnvelopmentModelOutputOriented</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model</span> <span class="kn">import</span> <span class="n">EnvelopmentModelInputOrientedWithNonDiscVars</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model</span> <span class="kn">import</span> <span class="n">EnvelopmentModelOutputOrientedWithNonDiscVars</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">EnvelopmentModelVRSDecorator</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">DefaultConstraintCreator</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">DisposableVarsConstraintCreator</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">EnvelopmentModelWithAbsoluteWeightRestrictions</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">EnvelopmentModelWithVirtualWeightRestrictions</span>
-<span class="kn">from</span> <span class="nn">core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">EnvelopmentModelWithPriceRatioConstraints</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model</span> <span class="kn">import</span> <span class="n">MultiplierInputOrientedModel</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model</span> <span class="kn">import</span> <span class="n">MultiplierOutputOrientedModel</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model_base</span> <span class="kn">import</span> <span class="n">MultiplierModelBase</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelVRSDecorator</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelWithDisposableCategories</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelWithAbsoluteWeightRestrictions</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelWithVirtualWeightRestrictions</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelWithPriceRatioConstraints</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelInputOrientedWithNonDiscVars</span>
-<span class="kn">from</span> <span class="nn">core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelOutputOrientedWithNonDiscVars</span>
-<span class="kn">from</span> <span class="nn">core.models.bound_generators</span> <span class="kn">import</span> <span class="n">generate_supper_efficiency_upper_bound</span>
-<span class="kn">from</span> <span class="nn">core.models.bound_generators</span> <span class="kn">import</span> <span class="n">generate_upper_bound_for_efficiency_score</span>
-<span class="kn">from</span> <span class="nn">core.models.bound_generators</span> <span class="kn">import</span> <span class="n">generate_supper_efficiency_lower_bound</span>
-<span class="kn">from</span> <span class="nn">core.models.bound_generators</span> <span class="kn">import</span> <span class="n">generate_lower_bound_for_efficiency_score</span>
-<span class="kn">from</span> <span class="nn">core.models.super_efficiency_model</span> <span class="kn">import</span> <span class="n">SupperEfficiencyModel</span>
-<span class="kn">from</span> <span class="nn">core.models.maximize_slacks</span> <span class="kn">import</span> <span class="n">MaximizeSlacksModel</span>
-<span class="kn">from</span> <span class="nn">core.models.categorical_dmus</span> <span class="kn">import</span> <span class="n">ModelWithCategoricalDMUs</span>
-<span class="kn">import</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">as</span> <span class="nn">dea_utils</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model_base</span> <span class="kn">import</span> <span class="n">EnvelopmentModelBase</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model</span> <span class="kn">import</span> <span class="n">EnvelopmentModelInputOriented</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model</span> <span class="kn">import</span> <span class="n">EnvelopmentModelOutputOriented</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model</span> <span class="kn">import</span> <span class="n">EnvelopmentModelInputOrientedWithNonDiscVars</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model</span> <span class="kn">import</span> <span class="n">EnvelopmentModelOutputOrientedWithNonDiscVars</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">EnvelopmentModelVRSDecorator</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">DefaultConstraintCreator</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">DisposableVarsConstraintCreator</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">EnvelopmentModelWithAbsoluteWeightRestrictions</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">EnvelopmentModelWithVirtualWeightRestrictions</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.envelopment_model_decorators</span> <span class="kn">import</span> <span class="n">EnvelopmentModelWithPriceRatioConstraints</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model</span> <span class="kn">import</span> <span class="n">MultiplierInputOrientedModel</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model</span> <span class="kn">import</span> <span class="n">MultiplierOutputOrientedModel</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model_base</span> <span class="kn">import</span> <span class="n">MultiplierModelBase</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelVRSDecorator</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelWithDisposableCategories</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelWithAbsoluteWeightRestrictions</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelWithVirtualWeightRestrictions</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelWithPriceRatioConstraints</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelInputOrientedWithNonDiscVars</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.multiplier_model_decorators</span> <span class="kn">import</span> <span class="n">MultiplierModelOutputOrientedWithNonDiscVars</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.bound_generators</span> <span class="kn">import</span> <span class="n">generate_supper_efficiency_upper_bound</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.bound_generators</span> <span class="kn">import</span> <span class="n">generate_upper_bound_for_efficiency_score</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.bound_generators</span> <span class="kn">import</span> <span class="n">generate_supper_efficiency_lower_bound</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.bound_generators</span> <span class="kn">import</span> <span class="n">generate_lower_bound_for_efficiency_score</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.super_efficiency_model</span> <span class="kn">import</span> <span class="n">SupperEfficiencyModel</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.maximize_slacks</span> <span class="kn">import</span> <span class="n">MaximizeSlacksModel</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.categorical_dmus</span> <span class="kn">import</span> <span class="n">ModelWithCategoricalDMUs</span>
+<span class="kn">import</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">as</span> <span class="nn">dea_utils</span>
 
 
 <div class="viewcode-block" id="add_input_and_output_categories"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.model_factory.add_input_and_output_categories">[docs]</a><span class="k">def</span> <span class="nf">add_input_and_output_categories</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">model_input</span><span class="p">):</span>

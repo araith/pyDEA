@@ -124,14 +124,14 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.core.models.envelopment_model</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains concrete implementations of input- and</span>
+<span class="sd">&#39;&#39;&#39; This module contains concrete implementations of input- and</span>
 <span class="sd">    output-oriented envelopment models as well as the model with</span>
 <span class="sd">    non-discretionary variables.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="kn">import</span> <span class="nn">pulp</span>
 
-<span class="kn">from</span> <span class="nn">core.models.input_output_model_bases</span> <span class="kn">import</span> <span class="n">InputOrientedModel</span>
-<span class="kn">from</span> <span class="nn">core.models.input_output_model_bases</span> <span class="kn">import</span> <span class="n">OutputOrientedModel</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.input_output_model_bases</span> <span class="kn">import</span> <span class="n">InputOrientedModel</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.input_output_model_bases</span> <span class="kn">import</span> <span class="n">OutputOrientedModel</span>
 
 
 <div class="viewcode-block" id="EnvelopmentModelInputOriented"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented">[docs]</a><span class="k">class</span> <span class="nc">EnvelopmentModelInputOriented</span><span class="p">(</span><span class="n">InputOrientedModel</span><span class="p">):</span>
@@ -157,7 +157,7 @@
 <span class="sd">            is minimized in the case of input-oriented envelopment model.</span>
 
 <span class="sd">            Returns:</span>
-<span class="sd">                double: upper bound on efficiency score.</span>
+<span class="sd">                double: upper bound on efficiency spyDEA.core.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound_generator</span><span class="p">()</span></div>
 
@@ -196,7 +196,7 @@
 
 <div class="viewcode-block" id="EnvelopmentModelInputOriented.get_input_variable_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_input_variable_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_variable_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">,</span> <span class="n">input_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns obj_variable, since in input-oriented model we multiply</span>
-<span class="sd">            current input by efficiency score.</span>
+<span class="sd">            current input by efficiency spyDEA.core.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                obj_variable (pulp.LpVariable): pulp variable that corresponds</span>
@@ -289,7 +289,7 @@
 
 <div class="viewcode-block" id="EnvelopmentModelOutputOriented.get_output_variable_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_output_variable_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_variable_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">,</span> <span class="n">output_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns obj_variable, since in output-oriented model we multiply</span>
-<span class="sd">            current output by inverse efficiency score.</span>
+<span class="sd">            current output by inverse efficiency spyDEA.core.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                obj_variable (pulp.LpVariable): pulp variable that corresponds</span>

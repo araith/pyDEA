@@ -124,22 +124,23 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.main_gui</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module should be used for running application GUI.</span>
+<span class="sd">&#39;&#39;&#39; This module should be used for running application GUI.</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
 
 <span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">Tk</span><span class="p">,</span> <span class="n">BOTH</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">StringVar</span><span class="p">,</span> <span class="n">PhotoImage</span>
 <span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Button</span><span class="p">,</span> <span class="n">Label</span><span class="p">,</span> <span class="n">Style</span><span class="p">,</span> <span class="n">Progressbar</span>
 <span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="kn">import</span> <span class="n">askyesno</span>
 <span class="kn">from</span> <span class="nn">tkinter.messagebox</span> <span class="kn">import</span> <span class="n">showerror</span>
 
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ObserverStringVar</span><span class="p">,</span> <span class="n">bg_color</span><span class="p">,</span> <span class="n">center_window</span>
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">clean_up_pickled_files</span><span class="p">,</span> <span class="n">get_logger</span>
-<span class="kn">from</span> <span class="nn">core.utils.run_routine</span> <span class="kn">import</span> <span class="n">RunMethodGUI</span>
-<span class="kn">from</span> <span class="nn">core.gui_modules.data_frame_gui</span> <span class="kn">import</span> <span class="n">DataFrame</span>
-<span class="kn">from</span> <span class="nn">core.gui_modules.params_frame_gui</span> <span class="kn">import</span> <span class="n">ParamsFrame</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">ObserverStringVar</span><span class="p">,</span> <span class="n">bg_color</span><span class="p">,</span> <span class="n">center_window</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">clean_up_pickled_files</span><span class="p">,</span> <span class="n">get_logger</span><span class="p">,</span> <span class="n">PACKAGE</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.run_routine</span> <span class="kn">import</span> <span class="n">RunMethodGUI</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.gui_modules.data_frame_gui</span> <span class="kn">import</span> <span class="n">DataFrame</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.gui_modules.params_frame_gui</span> <span class="kn">import</span> <span class="n">ParamsFrame</span>
 
 
 <div class="viewcode-block" id="MainFrame"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame">[docs]</a><span class="k">class</span> <span class="nc">MainFrame</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
@@ -281,9 +282,11 @@
 
     <span class="c1"># load logo</span>
     <span class="k">if</span> <span class="s2">&quot;nt&quot;</span> <span class="o">==</span> <span class="n">os</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
-        <span class="n">root</span><span class="o">.</span><span class="n">wm_iconbitmap</span><span class="p">(</span><span class="n">bitmap</span><span class="o">=</span><span class="s2">&quot;pyDEA/pyDEAlogo.ico&quot;</span><span class="p">)</span>
+        <span class="n">iconfile</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="n">PACKAGE</span><span class="p">,</span> <span class="s1">&#39;pyDEAlogo.ico&#39;</span><span class="p">)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">wm_iconbitmap</span><span class="p">(</span><span class="n">bitmap</span><span class="o">=</span><span class="n">iconfile</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">img</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="s1">&#39;pyDEA/pyDEAlogo.gif&#39;</span><span class="p">)</span>
+        <span class="n">iconfile</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="n">PACKAGE</span><span class="p">,</span> <span class="s1">&#39;pyDEAlogo.gif&#39;</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">PhotoImage</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="n">iconfile</span><span class="p">)</span>
         <span class="n">root</span><span class="o">.</span><span class="n">tk</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;wm&#39;</span><span class="p">,</span> <span class="s1">&#39;iconphoto&#39;</span><span class="p">,</span> <span class="n">root</span><span class="o">.</span><span class="n">_w</span><span class="p">,</span> <span class="n">img</span><span class="p">)</span>
 
     <span class="c1"># change background color of all widgets</span>

@@ -124,11 +124,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.core.models.categorical_dmus</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains class for performing DEA analysis with categorical DMUs</span>
+<span class="sd">&#39;&#39;&#39; This module contains class for performing DEA analysis with categorical DMUs</span>
 <span class="sd">    and some helper functions.</span>
 <span class="sd">&#39;&#39;&#39;</span>
-<span class="kn">from</span> <span class="nn">core.models.model_base</span> <span class="kn">import</span> <span class="n">ModelBase</span>
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">check_input_and_output_categories</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.models.model_base</span> <span class="kn">import</span> <span class="n">ModelBase</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">check_input_and_output_categories</span>
 
 
 <div class="viewcode-block" id="get_dmus_with_fixed_hierarchical_category"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.get_dmus_with_fixed_hierarchical_category">[docs]</a><span class="k">def</span> <span class="nf">get_dmus_with_fixed_hierarchical_category</span><span class="p">(</span><span class="n">coefficients</span><span class="p">,</span>
@@ -179,14 +179,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">category_name</span> <span class="o">=</span> <span class="n">category_name</span>
 
-    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+<div class="viewcode-block" id="ModelWithCategoricalDMUs.__getattr__"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.__getattr__">[docs]</a>    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Redirects calls to all undefined methods or attributes</span>
 <span class="sd">            to self.model.</span>
 
 <span class="sd">            Attributes:</span>
 <span class="sd">                name (str): attribute name.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ModelWithCategoricalDMUs.run"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Performs categorical analysis.</span>

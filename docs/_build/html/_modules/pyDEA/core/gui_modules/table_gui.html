@@ -124,7 +124,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for pyDEA.core.gui_modules.table_gui</h1><div class="highlight"><pre>
-<span></span><span class="sd">&#39;&#39;&#39; This module contains classes responsible for displaying input data</span>
+<span class="sd">&#39;&#39;&#39; This module contains classes responsible for displaying input data</span>
 <span class="sd">    in a table (TableFrame and TableFrameWithInputOutputBox).</span>
 <span class="sd">    It also contains many classes necessary for TableFrameWithInputOutputBox.</span>
 
@@ -135,14 +135,14 @@
 <span class="kn">from</span> <span class="nn">tkinter</span> <span class="kn">import</span> <span class="n">IntVar</span><span class="p">,</span> <span class="n">DISABLED</span><span class="p">,</span> <span class="n">StringVar</span><span class="p">,</span> <span class="n">NORMAL</span>
 <span class="kn">from</span> <span class="nn">tkinter.ttk</span> <span class="kn">import</span> <span class="n">Frame</span><span class="p">,</span> <span class="n">Entry</span><span class="p">,</span> <span class="n">Scrollbar</span><span class="p">,</span> <span class="n">Checkbutton</span>
 
-<span class="kn">from</span> <span class="nn">core.gui_modules.scrollable_frame_gui</span> <span class="kn">import</span> <span class="n">MouseWheel</span>
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">is_valid_coeff</span><span class="p">,</span> <span class="n">NOT_VALID_COEFF</span><span class="p">,</span> <span class="n">VALID_COEFF</span>
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">WARNING_COEFF</span><span class="p">,</span> <span class="n">EMPTY_COEFF</span><span class="p">,</span> <span class="n">CELL_DESTROY</span>
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">CHANGE_CATEGORY_NAME</span><span class="p">,</span> <span class="n">INPUT_OBSERVER</span>
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">OUTPUT_OBSERVER</span><span class="p">,</span> <span class="n">on_canvas_resize</span>
-<span class="kn">from</span> <span class="nn">core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">validate_category_name</span><span class="p">,</span> <span class="n">calculate_nb_pages</span>
-<span class="kn">from</span> <span class="nn">core.gui_modules.custom_canvas_gui</span> <span class="kn">import</span> <span class="n">StyledCanvas</span>
-<span class="kn">from</span> <span class="nn">core.data_processing.read_data_from_xls</span> <span class="kn">import</span> <span class="n">convert_to_dictionary</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.gui_modules.scrollable_frame_gui</span> <span class="kn">import</span> <span class="n">MouseWheel</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">is_valid_coeff</span><span class="p">,</span> <span class="n">NOT_VALID_COEFF</span><span class="p">,</span> <span class="n">VALID_COEFF</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">WARNING_COEFF</span><span class="p">,</span> <span class="n">EMPTY_COEFF</span><span class="p">,</span> <span class="n">CELL_DESTROY</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">CHANGE_CATEGORY_NAME</span><span class="p">,</span> <span class="n">INPUT_OBSERVER</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">OUTPUT_OBSERVER</span><span class="p">,</span> <span class="n">on_canvas_resize</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.utils.dea_utils</span> <span class="kn">import</span> <span class="n">validate_category_name</span><span class="p">,</span> <span class="n">calculate_nb_pages</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.gui_modules.custom_canvas_gui</span> <span class="kn">import</span> <span class="n">StyledCanvas</span>
+<span class="kn">from</span> <span class="nn">pyDEA.core.data_processing.read_data_from_xls</span> <span class="kn">import</span> <span class="n">convert_to_dictionary</span>
 
 <span class="n">CELL_WIDTH</span> <span class="o">=</span> <span class="mi">10</span>
 

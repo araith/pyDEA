@@ -159,11 +159,19 @@ input file parameters.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="pyDEA.core.utils.dea_utils.SOLUTION_FILE_TYPES">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">SOLUTION_FILE_TYPES</code><a class="headerlink" href="#pyDEA.core.utils.dea_utils.SOLUTION_FILE_TYPES" title="Permalink to this definition">¶</a></dt>
+<dt id="pyDEA.core.utils.dea_utils.SOLUTION_XLSX_FILE">
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">SOLUTION_XLSX_FILE</code><a class="headerlink" href="#pyDEA.core.utils.dea_utils.SOLUTION_XLSX_FILE" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>list of tuple of str, str</em></p>
 <p>list of
-supported solution file formats.</p>
+supported solution file formats (xlsx).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.utils.dea_utils.SOLUTION_XLS_FILE">
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">SOLUTION_XLS_FILE</code><a class="headerlink" href="#pyDEA.core.utils.dea_utils.SOLUTION_XLS_FILE" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>list of tuple of str, str</em></p>
+<p>list of
+supported solution file formats (xls).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This list does not contain csv format since for solution
@@ -288,7 +296,7 @@ be stored and then removed.</p>
 
 <dl class="class">
 <dt id="pyDEA.core.utils.dea_utils.ObserverStringVar">
-<em class="property">class </em><code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">ObserverStringVar</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.ObserverStringVar" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">ObserverStringVar</code><span class="sig-paren">(</span><em>*args</em>, <em>**kw</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#ObserverStringVar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.ObserverStringVar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">tkinter.StringVar</span></code></p>
 <p>This class extends StringVar and adds two data structures to it for
 storing input and output categories.</p>
@@ -310,7 +318,7 @@ storing input and output categories.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.auto_name_if_needed">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">auto_name_if_needed</code><span class="sig-paren">(</span><em>params</em>, <em>output_format</em>, <em>new_output_dir=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.auto_name_if_needed" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">auto_name_if_needed</code><span class="sig-paren">(</span><em>params</em>, <em>output_format</em>, <em>new_output_dir=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#auto_name_if_needed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.auto_name_if_needed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates an automatic name for solution file based on current
 parameter values, if OUTPUT_FILE is empty or set to auto.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -344,7 +352,7 @@ if output_format is not &#8216;xls&#8217;, &#8216;xlsx&#8217; or &#8216;csv&#821
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.calculate_nb_pages">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">calculate_nb_pages</code><span class="sig-paren">(</span><em>nb_data_rows</em>, <em>nb_table_rows</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.calculate_nb_pages" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">calculate_nb_pages</code><span class="sig-paren">(</span><em>nb_data_rows</em>, <em>nb_table_rows</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#calculate_nb_pages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.calculate_nb_pages" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates number of pages given number of data rows and number of rows
 in the table.</p>
 <div class="admonition note">
@@ -396,7 +404,7 @@ will return incorrect value.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.calculate_start_row_index">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">calculate_start_row_index</code><span class="sig-paren">(</span><em>curr_page</em>, <em>nb_table_rows</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.calculate_start_row_index" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">calculate_start_row_index</code><span class="sig-paren">(</span><em>curr_page</em>, <em>nb_table_rows</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#calculate_start_row_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.calculate_start_row_index" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates row index of data that will be displayed given
 current page and number of rows in the table.</p>
 <div class="admonition note">
@@ -425,7 +433,7 @@ current page and number of rows in the table.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.center_window">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">center_window</code><span class="sig-paren">(</span><em>widget</em>, <em>width=None</em>, <em>height=None</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.center_window" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">center_window</code><span class="sig-paren">(</span><em>widget</em>, <em>width=None</em>, <em>height=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#center_window"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.center_window" title="Permalink to this definition">¶</a></dt>
 <dd><p>Centres widget in the middle of the screen.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -446,7 +454,7 @@ If not specified, widget width is used.</li>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.change_to_unique_name_if_needed">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">change_to_unique_name_if_needed</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.change_to_unique_name_if_needed" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">change_to_unique_name_if_needed</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#change_to_unique_name_if_needed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.change_to_unique_name_if_needed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a file name, this function checks if there is a file with
 such a name, and generates a new unique name if the file exists.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -467,7 +475,7 @@ returned.</td>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.check_categories">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">check_categories</code><span class="sig-paren">(</span><em>categories_to_ckeck</em>, <em>categories</em>, <em>message=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.check_categories" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">check_categories</code><span class="sig-paren">(</span><em>categories_to_ckeck</em>, <em>categories</em>, <em>message=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#check_categories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.check_categories" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises ValueError if at least one of the given categories is not
 present in categories list.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -501,7 +509,7 @@ the list of current categories.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.check_input_and_output_categories">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">check_input_and_output_categories</code><span class="sig-paren">(</span><em>input_data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.check_input_and_output_categories" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">check_input_and_output_categories</code><span class="sig-paren">(</span><em>input_data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#check_input_and_output_categories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.check_input_and_output_categories" title="Permalink to this definition">¶</a></dt>
 <dd><p>Raises ValueError if input or output categories are empty.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -518,13 +526,13 @@ if input or output categories are empty.</td>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.clean_up_pickled_files">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">clean_up_pickled_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.clean_up_pickled_files" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">clean_up_pickled_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#clean_up_pickled_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.clean_up_pickled_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Removes mps-files from current folder and p-files from temporary folder.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.contraint_is_price_ratio_type">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">contraint_is_price_ratio_type</code><span class="sig-paren">(</span><em>bounds_key</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.contraint_is_price_ratio_type" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">contraint_is_price_ratio_type</code><span class="sig-paren">(</span><em>bounds_key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#contraint_is_price_ratio_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.contraint_is_price_ratio_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if given parameter is a tuple with two elements. In the case of price
 ratio weight restrictions key of bounds dictionary will be a tuple with two
 elements.</p>
@@ -544,7 +552,7 @@ elements.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.create_bounds">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">create_bounds</code><span class="sig-paren">(</span><em>constraints</em>, <em>categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.create_bounds" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">create_bounds</code><span class="sig-paren">(</span><em>constraints</em>, <em>categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#create_bounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.create_bounds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates proper data structures after parsing all constraints.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -584,7 +592,7 @@ if some of the constraints cannot be parsed.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.create_params_str">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">create_params_str</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.create_params_str" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">create_params_str</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#create_params_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.create_params_str" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates string from values of ORIENTATION and RETURN_TO_SCALE
 specified in parameters.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -599,7 +607,7 @@ specified in parameters.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.find_category_name_in_restrictions">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">find_category_name_in_restrictions</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.find_category_name_in_restrictions" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">find_category_name_in_restrictions</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#find_category_name_in_restrictions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.find_category_name_in_restrictions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds category name in the given constraint.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -642,7 +650,7 @@ return incorrect value</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.format_data">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">format_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.format_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">format_data</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#format_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.format_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Formats floating point number to 6 digits.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -671,7 +679,7 @@ return incorrect value</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.get_logger">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">get_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.get_logger" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">get_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#get_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.get_logger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets a logger with all configuration specified in file ini-file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -687,7 +695,7 @@ return incorrect value</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.get_price_ratio_categories">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">get_price_ratio_categories</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.get_price_ratio_categories" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">get_price_ratio_categories</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#get_price_ratio_categories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.get_price_ratio_categories" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses price ratio categories.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -720,7 +728,7 @@ function will fail with assert.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.is_efficient">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">is_efficient</code><span class="sig-paren">(</span><em>efficiency_score</em>, <em>lambda_variable</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.is_efficient" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">is_efficient</code><span class="sig-paren">(</span><em>efficiency_score</em>, <em>lambda_variable</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#is_efficient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.is_efficient" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if dmu with given efficiency score and value of
 lambda variable is efficient.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -757,7 +765,7 @@ to DMU under consideration.</li>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.is_valid_coeff">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">is_valid_coeff</code><span class="sig-paren">(</span><em>coeff</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.is_valid_coeff" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">is_valid_coeff</code><span class="sig-paren">(</span><em>coeff</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#is_valid_coeff"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.is_valid_coeff" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if given coefficient is valid. Valid coefficient is positive
 floating point or integer number.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -777,7 +785,7 @@ floating point or integer number.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.on_canvas_resize">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">on_canvas_resize</code><span class="sig-paren">(</span><em>canvas</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.on_canvas_resize" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">on_canvas_resize</code><span class="sig-paren">(</span><em>canvas</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#on_canvas_resize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.on_canvas_resize" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function updates scroll region of the canvas.
 It should be called on canvas resize.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -792,7 +800,7 @@ It should be called on canvas resize.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.parse_constraint">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">parse_constraint</code><span class="sig-paren">(</span><em>constraint</em>, <em>split_str</em>, <em>new_bounds_lb</em>, <em>new_bounds_ub</em>, <em>categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.parse_constraint" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">parse_constraint</code><span class="sig-paren">(</span><em>constraint</em>, <em>split_str</em>, <em>new_bounds_lb</em>, <em>new_bounds_ub</em>, <em>categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#parse_constraint"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.parse_constraint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses weight restriction constraint. This is internal utility function
 that is used in create_bounds().</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -839,7 +847,7 @@ if constraint cannot be parsed.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.parse_price_ratio">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">parse_price_ratio</code><span class="sig-paren">(</span><em>elem</em>, <em>value</em>, <em>constraint</em>, <em>categories</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.parse_price_ratio" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">parse_price_ratio</code><span class="sig-paren">(</span><em>elem</em>, <em>value</em>, <em>constraint</em>, <em>categories</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#parse_price_ratio"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.parse_price_ratio" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parses price ratio constraints and writes result to bounds.
 This function is internal utility function that is used for parsing
 weight restrictions in parse_constraint().</p>
@@ -876,7 +884,7 @@ if constraint cannot be parsed.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.dea_utils.validate_category_name">
-<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">validate_category_name</code><span class="sig-paren">(</span><em>name</em>, <em>category_index</em>, <em>current_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.dea_utils.validate_category_name" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.dea_utils.</code><code class="descname">validate_category_name</code><span class="sig-paren">(</span><em>name</em>, <em>category_index</em>, <em>current_categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/dea_utils.html#validate_category_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.dea_utils.validate_category_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks if given category name is valid. Name is valid if it is not
 a number, if it does not contain semicolon and if it is not duplicated.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -920,7 +928,7 @@ string otherwise.</p>
 parameters in the case when RETURN_TO_SCALE or ORIENTATION is set to both.</p>
 <dl class="function">
 <dt id="pyDEA.core.utils.model_builder.build_models">
-<code class="descclassname">pyDEA.core.utils.model_builder.</code><code class="descname">build_models</code><span class="sig-paren">(</span><em>params</em>, <em>model_input</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_builder.build_models" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.model_builder.</code><code class="descname">build_models</code><span class="sig-paren">(</span><em>params</em>, <em>model_input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_builder.html#build_models"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_builder.build_models" title="Permalink to this definition">¶</a></dt>
 <dd><p>Creates several models and parameters in the case when
 RETURN_TO_SCALE or ORIENTATION is set to both. If neither
 RETURN_TO_SCALE
@@ -954,42 +962,42 @@ second list contains corresponding parameters.</p>
 proper DEA model.</p>
 <dl class="class">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory">
-<em class="property">class </em><code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">EnvelopmentModelFactory</code><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">EnvelopmentModelFactory</code><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyDEA.core.utils.model_factory.ModelFactoryBase" title="pyDEA.core.utils.model_factory.ModelFactoryBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.utils.model_factory.ModelFactoryBase</span></code></a></p>
 <p>A factory class responsible for creating envelopment model.</p>
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.add_extra">
-<em class="property">classmethod </em><code class="descname">add_extra</code><span class="sig-paren">(</span><em>model</em>, <em>weakly_disposal_categories</em>, <em>non_discr_categories</em>, <em>orientation</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.add_extra" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">add_extra</code><span class="sig-paren">(</span><em>model</em>, <em>weakly_disposal_categories</em>, <em>non_discr_categories</em>, <em>orientation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.add_extra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.add_extra" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_VRS_model">
-<em class="property">classmethod </em><code class="descname">get_VRS_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_VRS_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_VRS_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.get_VRS_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_VRS_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_abs_restriction_model">
-<em class="property">classmethod </em><code class="descname">get_abs_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_abs_restriction_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_abs_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.get_abs_restriction_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_abs_restriction_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_basic_model">
-<em class="property">classmethod </em><code class="descname">get_basic_model</code><span class="sig-paren">(</span><em>model_input</em>, <em>concrete_model</em>, <em>weakly_disposal_categories</em>, <em>params</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_basic_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_basic_model</code><span class="sig-paren">(</span><em>model_input</em>, <em>concrete_model</em>, <em>weakly_disposal_categories</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.get_basic_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_basic_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_input_oriented_model">
-<em class="property">classmethod </em><code class="descname">get_input_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_input_oriented_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_input_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.get_input_oriented_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_input_oriented_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_lower_bound_generator">
-<em class="property">static </em><code class="descname">get_lower_bound_generator</code><span class="sig-paren">(</span><em>use_super_efficiency</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_lower_bound_generator" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">get_lower_bound_generator</code><span class="sig-paren">(</span><em>use_super_efficiency</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.get_lower_bound_generator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_lower_bound_generator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a function for lower bound generation for
 envelopment model.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1009,19 +1017,19 @@ should be created, false otherwise.</td>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_output_oriented_model">
-<em class="property">classmethod </em><code class="descname">get_output_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_output_oriented_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_output_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.get_output_oriented_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_output_oriented_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_price_ratio_model">
-<em class="property">classmethod </em><code class="descname">get_price_ratio_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_price_ratio_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_price_ratio_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.get_price_ratio_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_price_ratio_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="staticmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_upper_bound_generator_for_env_model">
-<em class="property">static </em><code class="descname">get_upper_bound_generator_for_env_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_upper_bound_generator_for_env_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">get_upper_bound_generator_for_env_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.get_upper_bound_generator_for_env_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_upper_bound_generator_for_env_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a function for upper bound generation for
 envelopment model.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1041,7 +1049,7 @@ should be created, false otherwise.</td>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_virtual_restriction_model">
-<em class="property">classmethod </em><code class="descname">get_virtual_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_virtual_restriction_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_virtual_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#EnvelopmentModelFactory.get_virtual_restriction_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.EnvelopmentModelFactory.get_virtual_restriction_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
@@ -1049,13 +1057,13 @@ should be created, false otherwise.</td>
 
 <dl class="class">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase">
-<em class="property">class </em><code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">ModelFactoryBase</code><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">ModelFactoryBase</code><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>Abstract base class for factory classes responsible for creating
 a DEA model.</p>
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase.add_extra">
-<em class="property">classmethod </em><code class="descname">add_extra</code><span class="sig-paren">(</span><em>model</em>, <em>weakly_disposal_categories</em>, <em>non_discr_categories</em>, <em>orientation</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.add_extra" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">add_extra</code><span class="sig-paren">(</span><em>model</em>, <em>weakly_disposal_categories</em>, <em>non_discr_categories</em>, <em>orientation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase.add_extra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.add_extra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper method that is called after get_basic_model.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1086,7 +1094,7 @@ model. Possible values: &#8220;input&#8221; or &#8220;output&#8221;.</li>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase.create_model">
-<em class="property">classmethod </em><code class="descname">create_model</code><span class="sig-paren">(</span><em>params</em>, <em>model_input</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.create_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">create_model</code><span class="sig-paren">(</span><em>params</em>, <em>model_input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase.create_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.create_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allocated a proper DEA model given parameters and input data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1110,7 +1118,7 @@ model. Possible values: &#8220;input&#8221; or &#8220;output&#8221;.</li>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase.get_VRS_model">
-<em class="property">classmethod </em><code class="descname">get_VRS_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_VRS_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_VRS_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase.get_VRS_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_VRS_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorates a given model with VRS constraints or variables.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1128,7 +1136,7 @@ model. Possible values: &#8220;input&#8221; or &#8220;output&#8221;.</li>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase.get_abs_restriction_model">
-<em class="property">classmethod </em><code class="descname">get_abs_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_abs_restriction_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_abs_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase.get_abs_restriction_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_abs_restriction_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorates a given model with absolute weight restrictions.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1154,7 +1162,7 @@ restrictions.</p>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase.get_basic_model">
-<em class="property">classmethod </em><code class="descname">get_basic_model</code><span class="sig-paren">(</span><em>model_input</em>, <em>concrete_model</em>, <em>weakly_disposal_categories</em>, <em>params</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_basic_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_basic_model</code><span class="sig-paren">(</span><em>model_input</em>, <em>concrete_model</em>, <em>weakly_disposal_categories</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase.get_basic_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_basic_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns allocated basic CRS DEA model.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1182,7 +1190,7 @@ strongly disposal.</li>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase.get_input_oriented_model">
-<em class="property">classmethod </em><code class="descname">get_input_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_input_oriented_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_input_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase.get_input_oriented_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_input_oriented_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns input-oriented model used in ModelBase.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1209,7 +1217,7 @@ discretionary.</li>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase.get_output_oriented_model">
-<em class="property">classmethod </em><code class="descname">get_output_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_output_oriented_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_output_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase.get_output_oriented_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_output_oriented_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns output-oriented model used in ModelBase.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1236,7 +1244,7 @@ discretionary.</li>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase.get_price_ratio_model">
-<em class="property">classmethod </em><code class="descname">get_price_ratio_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_price_ratio_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_price_ratio_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase.get_price_ratio_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_price_ratio_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorates a given model with price ratio weight restrictions.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1262,7 +1270,7 @@ restrictions.</p>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.ModelFactoryBase.get_virtual_restriction_model">
-<em class="property">classmethod </em><code class="descname">get_virtual_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_virtual_restriction_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_virtual_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#ModelFactoryBase.get_virtual_restriction_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.ModelFactoryBase.get_virtual_restriction_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorates a given model with virtual weight restrictions.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1290,54 +1298,54 @@ restrictions.</p>
 
 <dl class="class">
 <dt id="pyDEA.core.utils.model_factory.MultiplierModelFactory">
-<em class="property">class </em><code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">MultiplierModelFactory</code><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">MultiplierModelFactory</code><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#MultiplierModelFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyDEA.core.utils.model_factory.ModelFactoryBase" title="pyDEA.core.utils.model_factory.ModelFactoryBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.utils.model_factory.ModelFactoryBase</span></code></a></p>
 <p>A factory class responsible for creating multiplier model.</p>
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.MultiplierModelFactory.add_extra">
-<em class="property">classmethod </em><code class="descname">add_extra</code><span class="sig-paren">(</span><em>model</em>, <em>weakly_disposal_categories</em>, <em>non_discr_categories</em>, <em>orientation</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.add_extra" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">add_extra</code><span class="sig-paren">(</span><em>model</em>, <em>weakly_disposal_categories</em>, <em>non_discr_categories</em>, <em>orientation</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#MultiplierModelFactory.add_extra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.add_extra" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.MultiplierModelFactory.get_VRS_model">
-<em class="property">classmethod </em><code class="descname">get_VRS_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_VRS_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_VRS_model</code><span class="sig-paren">(</span><em>model</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#MultiplierModelFactory.get_VRS_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_VRS_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.MultiplierModelFactory.get_abs_restriction_model">
-<em class="property">classmethod </em><code class="descname">get_abs_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_abs_restriction_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_abs_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#MultiplierModelFactory.get_abs_restriction_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_abs_restriction_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.MultiplierModelFactory.get_basic_model">
-<em class="property">classmethod </em><code class="descname">get_basic_model</code><span class="sig-paren">(</span><em>model_input</em>, <em>concrete_model</em>, <em>weakly_disposal_categories</em>, <em>params</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_basic_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_basic_model</code><span class="sig-paren">(</span><em>model_input</em>, <em>concrete_model</em>, <em>weakly_disposal_categories</em>, <em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#MultiplierModelFactory.get_basic_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_basic_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.MultiplierModelFactory.get_input_oriented_model">
-<em class="property">classmethod </em><code class="descname">get_input_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_input_oriented_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_input_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#MultiplierModelFactory.get_input_oriented_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_input_oriented_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.MultiplierModelFactory.get_output_oriented_model">
-<em class="property">classmethod </em><code class="descname">get_output_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_output_oriented_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_output_oriented_model</code><span class="sig-paren">(</span><em>use_super_efficiency</em>, <em>non_discr_categories</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#MultiplierModelFactory.get_output_oriented_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_output_oriented_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.MultiplierModelFactory.get_price_ratio_model">
-<em class="property">classmethod </em><code class="descname">get_price_ratio_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_price_ratio_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_price_ratio_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#MultiplierModelFactory.get_price_ratio_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_price_ratio_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="classmethod">
 <dt id="pyDEA.core.utils.model_factory.MultiplierModelFactory.get_virtual_restriction_model">
-<em class="property">classmethod </em><code class="descname">get_virtual_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_virtual_restriction_model" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="descname">get_virtual_restriction_model</code><span class="sig-paren">(</span><em>model</em>, <em>bounds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#MultiplierModelFactory.get_virtual_restriction_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.MultiplierModelFactory.get_virtual_restriction_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
@@ -1345,7 +1353,7 @@ restrictions.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.model_factory.add_input_and_output_categories">
-<code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">add_input_and_output_categories</code><span class="sig-paren">(</span><em>params</em>, <em>model_input</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.add_input_and_output_categories" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">add_input_and_output_categories</code><span class="sig-paren">(</span><em>params</em>, <em>model_input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#add_input_and_output_categories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.add_input_and_output_categories" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds input and output categories specified in parameters
 to a given InputData object.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1369,7 +1377,7 @@ are missing.</p>
 
 <dl class="function">
 <dt id="pyDEA.core.utils.model_factory.create_model">
-<code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">create_model</code><span class="sig-paren">(</span><em>params</em>, <em>model_input</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.model_factory.create_model" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.utils.model_factory.</code><code class="descname">create_model</code><span class="sig-paren">(</span><em>params</em>, <em>model_input</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/model_factory.html#create_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.model_factory.create_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Allocates a proper DEA model based on given parameters and
 input data. This function must be used for creating DEA model.
 It calls appropriate factory class.</p>
@@ -1404,7 +1412,7 @@ Allowed values are env and multi.</p>
 <p>This module contains classes responsible for updating solution progress.</p>
 <dl class="class">
 <dt id="pyDEA.core.utils.progress_recorders.GuiProgress">
-<em class="property">class </em><code class="descclassname">pyDEA.core.utils.progress_recorders.</code><code class="descname">GuiProgress</code><span class="sig-paren">(</span><em>progress_bar</em>, <em>nb_models</em>, <em>nb_sheets</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.GuiProgress" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.core.utils.progress_recorders.</code><code class="descname">GuiProgress</code><span class="sig-paren">(</span><em>progress_bar</em>, <em>nb_models</em>, <em>nb_sheets</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/progress_recorders.html#GuiProgress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.GuiProgress" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyDEA.core.utils.progress_recorders.NullProgress" title="pyDEA.core.utils.progress_recorders.NullProgress"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.utils.progress_recorders.NullProgress</span></code></a></p>
 <p>This class updates progress bar while a given problem is being
 solved.</p>
@@ -1438,13 +1446,13 @@ solved.</p>
 </table>
 <dl class="method">
 <dt id="pyDEA.core.utils.progress_recorders.GuiProgress.increment_step">
-<code class="descname">increment_step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.GuiProgress.increment_step" title="Permalink to this definition">¶</a></dt>
+<code class="descname">increment_step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/progress_recorders.html#GuiProgress.increment_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.GuiProgress.increment_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Increments the progress bar by a step size.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.progress_recorders.GuiProgress.set_position">
-<code class="descname">set_position</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.GuiProgress.set_position" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_position</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/progress_recorders.html#GuiProgress.set_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.GuiProgress.set_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets position of the progress bar to a given value.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1460,19 +1468,19 @@ solved.</p>
 
 <dl class="class">
 <dt id="pyDEA.core.utils.progress_recorders.NullProgress">
-<em class="property">class </em><code class="descclassname">pyDEA.core.utils.progress_recorders.</code><code class="descname">NullProgress</code><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.NullProgress" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.core.utils.progress_recorders.</code><code class="descname">NullProgress</code><a class="reference internal" href="_modules/pyDEA/core/utils/progress_recorders.html#NullProgress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.NullProgress" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>This class does not update solution progress. It is used in
 terminal application.</p>
 <dl class="method">
 <dt id="pyDEA.core.utils.progress_recorders.NullProgress.increment_step">
-<code class="descname">increment_step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.NullProgress.increment_step" title="Permalink to this definition">¶</a></dt>
+<code class="descname">increment_step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/progress_recorders.html#NullProgress.increment_step"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.NullProgress.increment_step" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does nothing.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.progress_recorders.NullProgress.set_position">
-<code class="descname">set_position</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.NullProgress.set_position" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_position</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/progress_recorders.html#NullProgress.set_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.progress_recorders.NullProgress.set_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does nothing.</p>
 </dd></dl>
 
@@ -1485,14 +1493,14 @@ terminal application.</p>
 data instance either through terminal or GUI.</p>
 <dl class="class">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase">
-<em class="property">class </em><code class="descclassname">pyDEA.core.utils.run_routine.</code><code class="descname">RunMethodBase</code><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.core.utils.run_routine.</code><code class="descname">RunMethodBase</code><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
 <p>This class is an abstract base class for other classes used
 for executing solution routine - create data instance,
 solve LPs, post-process solutions.</p>
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase.decorate_model">
-<code class="descname">decorate_model</code><span class="sig-paren">(</span><em>model_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.decorate_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">decorate_model</code><span class="sig-paren">(</span><em>model_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase.decorate_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.decorate_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method is called after a model has been created,
 implementation depends on a concrete class.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1511,7 +1519,7 @@ implementation depends on a concrete class.</p>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase.get_categories">
-<code class="descname">get_categories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.get_categories" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_categories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase.get_categories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.get_categories" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns current categories.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1527,7 +1535,7 @@ implementation depends on a concrete class.</p>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase.get_coefficients">
-<code class="descname">get_coefficients</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.get_coefficients" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_coefficients</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase.get_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.get_coefficients" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns problem data coefficients.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1545,7 +1553,7 @@ must appear in the same order as categories.</td>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase.init_before_run">
-<code class="descname">init_before_run</code><span class="sig-paren">(</span><em>nb_models</em>, <em>coefficients</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.init_before_run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">init_before_run</code><span class="sig-paren">(</span><em>nb_models</em>, <em>coefficients</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase.init_before_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.init_before_run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Initialises appropriate data structures before solving LPs,
 implementation depends on a concrete class.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1565,7 +1573,7 @@ that maps DMU code to the list of coefficients</li>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase.post_process_solutions">
-<code class="descname">post_process_solutions</code><span class="sig-paren">(</span><em>solutions</em>, <em>params</em>, <em>param_strs</em>, <em>all_ranks</em>, <em>run_date</em>, <em>total_seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.post_process_solutions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">post_process_solutions</code><span class="sig-paren">(</span><em>solutions</em>, <em>params</em>, <em>param_strs</em>, <em>all_ranks</em>, <em>run_date</em>, <em>total_seconds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase.post_process_solutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.post_process_solutions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Post-processes solutions,
 implementation depends on a concrete class.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1591,7 +1599,7 @@ the problem.</li>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>params</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Executes solution routine - create data instance,
 solve LPs, post-process solutions.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1606,7 +1614,7 @@ solve LPs, post-process solutions.</p>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase.show_error">
-<code class="descname">show_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.show_error" title="Permalink to this definition">¶</a></dt>
+<code class="descname">show_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase.show_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.show_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays error message.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1620,14 +1628,14 @@ solve LPs, post-process solutions.</p>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase.show_success">
-<code class="descname">show_success</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.show_success" title="Permalink to this definition">¶</a></dt>
+<code class="descname">show_success</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase.show_success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.show_success" title="Permalink to this definition">¶</a></dt>
 <dd><p>By default does not do anything, but can be redefined
 by child classes to show a message that the execution was successful.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodBase.validate_weights_if_needed">
-<code class="descname">validate_weights_if_needed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.validate_weights_if_needed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">validate_weights_if_needed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodBase.validate_weights_if_needed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodBase.validate_weights_if_needed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Validates weight restrictions if they are present.
 This method might update parameters, hence,
 it MUST be called before model_builder.</p>
@@ -1637,7 +1645,7 @@ it MUST be called before model_builder.</p>
 
 <dl class="class">
 <dt id="pyDEA.core.utils.run_routine.RunMethodGUI">
-<em class="property">class </em><code class="descclassname">pyDEA.core.utils.run_routine.</code><code class="descname">RunMethodGUI</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.core.utils.run_routine.</code><code class="descname">RunMethodGUI</code><span class="sig-paren">(</span><em>frame</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodGUI"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyDEA.core.utils.run_routine.RunMethodBase" title="pyDEA.core.utils.run_routine.RunMethodBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.utils.run_routine.RunMethodBase</span></code></a></p>
 <p>This class implements running routing from GUI.</p>
 <dl class="attribute">
@@ -1672,43 +1680,43 @@ when DMU changes during solution process.</p>
 </table>
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodGUI.decorate_model">
-<code class="descname">decorate_model</code><span class="sig-paren">(</span><em>model_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.decorate_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">decorate_model</code><span class="sig-paren">(</span><em>model_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodGUI.decorate_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.decorate_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodGUI.get_categories">
-<code class="descname">get_categories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.get_categories" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_categories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodGUI.get_categories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.get_categories" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodGUI.get_coefficients">
-<code class="descname">get_coefficients</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.get_coefficients" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_coefficients</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodGUI.get_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.get_coefficients" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodGUI.init_before_run">
-<code class="descname">init_before_run</code><span class="sig-paren">(</span><em>nb_models</em>, <em>coefficients</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.init_before_run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">init_before_run</code><span class="sig-paren">(</span><em>nb_models</em>, <em>coefficients</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodGUI.init_before_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.init_before_run" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodGUI.post_process_solutions">
-<code class="descname">post_process_solutions</code><span class="sig-paren">(</span><em>solutions</em>, <em>params</em>, <em>param_strs</em>, <em>all_ranks</em>, <em>run_date</em>, <em>total_seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.post_process_solutions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">post_process_solutions</code><span class="sig-paren">(</span><em>solutions</em>, <em>params</em>, <em>param_strs</em>, <em>all_ranks</em>, <em>run_date</em>, <em>total_seconds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodGUI.post_process_solutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.post_process_solutions" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodGUI.show_error">
-<code class="descname">show_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.show_error" title="Permalink to this definition">¶</a></dt>
+<code class="descname">show_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodGUI.show_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.show_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodGUI.validate_weights_if_needed">
-<code class="descname">validate_weights_if_needed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.validate_weights_if_needed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">validate_weights_if_needed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodGUI.validate_weights_if_needed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodGUI.validate_weights_if_needed" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
@@ -1716,7 +1724,7 @@ when DMU changes during solution process.</p>
 
 <dl class="class">
 <dt id="pyDEA.core.utils.run_routine.RunMethodTerminal">
-<em class="property">class </em><code class="descclassname">pyDEA.core.utils.run_routine.</code><code class="descname">RunMethodTerminal</code><span class="sig-paren">(</span><em>params</em>, <em>sheet_name_usr</em>, <em>output_format</em>, <em>output_dir=''</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">pyDEA.core.utils.run_routine.</code><code class="descname">RunMethodTerminal</code><span class="sig-paren">(</span><em>params</em>, <em>sheet_name_usr</em>, <em>output_format</em>, <em>output_dir=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodTerminal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#pyDEA.core.utils.run_routine.RunMethodBase" title="pyDEA.core.utils.run_routine.RunMethodBase"><code class="xref py py-class docutils literal"><span class="pre">pyDEA.core.utils.run_routine.RunMethodBase</span></code></a></p>
 <p>This class implements running routing from terminal.</p>
 <dl class="attribute">
@@ -1773,49 +1781,49 @@ directory.</li>
 </table>
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodTerminal.decorate_model">
-<code class="descname">decorate_model</code><span class="sig-paren">(</span><em>model_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.decorate_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">decorate_model</code><span class="sig-paren">(</span><em>model_obj</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodTerminal.decorate_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.decorate_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodTerminal.get_categories">
-<code class="descname">get_categories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.get_categories" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_categories</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodTerminal.get_categories"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.get_categories" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodTerminal.get_coefficients">
-<code class="descname">get_coefficients</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.get_coefficients" title="Permalink to this definition">¶</a></dt>
+<code class="descname">get_coefficients</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodTerminal.get_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.get_coefficients" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodTerminal.init_before_run">
-<code class="descname">init_before_run</code><span class="sig-paren">(</span><em>nb_models</em>, <em>coefficients</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.init_before_run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">init_before_run</code><span class="sig-paren">(</span><em>nb_models</em>, <em>coefficients</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodTerminal.init_before_run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.init_before_run" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodTerminal.post_process_solutions">
-<code class="descname">post_process_solutions</code><span class="sig-paren">(</span><em>solutions</em>, <em>params</em>, <em>param_strs</em>, <em>all_ranks</em>, <em>run_date</em>, <em>total_seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.post_process_solutions" title="Permalink to this definition">¶</a></dt>
+<code class="descname">post_process_solutions</code><span class="sig-paren">(</span><em>solutions</em>, <em>params</em>, <em>param_strs</em>, <em>all_ranks</em>, <em>run_date</em>, <em>total_seconds</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodTerminal.post_process_solutions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.post_process_solutions" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodTerminal.show_error">
-<code class="descname">show_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.show_error" title="Permalink to this definition">¶</a></dt>
+<code class="descname">show_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodTerminal.show_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.show_error" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodTerminal.show_success">
-<code class="descname">show_success</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.show_success" title="Permalink to this definition">¶</a></dt>
+<code class="descname">show_success</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodTerminal.show_success"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.show_success" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays success message on screen.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="pyDEA.core.utils.run_routine.RunMethodTerminal.validate_weights_if_needed">
-<code class="descname">validate_weights_if_needed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.validate_weights_if_needed" title="Permalink to this definition">¶</a></dt>
+<code class="descname">validate_weights_if_needed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#RunMethodTerminal.validate_weights_if_needed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.RunMethodTerminal.validate_weights_if_needed" title="Permalink to this definition">¶</a></dt>
 <dd><p>See base class.</p>
 </dd></dl>
 
