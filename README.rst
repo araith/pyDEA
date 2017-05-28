@@ -8,13 +8,90 @@
 :License: MIT license
 :Web-site: 
 :Documentation: 
-:Platforms: All
+:Platforms: Windows, Linux
 :Date: 
-Copyright (c) 2016 Andrea Raith, Olga Perederieieva, Fariza Fauzi
+Copyright (c) 2017 Andrea Raith, Olga Perederieieva, Fariza Fauzi.
 
 *pyDEA* is a software package developed in Python for conducting data envelopment analysis (DEA). 
-   
-along with documentation of the software, which includes information on how to install and use *pyDEA*. 
+
+==============================
+Installing and Running Package
+==============================
+
+Installation
+------------
+
+The *pyDEA* package can be installed via pip, easy_install or from source. In order to install it via pip open terminal and use the following command:
+
+*>> pip install pyDEA*
+
+In order to install a specific version use the following command:
+
+*>> pip install pyDEA==version_number*
+
+In order to install *pyDEA* via easy_install use the following command:
+
+*>> easy_install pyDEA*
+
+Or for specific version:
+
+*>> easy_install pyDEA==version_number*
+
+In order to install from source, download and unzip source files, open terminal and navigate to *pyDEA* main folder and run the following command:
+
+*>> python setup.py install --record files.txt*
+
+This command will create distribution files in *pyDEA* folder and write paths to all other installed files to files.txt.
+
+How to Run
+----------
+
+The *pyDEA* package supports several interfaces. It has a Graphical User Interface (GUI), Command Line Interface (CLI) and it can be imported and used directly in python scripts. After package installation, in order to run GUI, open terminal and type:
+
+*>> pyDEA*
+
+Or use command:
+
+*>> python -m pyDEA.main_gui*
+
+In order to run CLI, use the following command:
+
+*>>  python -m pyDEA.main file_with_params output_file_format output_dir sheet_name*
+
+where
+
+  - *file_with_params* is path to file with parameters.
+  
+  - *output_file_format*, possible values: xls, xlsx and csv, default value is xlsx. This value is optional and is used only if OUTPUT_FILE in parameters file is empty or set to auto. Otherwise, the value in OUTPUT_FILE is used instead.
+
+  - *output_dir* is output directory. It is optional, if it is not specified, solution will be written to current directory. This value is used only if OUTPUT_FILE in parameters file is empty or set to auto. Otherwise, the value in OUTPUT_FILE is used instead.
+
+  - *sheet_name* is sheet name from which data should be read. It is optional, if it is not specified, data will be read from the first sheet.
+  
+If you want to specify sheet name, but not output directory use empty string as the third argument, as shown below:
+
+*>> python -m pyDEA.main .file_with_params “” “” sheet_name*
+
+If file path contains spaces use quotes.
+
+The *pyDEA* package can be imported in a python script as any other package. However, in order to access its methods and classes you need explicitly import them, for example, *from pyDEA import main_gui*. Then you can execute GUI by calling *main_gui.main()*. 
+
+Another example: 
+
+*>> from pyDEA.core.utils import dea_utils*
+
+*>> dea_utils.change_to_unique_name_if_needed("test")*
+
+This example imports all methods and classes defined in *dea_utils*.
+
+Uninstalling 
+------------
+
+If *pyDEA* was installed via pip or easy_install, it can be uninstalled by using the following command:
+
+*>> pip uninstall pyDEA*
+
+If *pyDEA* was installed from source, it must be manually uninstalled. Simply remove all files listed in files.txt and all *pyDEA* package files.
 
 ===============
  License
