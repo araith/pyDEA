@@ -117,7 +117,7 @@
         <div class="rst-content">
           
 
- 
+
 
 
 
@@ -415,7 +415,7 @@ the other tab is used for displaying solution.</p>
 <p class="first admonition-title">Note</p>
 <p>Parent must have object progress_bar, which value can
 be reset as follows:</p>
-<div class="last highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">parent</span><span class="o">.</span><span class="n">progress_bar</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<div class="last highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">parent</span><span class="o">.</span><span class="n">progress_bar</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
 </pre></div>
 </div>
 </div>
@@ -555,7 +555,7 @@ cleared, then we also need to clear parameters</p>
 <p>stores all loaded or entered
 data without categories,
 for example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="p">[[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1059,7 +1059,7 @@ some of the parameters.</p>
 <dl class="attribute">
 <dt id="pyDEA.core.gui_modules.options_frame_gui.COUNT_TO_NAME_RADIO_BTN">
 <code class="descclassname">pyDEA.core.gui_modules.options_frame_gui.</code><code class="descname">COUNT_TO_NAME_RADIO_BTN</code><a class="headerlink" href="#pyDEA.core.gui_modules.options_frame_gui.COUNT_TO_NAME_RADIO_BTN" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict of {(str, int</em></p>
+<dd><p><em>dict of {(str, int) to str}</em></p>
 <p>dictionary that
 maps parameter name and count to a valid value. This structure is
 used to identify parameter value used for display
@@ -1133,7 +1133,7 @@ category.</p>
 <p>dictionary that stores IntVars
 of Radiobuttons and Checkbuttons.</p>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;RETURN_TO_SCALE&quot;</span><span class="p">:</span> <span class="n">IntVar</span><span class="p">(),</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">options</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;RETURN_TO_SCALE&quot;</span><span class="p">:</span> <span class="n">IntVar</span><span class="p">(),</span>
 <span class="go">&quot;ORIENTATION&quot;: IntVar()}</span>
 </pre></div>
 </div>
@@ -3399,7 +3399,7 @@ number, 1 if negative or invalid value is stored in str_var.</td>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="o">.</span><span class="n">row_str_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="o">.</span><span class="n">row_str_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">tabel</span><span class="o">.</span><span class="n">get_nb_to_add</span><span class="p">(</span><span class="n">table</span><span class="o">.</span><span class="n">row_str_var</span><span class="p">)</span>
 <span class="go">10</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="o">.</span><span class="n">row_str_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>

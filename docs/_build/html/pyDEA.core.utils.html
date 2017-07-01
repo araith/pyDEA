@@ -116,7 +116,7 @@
         <div class="rst-content">
           
 
- 
+
 
 
 
@@ -390,7 +390,7 @@ will return incorrect value.</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_nb_pages</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_nb_pages</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="mi">12</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">calculate_nb_pages</span><span class="p">(</span><span class="mi">25</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span>
@@ -499,7 +499,7 @@ the list of current categories.</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">check_categories</span><span class="p">([</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;O1&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">check_categories</span><span class="p">([</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;O1&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="ne">ValueError</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">check_categories</span><span class="p">([</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;O1&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">])</span>
 <span class="go">&gt;&gt;&gt;</span>
@@ -577,7 +577,7 @@ if some of the constraints cannot be parsed.</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">categories</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">,</span> <span class="s1">&#39;O1&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">])</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">categories</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">,</span> <span class="s1">&#39;O1&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">constraints</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I1 &lt;= 10&#39;</span><span class="p">,</span> <span class="s1">&#39;I1 &gt;= 2&#39;</span><span class="p">,</span> <span class="s1">&#39;O1 &gt;= 3&#39;</span><span class="p">,</span> <span class="s1">&#39;O2 &lt;= 7&#39;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">create_bounds</span><span class="p">(</span><span class="n">constraints</span><span class="p">,</span> <span class="n">categories</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">{</span><span class="s1">&#39;I1&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="s1">&#39;O1&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="s1">&#39;O2&#39;</span><span class="p">:</span> <span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="mi">7</span><span class="p">)}</span>
@@ -626,7 +626,7 @@ to the position of the category name in the constraint.</td>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">find_category_name_in_restrictions</span><span class="p">(</span><span class="s1">&#39;I1 &lt;= 7&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">find_category_name_in_restrictions</span><span class="p">(</span><span class="s1">&#39;I1 &lt;= 7&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">find_category_name_in_restrictions</span><span class="p">(</span><span class="s1">&#39;  I1  &lt;=  7.8 &#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -665,7 +665,7 @@ return incorrect value</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">format_data</span><span class="p">(</span><span class="mf">1.222222222222222</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">format_data</span><span class="p">(</span><span class="mf">1.222222222222222</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;1.222222&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">format_data</span><span class="p">(</span><span class="s1">&#39;str&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;str&#39;</span>
@@ -711,7 +711,7 @@ denominator respectively.</td>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_price_ratio_categories</span><span class="p">(</span><span class="s1">&#39;I1/ I2&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">get_price_ratio_categories</span><span class="p">(</span><span class="s1">&#39;I1/ I2&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">get_price_ratio_categories</span><span class="p">(</span><span class="s1">&#39;   I1   /  I2  &#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="p">(</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">)</span>
@@ -751,7 +751,7 @@ to DMU under consideration.</li>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">is_efficient</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_efficient</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 <span class="go">True</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">is_efficient</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 <span class="go">False</span>
@@ -831,7 +831,7 @@ if constraint cannot be parsed.</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">new_bounds_lb</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">new_bounds_lb</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">new_bounds_ub</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">,</span> <span class="s1">&#39;O1&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">constr</span> <span class="o">=</span> <span class="s1">&#39;I1 &gt;= 5&#39;</span>
@@ -873,7 +873,7 @@ if constraint cannot be parsed.</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">bounds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">bounds</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;I1&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">,</span> <span class="s1">&#39;O1&#39;</span><span class="p">,</span> <span class="s1">&#39;O2&#39;</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">parse_price_ratio</span><span class="p">(</span><span class="s1">&#39;I1/I2&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;I1/I2 &gt;= 5&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">bounds</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bounds</span>
@@ -909,7 +909,7 @@ string otherwise.</p>
 </tbody>
 </table>
 <p class="rubric">Example</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">validate_category_name</span><span class="p">(</span><span class="s1">&#39;I1n&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;I1n&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">,</span> <span class="s1">&#39;O2])</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">validate_category_name</span><span class="p">(</span><span class="s1">&#39;I1n&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;I1n&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">,</span> <span class="s1">&#39;O2])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;I1n&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">validate_category_name</span><span class="p">(</span><span class="s1">&#39;I1n;&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;I1n;&#39;</span><span class="p">,</span> <span class="s1">&#39;I2&#39;</span><span class="p">,</span> <span class="s1">&#39;O2])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;&#39;</span>
