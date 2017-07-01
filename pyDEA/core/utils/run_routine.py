@@ -270,7 +270,6 @@ class RunMethodTerminal(RunMethodBase):
             elif output_file.endswith('.xlsx'):
                 work_book = XlsxWorkbook()
             elif output_file.endswith('.csv'):
-                # all not supported formats will be written to csv
                 work_book = TxtWriter(os.path.splitext(output_file)[0])
             else:
                 raise ValueError('File {0} has unsupported output format'.format

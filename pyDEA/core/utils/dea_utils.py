@@ -484,7 +484,7 @@ def parse_price_ratio(elem, value, constraint, categories, bounds):
             two_categories[1] not in categories):
         raise ValueError('Incorrect constraint, category does not'
                          ' exist: {0}'.format(
-                         constraint))
+                            constraint))
     key = two_categories[0], two_categories[1]
     bounds[key] = float(value)
 
@@ -553,7 +553,7 @@ def parse_constraint(constraint, split_str, new_bounds_lb, new_bounds_ub,
             else:
                 raise ValueError('Incorrect constraint, category does not'
                                  ' exist: {0}'.format(
-                                 constraint))
+                                     constraint))
     return found
 
 
@@ -618,6 +618,7 @@ def contraint_is_price_ratio_type(bounds_key):
             bool: true if given element is a tuple with two elements, false otherwise.
     '''
     return isinstance(bounds_key, tuple) and len(bounds_key) == 2
+
 
 def get_price_ratio_categories(val):
     ''' Parses price ratio categories.

@@ -10,7 +10,7 @@ from pyDEA.core.utils.dea_utils import format_data, change_to_unique_name_if_nee
 class SolutionTextWriter(object):
     ''' This class implements generic utility to write formatted data
         to a given output (usually file, but could be anything that implements
-        a particular interface). Data is written row by row an column by column,
+        a particular interface). Data is written row by row and column by column,
         as a table.
 
         Attributes:
