@@ -225,16 +225,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_create_params_tab</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">weight_tab</span> <span class="o">=</span> <span class="n">WeightFrame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span><span class="p">,</span>
                                       <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">weights_status_str</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight_tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Weights editor&#39;</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">weight_tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Weights editor&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="ParamsFrame.change_weight_tab_name"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.params_frame_gui.ParamsFrame.change_weight_tab_name">[docs]</a>    <span class="k">def</span> <span class="nf">change_weight_tab_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Changes name of weights editor tab.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                new_name (str): new name for weights editor tab.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">new_name</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">new_name</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_create_params_tab</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Creates all widgets of the parameters tab.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -309,8 +309,8 @@
         <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
             <span class="n">write_parameters_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">on_save_params_as</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_save_params_as</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="ParamsFrame.on_save_params_as"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.params_frame_gui.ParamsFrame.on_save_params_as">[docs]</a>    <span class="k">def</span> <span class="nf">on_save_params_as</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Calls asksaveasfilename dialogue and saves current values of</span>
 <span class="sd">            parameters to</span>
@@ -318,8 +318,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_file_name_to_save</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
-            <span class="n">write_parameters_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span></div>
-
+            <span class="n">write_parameters_to_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">file_name</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_get_file_name_to_save</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Calls asksaveasfilename dialogue. This method is overridden</span>
 <span class="sd">            in unit tests.</span>
@@ -354,8 +354,8 @@
                 <span class="c1"># restore previous parameters</span>
                 <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params_to_restore</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">options_frame</span><span class="o">.</span><span class="n">set_params_values</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">options_frame</span><span class="o">.</span><span class="n">set_params_values</span><span class="p">()</span>
+</div>
     <span class="k">def</span> <span class="nf">_get_filename_for_load</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Calls askopenfilename dialogue. This method is overridden</span>
 <span class="sd">            in unit tests.</span>
@@ -407,8 +407,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_show_warning</span><span class="p">(</span><span class="n">norm_data_path</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params_to_restore</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
-
+                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_show_warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">norm_data_path</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Shows warning that data cannot be loaded from file.</span>
 <span class="sd">            This method is overridden in unit tests.</span>
@@ -432,8 +432,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">weight_tab</span><span class="o">.</span><span class="n">add_weights</span><span class="p">()</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options_frame</span><span class="o">.</span><span class="n">combobox_text_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="n">old_name</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">options_frame</span><span class="o">.</span><span class="n">change_categorical_box</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">options_frame</span><span class="o">.</span><span class="n">set_categorical_box</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span></div>
-
+                <span class="bp">self</span><span class="o">.</span><span class="n">options_frame</span><span class="o">.</span><span class="n">set_categorical_box</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="ParamsFrame.add_categories"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.params_frame_gui.ParamsFrame.add_categories">[docs]</a>    <span class="k">def</span> <span class="nf">add_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">categories_container</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds input or output categories to a specified widget</span>
 <span class="sd">            with categories from parameters.</span>
@@ -454,8 +454,8 @@
                 <span class="n">frame</span><span class="o">.</span><span class="n">add_category</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
                 <span class="n">categories_container</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove_category_from_params</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span></div>
-
+                <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">remove_category_from_params</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="ParamsFrame.clear_all"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.params_frame_gui.ParamsFrame.clear_all">[docs]</a>    <span class="k">def</span> <span class="nf">clear_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Clears all parameters and corresponding widgets.</span>
 <span class="sd">        &#39;&#39;&#39;</span>

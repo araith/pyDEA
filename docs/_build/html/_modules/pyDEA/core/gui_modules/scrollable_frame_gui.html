@@ -162,14 +162,14 @@
 
 <div class="viewcode-block" id="MouseWheel.onMouseWheel"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.onMouseWheel">[docs]</a>    <span class="k">def</span> <span class="nf">onMouseWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span><span class="o">.</span><span class="n">onMouseWheel</span><span class="p">(</span><span class="n">event</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span><span class="o">.</span><span class="n">onMouseWheel</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="MouseWheel.mouseWheel_bind"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.mouseWheel_bind">[docs]</a>    <span class="k">def</span> <span class="nf">mouseWheel_bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span> <span class="o">=</span> <span class="n">widget</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span> <span class="o">=</span> <span class="n">widget</span>
+</div>
 <div class="viewcode-block" id="MouseWheel.mouseWheel_unbind"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.mouseWheel_unbind">[docs]</a>    <span class="k">def</span> <span class="nf">mouseWheel_unbind</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span> <span class="o">=</span> <span class="bp">None</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">activeArea</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="MouseWheel.build_function_onMouseWheel"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.build_function_onMouseWheel">[docs]</a>    <span class="k">def</span> <span class="nf">build_function_onMouseWheel</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">orient</span><span class="p">,</span> <span class="n">scrollbar</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
         <span class="n">view_command</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">orient</span><span class="o">+</span><span class="s1">&#39;view&#39;</span><span class="p">)</span>
@@ -197,8 +197,8 @@
                         <span class="n">scrollbar</span><span class="o">.</span><span class="n">state</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;disabled&#39;</span><span class="p">):</span>
                     <span class="n">view_command</span><span class="p">(</span><span class="s2">&quot;scroll&quot;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">delta</span><span class="p">,</span> <span class="s2">&quot;units&quot;</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">onMouseWheel</span></div>
-
+        <span class="k">return</span> <span class="n">onMouseWheel</span>
+</div>
 <div class="viewcode-block" id="MouseWheel.add_scrolling"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.MouseWheel.add_scrolling">[docs]</a>    <span class="k">def</span> <span class="nf">add_scrolling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">scrollingArea</span><span class="p">,</span> <span class="n">xscrollbar</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">yscrollbar</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="n">scrollingArea</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Enter&gt;&#39;</span><span class="p">,</span>
                            <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouseWheel_bind</span><span class="p">(</span><span class="n">scrollingArea</span><span class="p">))</span>
@@ -228,9 +228,9 @@
                     <span class="s1">&#39;&lt;Enter&gt;&#39;</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">event</span><span class="p">,</span>
                     <span class="n">scrollbar</span><span class="o">=</span><span class="n">scrollbar</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouseWheel_bind</span><span class="p">(</span><span class="n">scrollbar</span><span class="p">))</span>
                 <span class="n">scrollbar</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Leave&gt;&#39;</span><span class="p">,</span>
-                               <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouseWheel_unbind</span><span class="p">())</span></div></div>
+                               <span class="k">lambda</span> <span class="n">event</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouseWheel_unbind</span><span class="p">())</span>
 
-
+</div></div>
 <div class="viewcode-block" id="VerticalScrolledFrame"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.scrollable_frame_gui.VerticalScrolledFrame">[docs]</a><span class="k">class</span> <span class="nc">VerticalScrolledFrame</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; A pure Tkinter scrollable frame that actually works!</span>
 <span class="sd">            Use the &#39;interior&#39; attribute to place widgets inside the scrollable</span>

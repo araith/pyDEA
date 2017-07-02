@@ -225,8 +225,8 @@
                                      <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="o">+</span><span class="n">N</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">solution_tab</span> <span class="o">=</span> <span class="n">SolutionFrameWithText</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">solution_tab</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="o">+</span><span class="n">E</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">solution_tab</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="o">+</span><span class="n">E</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_create_file_format_btn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">btn_text</span><span class="p">,</span> <span class="n">var_value</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">column</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Creates and grids Radiobutton used for choosing solution file</span>
 <span class="sd">            format.</span>
@@ -312,8 +312,8 @@
                     <span class="n">work_book</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
                 <span class="n">progress_recorder</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">change_solution_tab_name</span><span class="p">(</span><span class="s1">&#39;Solution&#39;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">status_lbl</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Solution saved&#39;</span><span class="p">)</span></div>
-
+                <span class="bp">self</span><span class="o">.</span><span class="n">status_lbl</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Solution saved&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="SolutionTabFrame.ask_file_name_to_save"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_tab_frame_gui.SolutionTabFrame.ask_file_name_to_save">[docs]</a>    <span class="k">def</span> <span class="nf">ask_file_name_to_save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ext_code</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Calls asksaveasfilename dialogue to ask the user where file</span>
 <span class="sd">            should be saved.</span>
@@ -328,8 +328,8 @@
             <span class="n">filetype</span> <span class="o">=</span> <span class="n">SOLUTION_XLSX_FILE</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">filetype</span> <span class="o">=</span> <span class="n">SOLUTION_XLS_FILE</span>
-        <span class="k">return</span> <span class="n">asksaveasfilename</span><span class="p">(</span><span class="n">filetypes</span><span class="o">=</span><span class="n">filetype</span><span class="p">,</span> <span class="n">defaultextension</span><span class="o">=</span><span class="s1">&#39;xlsx&#39;</span><span class="p">)</span></div>
-
+        <span class="k">return</span> <span class="n">asksaveasfilename</span><span class="p">(</span><span class="n">filetypes</span><span class="o">=</span><span class="n">filetype</span><span class="p">,</span> <span class="n">defaultextension</span><span class="o">=</span><span class="s1">&#39;xlsx&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="SolutionTabFrame.show_solution"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_tab_frame_gui.SolutionTabFrame.show_solution">[docs]</a>    <span class="k">def</span> <span class="nf">show_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">param_strs</span><span class="p">,</span> <span class="n">run_date</span><span class="p">,</span>
                       <span class="n">total_seconds</span><span class="p">,</span> <span class="n">ranks</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">categorical</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Displays solution on the screen.</span>
@@ -361,8 +361,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">solution_tab</span><span class="o">.</span><span class="n">show_solution</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">param_strs</span><span class="p">,</span> <span class="n">run_date</span><span class="p">,</span>
                                         <span class="n">total_seconds</span><span class="p">,</span> <span class="n">ranks</span><span class="p">,</span> <span class="n">categorical</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">change_solution_tab_name</span><span class="p">(</span><span class="s1">&#39;Solution*&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status_lbl</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Solution loaded&#39;</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_lbl</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">&#39;Solution loaded&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="SolutionTabFrame.update_data_file_name"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_tab_frame_gui.SolutionTabFrame.update_data_file_name">[docs]</a>    <span class="k">def</span> <span class="nf">update_data_file_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_data_file_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates label with data file name.</span>
 

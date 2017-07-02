@@ -150,9 +150,9 @@
         <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
             <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">file_name</span><span class="p">:</span>
                 <span class="n">data_file</span> <span class="o">=</span> <span class="n">data_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">return</span> <span class="n">data_file</span></div>
+        <span class="k">return</span> <span class="n">data_file</span>
 
-
+</div>
 <div class="viewcode-block" id="DataTabFrame"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame">[docs]</a><span class="k">class</span> <span class="nc">DataTabFrame</span><span class="p">(</span><span class="n">Frame</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class creates frame with all widgets needed for working with data</span>
 <span class="sd">        (e.g. loading, saving, modifying, etc.)</span>
@@ -263,8 +263,8 @@
 
         <span class="n">frame_for_navigation_btns</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">E</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
                                        <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span> <span class="o">=</span> <span class="n">frame_for_navigation_btns</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span> <span class="o">=</span> <span class="n">frame_for_navigation_btns</span>
+</div>
     <span class="k">def</span> <span class="nf">_create_btns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Creates load and save buttons.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -296,15 +296,15 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
         <span class="n">nb_letters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">TEXT_FOR_PANEL</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">data_file</span><span class="p">[</span><span class="n">nb_letters</span><span class="p">:]</span></div>
-
+        <span class="k">return</span> <span class="n">data_file</span><span class="p">[</span><span class="n">nb_letters</span><span class="p">:]</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.remove_star_from_panel"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.remove_star_from_panel">[docs]</a>    <span class="k">def</span> <span class="nf">remove_star_from_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Removes star from data file name if it was there.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data_file_name</span><span class="p">()</span>
         <span class="n">data_file</span> <span class="o">=</span> <span class="n">remove_star</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span> <span class="o">+</span> <span class="n">data_file</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span> <span class="o">+</span> <span class="n">data_file</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.save_data"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.save_data">[docs]</a>    <span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Saves data to an existing or new file.</span>
 
@@ -320,8 +320,8 @@
         <span class="k">elif</span> <span class="n">data_file</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_data_to_given_file</span><span class="p">(</span><span class="n">remove_star</span><span class="p">(</span><span class="n">data_file</span><span class="p">),</span>
                                          <span class="n">sheet_name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_star_from_panel</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_star_from_panel</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.save_data_as"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.save_data_as">[docs]</a>    <span class="k">def</span> <span class="nf">save_data_as</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Saves data to a new file.</span>
 
@@ -331,8 +331,8 @@
         <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_file_save_as_dialog</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">save_data_to_given_file</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span> <span class="o">+</span> <span class="n">file_name</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_call_file_save_as_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Calls save as dialogue.</span>
 
@@ -350,8 +350,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">categories</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">cells</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="k">for</span> <span class="n">col</span>
                       <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_cols</span><span class="p">)]</span>
-        <span class="n">save_data_to_xls</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">sheet_name</span><span class="p">)</span></div>
-
+        <span class="n">save_data_to_xls</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">sheet_name</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.on_data_modify"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.on_data_modify">[docs]</a>    <span class="k">def</span> <span class="nf">on_data_modify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds star to label frame when data was modified.</span>
 
@@ -361,8 +361,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;text&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">data_file</span> <span class="ow">and</span> <span class="s1">&#39;*&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_file</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">data_file</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">data_file</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.load_file"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.load_file">[docs]</a>    <span class="k">def</span> <span class="nf">load_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Asks user which data file should be loaded and loads specified file.</span>
 
@@ -370,8 +370,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_call_open_file_dialogue</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">file_name</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">show_loaded_data</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_loaded_data</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_call_open_file_dialogue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Calls open file dialogue. This method is overridden in unit tests.</span>
 
@@ -391,8 +391,8 @@
         <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span>
             <span class="n">askyesno</span><span class="p">(</span><span class="s2">&quot;Verify&quot;</span><span class="p">,</span>
                      <span class="s2">&quot;Are sure you want to delete all input data?&quot;</span><span class="p">)):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">clear_all</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear_all</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.clear_all"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.clear_all">[docs]</a>    <span class="k">def</span> <span class="nf">clear_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Clears all data.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -402,8 +402,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">panel</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">TEXT_FOR_PANEL</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">reset_progress_bar</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span><span class="o">.</span><span class="n">reset_navigation</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span><span class="o">.</span><span class="n">reset_navigation</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.on_params_file_change"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.on_params_file_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_params_file_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Loads data or clears all after parameters are loaded from file.</span>
 
@@ -419,8 +419,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">params_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_from_params_file</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">params_file</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">show_loaded_data</span><span class="p">(</span><span class="n">params_file</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">show_loaded_data</span><span class="p">(</span><span class="n">params_file</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.show_loaded_data"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.show_loaded_data">[docs]</a>    <span class="k">def</span> <span class="nf">show_loaded_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Loads data file.</span>
 
@@ -461,8 +461,8 @@
             <span class="n">categories</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span>
                 <span class="n">file_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">show_data</span><span class="p">(</span><span class="n">categories</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">remove_star_from_panel</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">remove_star_from_panel</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.call_dialog"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.call_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">call_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Calls dialogue that asks user to specify sheet name from where</span>
 <span class="sd">            data should be loaded.</span>
@@ -483,8 +483,8 @@
         <span class="n">win</span><span class="o">.</span><span class="n">grab_set</span><span class="p">()</span>
         <span class="n">win</span><span class="o">.</span><span class="n">focus_set</span><span class="p">()</span>
         <span class="n">win</span><span class="o">.</span><span class="n">wait_window</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span></div>
-
+        <span class="k">return</span> <span class="n">var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.show_data"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.show_data">[docs]</a>    <span class="k">def</span> <span class="nf">show_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Fills table with data.</span>
 
@@ -515,8 +515,8 @@
 
         <span class="n">nb_data_pages</span> <span class="o">=</span> <span class="n">calculate_nb_pages</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_rows</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span><span class="o">.</span><span class="n">set_navigation</span><span class="p">(</span><span class="n">nb_data_pages</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">navigation_frame</span><span class="o">.</span><span class="n">set_navigation</span><span class="p">(</span><span class="n">nb_data_pages</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="DataTabFrame.read_coefficients"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.data_tab_frame_gui.DataTabFrame.read_coefficients">[docs]</a>    <span class="k">def</span> <span class="nf">read_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Converts coefficients into a proper data structure</span>
 <span class="sd">            used for running algorithms.</span>

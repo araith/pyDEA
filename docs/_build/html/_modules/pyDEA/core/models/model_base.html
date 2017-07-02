@@ -135,9 +135,9 @@
 <div class="viewcode-block" id="do_nothing"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.model_base.do_nothing">[docs]</a><span class="k">def</span> <span class="nf">do_nothing</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39; Helper function. Does nothing.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">pass</span></div>
+    <span class="k">pass</span>
 
-
+</div>
 <div class="viewcode-block" id="ModelBase"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.model_base.ModelBase">[docs]</a><span class="k">class</span> <span class="nc">ModelBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Abstract base class for some of the DEA models.</span>
 
@@ -167,8 +167,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">run_for_one_DMU</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span>
             <span class="c1"># self.lp_model.writeLP(&quot;dmu_{0}.txt&quot;.format(dmu_code))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_dmu_str_var</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">model_solution</span></div>
-
+        <span class="k">return</span> <span class="n">model_solution</span>
+</div>
     <span class="k">def</span> <span class="nf">_create_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Allocates solution object.</span>
 
@@ -186,8 +186,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_update_lp</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lp_model</span><span class="o">.</span><span class="n">solve</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fill_solution</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fill_solution</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_fill_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Fills given solution with data calculated for one DMU.</span>
 <span class="sd">            Must be implemented in derived classes.</span>

@@ -188,13 +188,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">second_solution</span><span class="o">.</span><span class="n">efficiency_scores</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">_should_add_efficiency</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fill_efficiency</span><span class="p">(</span><span class="n">model_solution</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">=</span> <span class="n">lp_model_copy</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">lp_model</span> <span class="o">=</span> <span class="n">lp_model_copy</span>
 
     <span class="c1"># we need to explicitly redirect all calls to model since this class</span>
     <span class="c1"># inherits from EnvelopmentModelBase and all methods are defined there.</span>
     <span class="c1"># Some of them might be redefined by children classes. To ensure children</span>
     <span class="c1"># redefined methods are called, we have to explicitly redirect calls to</span>
-    <span class="c1"># stored model.</span>
+    <span class="c1"># stored model.</span></div>
     <span class="k">def</span> <span class="nf">_create_lp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>

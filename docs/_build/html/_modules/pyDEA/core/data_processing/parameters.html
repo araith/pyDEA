@@ -213,9 +213,9 @@
     <span class="k">if</span> <span class="n">nb_parsed_params</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;File {filename} does not contain any valid&#39;</span>
                          <span class="s1">&#39; parameter values&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">params</span></div>
+    <span class="k">return</span> <span class="n">params</span>
 
-
+</div>
 <div class="viewcode-block" id="extract_comment"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.extract_comment">[docs]</a><span class="k">def</span> <span class="nf">extract_comment</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Removes comments from a given line. Symbol # is treated as</span>
 <span class="sd">        one line comment separator.</span>
@@ -237,9 +237,9 @@
     <span class="n">pos</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">pos</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">line</span><span class="p">[:</span><span class="n">pos</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">line</span></div>
+    <span class="k">return</span> <span class="n">line</span>
 
-
+</div>
 <div class="viewcode-block" id="write_parameters_to_file"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.write_parameters_to_file">[docs]</a><span class="k">def</span> <span class="nf">write_parameters_to_file</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Writes all parameters stored in a given Parameters object</span>
 <span class="sd">        to a given file in the following format format:</span>
@@ -253,9 +253,9 @@
     <span class="n">file_with_params</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>  <span class="c1"># w - open to write data</span>
     <span class="k">for</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span> <span class="ow">in</span> <span class="n">params</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">file_with_params</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&lt;&#39;</span> <span class="o">+</span> <span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;&gt; {&#39;</span> <span class="o">+</span> <span class="n">value</span> <span class="o">+</span> <span class="s1">&#39;}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">file_with_params</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+    <span class="n">file_with_params</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-
+</div>
 <div class="viewcode-block" id="validate_string"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.validate_string">[docs]</a><span class="k">def</span> <span class="nf">validate_string</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">expression</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Checks if a given string matched a given regular expression.</span>
 
@@ -286,9 +286,9 @@
     <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">match</span> <span class="ow">and</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">()</span> <span class="o">==</span> <span class="n">string</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">True</span>
-    <span class="k">return</span> <span class="bp">False</span></div>
+    <span class="k">return</span> <span class="bp">False</span>
 
-
+</div>
 <div class="viewcode-block" id="Parameters"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.Parameters">[docs]</a><span class="k">class</span> <span class="nc">Parameters</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39; This class stores and manipulates all parameters needed to run</span>
 <span class="sd">        DEA models. After object creation all parameter values are set</span>
@@ -342,8 +342,8 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Trying to update parameter &lt;{0}&gt; with &#39;</span>
                              <span class="s1">&#39;not valid value &lt;{1}&gt;&#39;</span><span class="o">.</span>
                              <span class="n">format</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">param_value</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">param_value</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">param_value</span>
+</div>
 <div class="viewcode-block" id="Parameters.get_parameter_value"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.Parameters.get_parameter_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_parameter_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns a value that corresponds to a given parameter name.</span>
 <span class="sd">            If there is no such parameter name, throws KeyError exception.</span>
@@ -362,14 +362,14 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                str: parameter value.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span>
+</div>
 <div class="viewcode-block" id="Parameters.print_all_parameters"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.Parameters.print_all_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">print_all_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Prints all parameters on screen.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;&lt;{0}&gt; = {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
-
+            <span class="k">print</span><span class="p">(</span><span class="s2">&quot;&lt;{0}&gt; = {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+</div>
 <div class="viewcode-block" id="Parameters.get_all_params_as_string"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.Parameters.get_all_params_as_string">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_params_as_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns all parameters with values as a string. </span>
 
@@ -379,8 +379,8 @@
         <span class="n">all_params</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">all_params</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;&lt;{0}&gt; = &#39;{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
-        <span class="k">return</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">all_params</span><span class="p">)</span></div>
-
+        <span class="k">return</span> <span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">all_params</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="Parameters.get_set_of_parameters"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.Parameters.get_set_of_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">get_set_of_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;;&#39;</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Some of the parameters contain a set of values.</span>
 <span class="sd">            Returns a set of strings with these values instead of</span>
@@ -395,8 +395,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">params_as_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="n">param_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">set</span><span class="p">([</span><span class="n">elem</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">params_as_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">strip</span><span class="p">()])</span></div>
-
+                    <span class="k">if</span> <span class="n">elem</span><span class="o">.</span><span class="n">strip</span><span class="p">()])</span>
+</div>
 <div class="viewcode-block" id="Parameters.copy_all_params"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.Parameters.copy_all_params">[docs]</a>    <span class="k">def</span> <span class="nf">copy_all_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params_from</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Copies all parameter values from a given parameter object.</span>
 
@@ -405,8 +405,8 @@
 <span class="sd">                    parameter values will be copied.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">params_from</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="Parameters.remove_category_from_params"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.Parameters.remove_category_from_params">[docs]</a>    <span class="k">def</span> <span class="nf">remove_category_from_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_type</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Removes a given parameter value from parameters.</span>
 
@@ -417,15 +417,15 @@
         <span class="n">categories</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_set_of_parameters</span><span class="p">(</span><span class="n">category_type</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
             <span class="n">categories</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">category_type</span><span class="p">,</span> <span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">categories</span><span class="p">))</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">category_type</span><span class="p">,</span> <span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">categories</span><span class="p">))</span>
+</div>
 <div class="viewcode-block" id="Parameters.clear_all_categorical_and_data_fields"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.Parameters.clear_all_categorical_and_data_fields">[docs]</a>    <span class="k">def</span> <span class="nf">clear_all_categorical_and_data_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Sets values of parameters from CATEGORICAL_AND_DATA_FIELDS</span>
 <span class="sd">            to empty strings.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">param_name</span> <span class="ow">in</span> <span class="n">CATEGORICAL_AND_DATA_FIELDS</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="Parameters.change_category_name"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.parameters.Parameters.change_category_name">[docs]</a>    <span class="k">def</span> <span class="nf">change_category_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Changes a given category name to a new name in all parameter</span>
 <span class="sd">            values that contain this category.</span>

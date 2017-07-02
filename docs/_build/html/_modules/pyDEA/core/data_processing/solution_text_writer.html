@@ -136,7 +136,7 @@
 <div class="viewcode-block" id="SolutionTextWriter"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.SolutionTextWriter">[docs]</a><span class="k">class</span> <span class="nc">SolutionTextWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class implements generic utility to write formatted data</span>
 <span class="sd">        to a given output (usually file, but could be anything that implements</span>
-<span class="sd">        a particular interface). Data is written row by row an column by column,</span>
+<span class="sd">        a particular interface). Data is written row by row and column by column,</span>
 <span class="sd">        as a table.</span>
 
 <span class="sd">        Attributes:</span>
@@ -204,9 +204,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">write_fnc</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">delimiter</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_row</span> <span class="o">=</span> <span class="n">row_index</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_col</span> <span class="o">=</span> <span class="n">column_index</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write_fnc</span><span class="p">(</span><span class="n">format_data</span><span class="p">(</span><span class="n">data</span><span class="p">))</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_fnc</span><span class="p">(</span><span class="n">format_data</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
-
+</div></div>
 <div class="viewcode-block" id="TxtOneFileWriter"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.TxtOneFileWriter">[docs]</a><span class="k">class</span> <span class="nc">TxtOneFileWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class is a helper class for TxtWriter. It implements</span>
 <span class="sd">        function write_text that writes data to a file, and it</span>
@@ -229,9 +229,9 @@
 <span class="sd">            Args:</span>
 <span class="sd">                data (str): data to write to file.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_ref</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_ref</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
-
+</div></div>
 <div class="viewcode-block" id="TxtWriter"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.TxtWriter">[docs]</a><span class="k">class</span> <span class="nc">TxtWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class is used for writing solution to csv. It creates a</span>
 <span class="sd">        given folder where all csv files will be written and</span>
@@ -281,8 +281,8 @@
         <span class="n">tab_writer</span> <span class="o">=</span> <span class="n">TxtOneFileWriter</span><span class="p">(</span><span class="n">file_ref</span><span class="p">)</span>
         <span class="n">writer</span> <span class="o">=</span> <span class="n">SolutionTextWriter</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">tab_writer</span><span class="o">.</span><span class="n">write_text</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">tab_writers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">file_name</span><span class="p">,</span> <span class="n">writer</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">writer</span></div>
-
+        <span class="k">return</span> <span class="n">writer</span>
+</div>
 <div class="viewcode-block" id="TxtWriter.save"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.TxtWriter.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Closes all created csv files and renames them according to solution</span>
 <span class="sd">            page names.</span>
@@ -296,7 +296,53 @@
         <span class="k">for</span> <span class="n">saved_file_name</span><span class="p">,</span> <span class="n">tab_writer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tab_writers</span><span class="p">:</span>
             <span class="n">new_name</span> <span class="o">=</span> <span class="s1">&#39;{0}.csv&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tab_writer</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
             <span class="n">new_name</span> <span class="o">=</span> <span class="n">change_to_unique_name_if_needed</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span>
-            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">saved_file_name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">))</span></div></div>
+            <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">saved_file_name</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">folder_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">))</span>
+
+</div></div>
+<div class="viewcode-block" id="OneCsvWriter"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.OneCsvWriter">[docs]</a><span class="k">class</span> <span class="nc">OneCsvWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class is used for writing data to a csv file.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            file_name (str): name of the file to create.</span>
+<span class="sd">            tab_writer (TxtOneFileWriter): TxtOneFileWriter</span>
+<span class="sd">                object which is responsible to filling  csv</span>
+<span class="sd">                file with data.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            file_name (str): name of the file to create.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_writer</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_name</span> <span class="o">=</span> <span class="n">file_name</span>
+
+<div class="viewcode-block" id="OneCsvWriter.add_sheet"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.OneCsvWriter.add_sheet">[docs]</a>    <span class="k">def</span> <span class="nf">add_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Creates a csv file.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                name (str): this parameter is ignored.</span>
+
+<span class="sd">                    Note:</span>
+<span class="sd">                        This argument is ignored, the file name given in class</span>
+<span class="sd">                        consructor is used.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                SolutionTextWriter: SolutionTextWriter object that is</span>
+<span class="sd">                    responsible for filling this file with data.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">file_ref</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">tab_writer</span> <span class="o">=</span> <span class="n">TxtOneFileWriter</span><span class="p">(</span><span class="n">file_ref</span><span class="p">)</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">SolutionTextWriter</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">tab_writer</span><span class="o">.</span><span class="n">write_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_writer</span> <span class="o">=</span> <span class="n">tab_writer</span>
+        <span class="k">return</span> <span class="n">writer</span>
+</div>
+<div class="viewcode-block" id="OneCsvWriter.save"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution_text_writer.OneCsvWriter.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Closes opened csv file.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                file_name (str): this parameter is ignored.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># no need to save, only to close opened file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tab_writer</span><span class="o">.</span><span class="n">file_ref</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 </pre></div>
 
            </div>

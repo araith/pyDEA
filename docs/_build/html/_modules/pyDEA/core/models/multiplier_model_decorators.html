@@ -212,9 +212,9 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: efficiency spyDEA.core.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_get_efficiency_score</span><span class="p">(</span><span class="n">lambda_variable</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_get_efficiency_score</span><span class="p">(</span><span class="n">lambda_variable</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="MultiplierModelWithDisposableCategories"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithDisposableCategories">[docs]</a><span class="k">class</span> <span class="nc">MultiplierModelWithDisposableCategories</span><span class="p">(</span><span class="n">MultiplierModelBase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Implements multiplier model with disposable categories.</span>
 
@@ -291,9 +291,9 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: efficiency spyDEA.core.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_get_efficiency_score</span><span class="p">(</span><span class="n">lambda_variable</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_get_efficiency_score</span><span class="p">(</span><span class="n">lambda_variable</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="MultiplierModelWithNonDiscVarsForDecoration"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithNonDiscVarsForDecoration">[docs]</a><span class="k">class</span> <span class="nc">MultiplierModelWithNonDiscVarsForDecoration</span><span class="p">(</span><span class="n">MultiplierModelBase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Abstract base class that implements multiplier model with</span>
 <span class="sd">        non-discretionary variables.</span>
@@ -427,9 +427,9 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: efficiency spyDEA.core.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_get_efficiency_score</span><span class="p">(</span><span class="n">lambda_variable</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_get_efficiency_score</span><span class="p">(</span><span class="n">lambda_variable</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="MultiplierModelInputOrientedWithNonDiscVars"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model_decorators.MultiplierModelInputOrientedWithNonDiscVars">[docs]</a><span class="k">class</span> <span class="nc">MultiplierModelInputOrientedWithNonDiscVars</span><span class="p">(</span>
         <span class="n">MultiplierModelWithNonDiscVarsForDecoration</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Implements input-oriented multiplier model with non-discretionary</span>
@@ -461,9 +461,9 @@
         <span class="n">out_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">var</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_input_variables</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                     <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">}</span>
-        <span class="k">return</span> <span class="n">out_dict</span></div>
+        <span class="k">return</span> <span class="n">out_dict</span>
 
-
+</div>
 <div class="viewcode-block" id="MultiplierModelOutputOrientedWithNonDiscVars"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model_decorators.MultiplierModelOutputOrientedWithNonDiscVars">[docs]</a><span class="k">class</span> <span class="nc">MultiplierModelOutputOrientedWithNonDiscVars</span><span class="p">(</span>
         <span class="n">MultiplierModelWithNonDiscVarsForDecoration</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Implements output-oriented multiplier model with non-discretionary</span>
@@ -495,9 +495,9 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">var</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_model_to_decorate</span><span class="o">.</span><span class="n">_output_variables</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">}</span></div>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="p">}</span>
 
-
+</div>
 <div class="viewcode-block" id="MultiplierModelWithWeigthRestrictionsBase"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithWeigthRestrictionsBase">[docs]</a><span class="k">class</span> <span class="nc">MultiplierModelWithWeigthRestrictionsBase</span><span class="p">(</span><span class="n">MultiplierModelBase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Abstract base class that implements basic operations</span>
 <span class="sd">        of multiplier model with weight restrictions.</span>
@@ -633,9 +633,9 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                str: prefix of a constraint name.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
 
-
+</div>
 <div class="viewcode-block" id="MultiplierModelWithAbsoluteWeightRestrictions"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithAbsoluteWeightRestrictions">[docs]</a><span class="k">class</span> <span class="nc">MultiplierModelWithAbsoluteWeightRestrictions</span><span class="p">(</span>
         <span class="n">MultiplierModelWithWeigthRestrictionsBase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Implements multiplier model with absolute weight restrictions.</span>
@@ -648,9 +648,9 @@
     <span class="k">def</span> <span class="nf">_get_constraint_prefix_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="s1">&#39;Absolute&#39;</span></div>
+        <span class="k">return</span> <span class="s1">&#39;Absolute&#39;</span>
 
-
+</div>
 <div class="viewcode-block" id="MultiplierModelWithVirtualWeightRestrictions"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithVirtualWeightRestrictions">[docs]</a><span class="k">class</span> <span class="nc">MultiplierModelWithVirtualWeightRestrictions</span><span class="p">(</span>
         <span class="n">MultiplierModelWithWeigthRestrictionsBase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Implements multiplier model with virtual weight restrictions.</span>
@@ -719,9 +719,9 @@
     <span class="k">def</span> <span class="nf">_store_vars_ub</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">constraint_name</span><span class="p">,</span> <span class="n">variable</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ub_weight_rest_variables</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">constraint_name</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ub_weight_rest_variables</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">variable</span><span class="p">,</span> <span class="n">constraint_name</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="MultiplierModelWithPriceRatioConstraints"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model_decorators.MultiplierModelWithPriceRatioConstraints">[docs]</a><span class="k">class</span> <span class="nc">MultiplierModelWithPriceRatioConstraints</span><span class="p">(</span><span class="n">MultiplierModelBase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Implements multiplier model with price ratio restrictions.</span>
 

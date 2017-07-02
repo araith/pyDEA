@@ -167,8 +167,8 @@
         <span class="n">tab</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_tab_object</span><span class="p">()</span>
         <span class="n">tab</span><span class="o">.</span><span class="n">pack</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tab</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">all_tabs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_tabs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tab</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_create_tab_object</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Allocates a proper Frame object that is placed on each tab.</span>
 
@@ -198,8 +198,8 @@
 <span class="sd">                    used in categorical analysis.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">create_default_tabs</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">params_to_print</span><span class="p">,</span> <span class="n">all_params</span><span class="p">,</span>
-                                 <span class="n">run_date</span><span class="p">,</span> <span class="n">total_seconds</span><span class="p">,</span> <span class="n">ranks</span><span class="p">,</span> <span class="n">categorical</span><span class="p">)</span></div>
-
+                                 <span class="n">run_date</span><span class="p">,</span> <span class="n">total_seconds</span><span class="p">,</span> <span class="n">ranks</span><span class="p">,</span> <span class="n">categorical</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="SolutionFrame.create_default_tabs"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_frame_gui.SolutionFrame.create_default_tabs">[docs]</a>    <span class="k">def</span> <span class="nf">create_default_tabs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">,</span> <span class="n">params_to_print</span><span class="p">,</span> <span class="n">all_params</span><span class="p">,</span>
                             <span class="n">run_date</span><span class="p">,</span> <span class="n">total_seconds</span><span class="p">,</span> <span class="n">ranks</span><span class="p">,</span> <span class="n">categorical</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Creates all tabs.</span>
@@ -234,8 +234,8 @@
             <span class="n">writer</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">all_params</span><span class="p">[</span><span class="n">count</span><span class="p">],</span> <span class="n">progress_recorder</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modify_tab_names</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">remove_unused_tabs</span><span class="p">()</span>
-        <span class="n">progress_recorder</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span></div>
-
+        <span class="n">progress_recorder</span><span class="o">.</span><span class="n">set_position</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="SolutionFrame.add_sheet"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_frame_gui.SolutionFrame.add_sheet">[docs]</a>    <span class="k">def</span> <span class="nf">add_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tab_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Creates a tab with a given name.</span>
 
@@ -250,21 +250,21 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">create_tab</span><span class="p">(</span><span class="n">tab_name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">nb_tabs</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nb_filled_tabs</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_tabs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">last_modified_tab</span><span class="p">]</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_tabs</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">last_modified_tab</span><span class="p">]</span>
+</div>
 <div class="viewcode-block" id="SolutionFrame.clear_all_tabs"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_frame_gui.SolutionFrame.clear_all_tabs">[docs]</a>    <span class="k">def</span> <span class="nf">clear_all_tabs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Clears all tabs.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">tab</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_tabs</span><span class="p">:</span>
-            <span class="n">tab</span><span class="o">.</span><span class="n">clear_all_data</span><span class="p">()</span></div>
-
+            <span class="n">tab</span><span class="o">.</span><span class="n">clear_all_data</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="SolutionFrame.modify_tab_names"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_frame_gui.SolutionFrame.modify_tab_names">[docs]</a>    <span class="k">def</span> <span class="nf">modify_tab_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Modifies tab names according to the names that were passed</span>
 <span class="sd">            as a parameter when tab was created.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">tab</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">all_tabs</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">tab</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">tab</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="n">tab</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="SolutionFrame.remove_unused_tabs"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_frame_gui.SolutionFrame.remove_unused_tabs">[docs]</a>    <span class="k">def</span> <span class="nf">remove_unused_tabs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Removes unused tabs.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -273,9 +273,9 @@
             <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_tabs</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_filled_tabs</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">all_tabs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">all_tabs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">nb_tabs</span> <span class="o">-=</span> <span class="mi">1</span></div></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">nb_tabs</span> <span class="o">-=</span> <span class="mi">1</span>
 
-
+</div></div>
 <div class="viewcode-block" id="SolutionFrameWithText"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.solution_frame_gui.SolutionFrameWithText">[docs]</a><span class="k">class</span> <span class="nc">SolutionFrameWithText</span><span class="p">(</span><span class="n">SolutionFrame</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class creates a different frame for displaying solution</span>
 <span class="sd">        as a plain text instead of table.</span>

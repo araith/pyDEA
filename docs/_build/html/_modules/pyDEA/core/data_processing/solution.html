@@ -196,8 +196,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_efficiency_score</span><span class="p">(</span><span class="n">efficiency_score</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_dmu_code_exists</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">efficiency_scores</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="n">efficiency_score</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">efficiency_scores</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="n">efficiency_score</span>
+</div>
     <span class="k">def</span> <span class="nf">_check_efficiency_score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">efficiency_score</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Checks if efficiency score has a valid value.</span>
 
@@ -219,8 +219,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: efficiency spyDEA.core.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">efficiency_scores</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">efficiency_scores</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span>
+</div>
 <div class="viewcode-block" id="Solution.is_efficient"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution.is_efficient">[docs]</a>    <span class="k">def</span> <span class="nf">is_efficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">lambda_variables</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Checks if a given DMU is efficient.</span>
 
@@ -240,8 +240,8 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">lambda_variables</span><span class="p">:</span>
             <span class="n">lambda_variables</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">is_efficient</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_efficiency_score</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">),</span>
-                            <span class="n">lambda_variables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></div>
-
+                            <span class="n">lambda_variables</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</div>
 <div class="viewcode-block" id="Solution.add_lambda_variables"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution.add_lambda_variables">[docs]</a>    <span class="k">def</span> <span class="nf">add_lambda_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">variables</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds lambda variables corresponding to a given DMU</span>
 <span class="sd">            to pickled file.</span>
@@ -260,8 +260,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_dmu_code_exists</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_lambda_variables</span><span class="p">(</span><span class="n">variables</span><span class="p">)</span>
-        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_pickle_name</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span></div>
-
+        <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">variables</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_pickle_name</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">),</span> <span class="s1">&#39;wb&#39;</span><span class="p">))</span>
+</div>
 <div class="viewcode-block" id="Solution.get_lambda_variables"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution.get_lambda_variables">[docs]</a>    <span class="k">def</span> <span class="nf">get_lambda_variables</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns lambda variables corresponding to a given DMU.</span>
 
@@ -272,8 +272,8 @@
 <span class="sd">                dict of str to double: lambda variables.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">file_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_pickle_name</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span></div>
-
+        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">file_name</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">))</span>
+</div>
     <span class="k">def</span> <span class="nf">_get_pickle_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Generates a unique name for pickled file with lambda</span>
 <span class="sd">            variables.</span>
@@ -330,8 +330,8 @@
         <span class="k">if</span> <span class="n">input_category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;{category} is not a valid input category&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="n">category</span><span class="o">=</span><span class="n">input_category</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">input_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">][</span><span class="n">input_category</span><span class="p">]</span> <span class="o">=</span> <span class="n">dual_value</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">][</span><span class="n">input_category</span><span class="p">]</span> <span class="o">=</span> <span class="n">dual_value</span>
+</div>
 <div class="viewcode-block" id="Solution.add_output_dual"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution.add_output_dual">[docs]</a>    <span class="k">def</span> <span class="nf">add_output_dual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">output_category</span><span class="p">,</span> <span class="n">dual_value</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds value of a dual variable associated with a given output</span>
 <span class="sd">            category and DMU code to internal data structure.</span>
@@ -348,8 +348,8 @@
         <span class="k">if</span> <span class="n">output_category</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;{category} is not a valid output category&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                              <span class="n">category</span><span class="o">=</span><span class="n">output_category</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">output_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">][</span><span class="n">output_category</span><span class="p">]</span> <span class="o">=</span> <span class="n">dual_value</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">][</span><span class="n">output_category</span><span class="p">]</span> <span class="o">=</span> <span class="n">dual_value</span>
+</div>
 <div class="viewcode-block" id="Solution.get_input_dual"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution.get_input_dual">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_dual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns dual variable value corresponding to a given DMU and</span>
 <span class="sd">            input category.</span>
@@ -361,8 +361,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: dual variable value.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">][</span><span class="n">input_category</span><span class="p">]</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">][</span><span class="n">input_category</span><span class="p">]</span>
+</div>
 <div class="viewcode-block" id="Solution.get_output_dual"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution.get_output_dual">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_dual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">output_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns dual variable value corresponding to a given DMU and</span>
 <span class="sd">            output category.</span>
@@ -374,8 +374,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: dual variable value.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">][</span><span class="n">output_category</span><span class="p">]</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">][</span><span class="n">output_category</span><span class="p">]</span>
+</div>
 <div class="viewcode-block" id="Solution.add_lp_status"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.Solution.add_lp_status">[docs]</a>    <span class="k">def</span> <span class="nf">add_lp_status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">lp_status</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds LP status corresponding to a given DMU to internal</span>
 <span class="sd">            data structure.</span>
@@ -385,8 +385,8 @@
 <span class="sd">                lp_status (pulp.LpStatus): LP status.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_if_dmu_code_exists</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="n">lp_status</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="n">lp_status</span>
+</div>
     <span class="k">def</span> <span class="nf">_print_for_one_dmu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Prints on screen all information available for a given DMU.</span>
 
@@ -413,9 +413,9 @@
         <span class="sd">&#39;&#39;&#39; Prints all data on the screen.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_print_for_one_dmu</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_print_for_one_dmu</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
 
-
+</div></div>
 <div class="viewcode-block" id="SolutionWithVRS"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.SolutionWithVRS">[docs]</a><span class="k">class</span> <span class="nc">SolutionWithVRS</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class decorate Solution with VRS variables to store their values</span>
 <span class="sd">        for VRS DEA models.</span>
@@ -446,8 +446,8 @@
 <span class="sd">                value (double): value of the VRS variable.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_model_solution</span><span class="o">.</span><span class="n">_check_if_dmu_code_exists</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">vrs_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">vrs_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</div>
 <div class="viewcode-block" id="SolutionWithVRS.get_VRS_dual"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.SolutionWithVRS.get_VRS_dual">[docs]</a>    <span class="k">def</span> <span class="nf">get_VRS_dual</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns value of a VRS variable corresponding to a given</span>
 <span class="sd">            DMU.</span>
@@ -458,8 +458,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: value of the VRS variable.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vrs_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vrs_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span>
+</div>
     <span class="k">def</span> <span class="nf">_print_for_one_dmu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Prints on screen all information available for a given DMU.</span>
 
@@ -473,9 +473,9 @@
         <span class="sd">&#39;&#39;&#39; Prints all data on the screen.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_print_for_one_dmu</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_print_for_one_dmu</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
 
-
+</div></div>
 <div class="viewcode-block" id="SolutionWithSuperEfficiency"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.solution.SolutionWithSuperEfficiency">[docs]</a><span class="k">class</span> <span class="nc">SolutionWithSuperEfficiency</span><span class="p">(</span><span class="n">Solution</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class redefines one method of :class:`Solution` to accept</span>
 <span class="sd">        efficiency scores greater than 1.</span>

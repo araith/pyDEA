@@ -228,16 +228,16 @@
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Given DEA model(s) successfully solved.&#39;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">show_error</span><span class="p">(</span><span class="s1">&#39;Some of the input data is not correct&#39;</span><span class="p">)</span></div>
-
+                <span class="bp">self</span><span class="o">.</span><span class="n">show_error</span><span class="p">(</span><span class="s1">&#39;Some of the input data is not correct&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="RunMethodBase.get_categories"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodBase.get_categories">[docs]</a>    <span class="k">def</span> <span class="nf">get_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns current categories.</span>
 
 <span class="sd">            Returns:</span>
 <span class="sd">                (list of str): list of current categories</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
-
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodBase.get_coefficients"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodBase.get_coefficients">[docs]</a>    <span class="k">def</span> <span class="nf">get_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns problem data coefficients.</span>
 
@@ -246,23 +246,23 @@
 <span class="sd">                    DMU code to the list of coefficients. Coefficients</span>
 <span class="sd">                    must appear in the same order as categories.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
-
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodBase.show_error"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodBase.show_error">[docs]</a>    <span class="k">def</span> <span class="nf">show_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Displays error message.</span>
 
 <span class="sd">            Args:</span>
 <span class="sd">                message (str): error message</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
-
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodBase.validate_weights_if_needed"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodBase.validate_weights_if_needed">[docs]</a>    <span class="k">def</span> <span class="nf">validate_weights_if_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Validates weight restrictions if they are present.</span>
 <span class="sd">            This method might update parameters, hence,</span>
 <span class="sd">            it MUST be called before model_builder.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
-
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodBase.init_before_run"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodBase.init_before_run">[docs]</a>    <span class="k">def</span> <span class="nf">init_before_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_models</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Initialises appropriate data structures before solving LPs,</span>
 <span class="sd">            implementation depends on a concrete class.</span>
@@ -272,8 +272,8 @@
 <span class="sd">                coefficients (dict of str to list of float): dictionary</span>
 <span class="sd">                    that maps DMU code to the list of coefficients</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
-
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodBase.decorate_model"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodBase.decorate_model">[docs]</a>    <span class="k">def</span> <span class="nf">decorate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; This method is called after a model has been created,</span>
 <span class="sd">            implementation depends on a concrete class.</span>
@@ -285,8 +285,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                (ModelBase or any of its derivatives): decorated model</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
-
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodBase.post_process_solutions"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodBase.post_process_solutions">[docs]</a>    <span class="k">def</span> <span class="nf">post_process_solutions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">param_strs</span><span class="p">,</span> <span class="n">all_ranks</span><span class="p">,</span>
                                <span class="n">run_date</span><span class="p">,</span> <span class="n">total_seconds</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Post-processes solutions,</span>
@@ -304,15 +304,15 @@
 <span class="sd">                total_seconds (float): time (in seconds) needed to solve</span>
 <span class="sd">                    the problem.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
-
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodBase.show_success"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodBase.show_success">[docs]</a>    <span class="k">def</span> <span class="nf">show_success</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; By default does not do anything, but can be redefined</span>
 <span class="sd">            by child classes to show a message that the execution was successful.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">pass</span></div></div>
+        <span class="k">pass</span>
 
-
+</div></div>
 <div class="viewcode-block" id="RunMethodTerminal"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodTerminal">[docs]</a><span class="k">class</span> <span class="nc">RunMethodTerminal</span><span class="p">(</span><span class="n">RunMethodBase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class implements running routing from terminal.</span>
 
@@ -345,41 +345,41 @@
         <span class="n">categories</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">,</span> <span class="n">sheet_name</span> <span class="o">=</span> <span class="n">read_data</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="s1">&#39;DATA_FILE&#39;</span><span class="p">),</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sheet_name_usr</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">categories</span></div>
-
+        <span class="k">return</span> <span class="n">categories</span>
+</div>
 <div class="viewcode-block" id="RunMethodTerminal.get_coefficients"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodTerminal.get_coefficients">[docs]</a>    <span class="k">def</span> <span class="nf">get_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">convert_to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
-
+        <span class="k">return</span> <span class="n">convert_to_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="RunMethodTerminal.show_error"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodTerminal.show_error">[docs]</a>    <span class="k">def</span> <span class="nf">show_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
-
+        <span class="k">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="RunMethodTerminal.validate_weights_if_needed"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodTerminal.validate_weights_if_needed">[docs]</a>    <span class="k">def</span> <span class="nf">validate_weights_if_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">pass</span></div>
-
+        <span class="k">pass</span>
+</div>
 <div class="viewcode-block" id="RunMethodTerminal.init_before_run"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodTerminal.init_before_run">[docs]</a>    <span class="k">def</span> <span class="nf">init_before_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_models</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">pass</span></div>
-
+        <span class="k">pass</span>
+</div>
 <div class="viewcode-block" id="RunMethodTerminal.decorate_model"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodTerminal.decorate_model">[docs]</a>    <span class="k">def</span> <span class="nf">decorate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">model_obj</span></div>
-
+        <span class="k">return</span> <span class="n">model_obj</span>
+</div>
 <div class="viewcode-block" id="RunMethodTerminal.show_success"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodTerminal.show_success">[docs]</a>    <span class="k">def</span> <span class="nf">show_success</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Displays success message on screen.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">print</span><span class="p">(</span><span class="s1">&#39;*************************************&#39;</span><span class="p">)</span>
-        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Successfully solved given DEA models.&#39;</span><span class="p">)</span></div>
-
+        <span class="k">print</span><span class="p">(</span><span class="s1">&#39;Successfully solved given DEA models.&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="RunMethodTerminal.post_process_solutions"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodTerminal.post_process_solutions">[docs]</a>    <span class="k">def</span> <span class="nf">post_process_solutions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">param_strs</span><span class="p">,</span> <span class="n">all_ranks</span><span class="p">,</span>
                                <span class="n">run_date</span><span class="p">,</span> <span class="n">total_seconds</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
@@ -396,7 +396,6 @@
             <span class="k">elif</span> <span class="n">output_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.xlsx&#39;</span><span class="p">):</span>
                 <span class="n">work_book</span> <span class="o">=</span> <span class="n">XlsxWorkbook</span><span class="p">()</span>
             <span class="k">elif</span> <span class="n">output_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.csv&#39;</span><span class="p">):</span>
-                <span class="c1"># all not supported formats will be written to csv</span>
                 <span class="n">work_book</span> <span class="o">=</span> <span class="n">TxtWriter</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">output_file</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;File {0} has unsupported output format&#39;</span><span class="o">.</span><span class="n">format</span>
@@ -414,9 +413,9 @@
                                    <span class="n">categorical</span><span class="o">=</span><span class="n">categorical</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">sol</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">solutions</span><span class="p">):</span>
                     <span class="n">writer</span><span class="o">.</span><span class="n">write_data</span><span class="p">(</span><span class="n">sol</span><span class="p">,</span> <span class="n">param_strs</span><span class="p">[</span><span class="n">count</span><span class="p">])</span>
-                <span class="n">work_book</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span></div></div>
+                <span class="n">work_book</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span>
 
-
+</div></div>
 <div class="viewcode-block" id="RunMethodGUI"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodGUI">[docs]</a><span class="k">class</span> <span class="nc">RunMethodGUI</span><span class="p">(</span><span class="n">RunMethodBase</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class implements running routing from GUI.</span>
 
@@ -437,25 +436,25 @@
 <div class="viewcode-block" id="RunMethodGUI.get_categories"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodGUI.get_categories">[docs]</a>    <span class="k">def</span> <span class="nf">get_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">construct_categories</span><span class="p">()</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">construct_categories</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodGUI.get_coefficients"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodGUI.get_coefficients">[docs]</a>    <span class="k">def</span> <span class="nf">get_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">data_frame</span><span class="o">.</span><span class="n">data_tab</span><span class="o">.</span><span class="n">read_coefficients</span><span class="p">()</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">data_frame</span><span class="o">.</span><span class="n">data_tab</span><span class="o">.</span><span class="n">read_coefficients</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodGUI.show_error"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodGUI.show_error">[docs]</a>    <span class="k">def</span> <span class="nf">show_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-        <span class="n">showerror</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span></div>
-
+        <span class="n">showerror</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="RunMethodGUI.validate_weights_if_needed"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodGUI.validate_weights_if_needed">[docs]</a>    <span class="k">def</span> <span class="nf">validate_weights_if_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">params_frame</span><span class="o">.</span><span class="n">weight_tab</span><span class="o">.</span><span class="n">on_validate_weights</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">params_frame</span><span class="o">.</span><span class="n">weight_tab</span><span class="o">.</span><span class="n">on_validate_weights</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="RunMethodGUI.init_before_run"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodGUI.init_before_run">[docs]</a>    <span class="k">def</span> <span class="nf">init_before_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_models</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -463,15 +462,15 @@
         <span class="n">current_dmu</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">on_dmu_change</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_dmu</span> <span class="o">=</span> <span class="n">current_dmu</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">increment</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">/</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coefficients</span><span class="p">)</span> <span class="o">*</span> <span class="n">nb_models</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">progress_bar</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">progress_bar</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</div>
 <div class="viewcode-block" id="RunMethodGUI.decorate_model"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodGUI.decorate_model">[docs]</a>    <span class="k">def</span> <span class="nf">decorate_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">model</span> <span class="o">=</span> <span class="n">ProgressBarDecorator</span><span class="p">(</span><span class="n">model_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_dmu</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">increment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">increment</span>
-        <span class="k">return</span> <span class="n">model</span></div>
-
+        <span class="k">return</span> <span class="n">model</span>
+</div>
 <div class="viewcode-block" id="RunMethodGUI.post_process_solutions"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.RunMethodGUI.post_process_solutions">[docs]</a>    <span class="k">def</span> <span class="nf">post_process_solutions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solutions</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">param_strs</span><span class="p">,</span> <span class="n">all_ranks</span><span class="p">,</span>
                                <span class="n">run_date</span><span class="p">,</span> <span class="n">total_seconds</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>

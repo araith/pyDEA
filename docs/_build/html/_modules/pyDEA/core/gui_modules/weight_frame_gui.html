@@ -218,8 +218,8 @@
                                                   <span class="s1">&#39;PRICE_RATIO_RESTRICTIONS&#39;</span><span class="p">,</span>
                                                   <span class="bp">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                                      <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span></div>
-
+                                      <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="WeightFrame.add_weights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.weight_frame_gui.WeightFrame.add_weights">[docs]</a>    <span class="k">def</span> <span class="nf">add_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds weight restrictions stored in params to the appropriate</span>
 <span class="sd">            text widgets if such weight restrictions can be parsed and</span>
@@ -230,8 +230,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_given_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">virtual_weights</span><span class="p">,</span>
                                 <span class="s1">&#39;VIRTUAL_WEIGHT_RESTRICTIONS&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_given_weights</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span><span class="p">,</span>
-                                <span class="s1">&#39;PRICE_RATIO_RESTRICTIONS&#39;</span><span class="p">)</span></div>
-
+                                <span class="s1">&#39;PRICE_RATIO_RESTRICTIONS&#39;</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_add_given_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text_widget</span><span class="p">,</span> <span class="n">weights_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds given weight restrictions to a given text widget.</span>
 
@@ -278,8 +278,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">abs_weights</span><span class="o">.</span><span class="n">delete_weights</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">virtual_weights</span><span class="o">.</span><span class="n">delete_weights</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span><span class="o">.</span><span class="n">delete_weights</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">price_ratio_weights</span><span class="o">.</span><span class="n">delete_weights</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="WeightFrame.on_validate_weights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.weight_frame_gui.WeightFrame.on_validate_weights">[docs]</a>    <span class="k">def</span> <span class="nf">on_validate_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Validates weights of all text widgets and displays an error if</span>
 <span class="sd">            some of the weights are invalid.</span>

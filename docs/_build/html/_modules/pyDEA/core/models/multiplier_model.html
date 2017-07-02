@@ -143,8 +143,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                pulp.LpMaximize.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpMaximize</span></div>
-
+        <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpMaximize</span>
+</div>
 <div class="viewcode-block" id="MultiplierInputOrientedModel.get_objective_function"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.get_objective_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_objective_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_variables</span><span class="p">,</span>
                                <span class="n">output_variables</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Generates objective function of input-oriented multiplier model.</span>
@@ -164,8 +164,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">lpSum</span><span class="p">([</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span> <span class="o">*</span>
                           <span class="n">output_variables</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
-                          <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">])</span></div>
-
+                          <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">])</span>
+</div>
 <div class="viewcode-block" id="MultiplierInputOrientedModel.update_objective"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.update_objective">[docs]</a>    <span class="k">def</span> <span class="nf">update_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_variables</span><span class="p">,</span>
                          <span class="n">output_variables</span><span class="p">,</span> <span class="n">lp_model</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficients of the objective function of a given model.</span>
@@ -183,8 +183,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">:</span>
             <span class="n">lp_model</span><span class="o">.</span><span class="n">objective</span><span class="p">[</span><span class="n">output_variables</span><span class="p">[</span><span class="n">category</span><span class="p">]]</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span>
-                <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span></div>
-
+                <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span>
+</div>
 <div class="viewcode-block" id="MultiplierInputOrientedModel.get_equality_constraint"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.get_equality_constraint">[docs]</a>    <span class="k">def</span> <span class="nf">get_equality_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_variables</span><span class="p">,</span>
                                 <span class="n">output_variables</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Generates equality constraint of input-oriented multiplier model.</span>
@@ -204,8 +204,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">lpSum</span><span class="p">([</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span> <span class="o">*</span>
                           <span class="n">input_variables</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
-                          <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span></div>
-
+                          <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+</div>
 <div class="viewcode-block" id="MultiplierInputOrientedModel.update_equality_constraint"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model.MultiplierInputOrientedModel.update_equality_constraint">[docs]</a>    <span class="k">def</span> <span class="nf">update_equality_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_variables</span><span class="p">,</span>
                                    <span class="n">output_variables</span><span class="p">,</span> <span class="n">lp_model</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficients of the equality constraint of a given model.</span>
@@ -223,9 +223,9 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">input_variables</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">lp_model</span><span class="o">.</span><span class="n">constraints</span><span class="p">[</span><span class="s1">&#39;equality_constraint&#39;</span><span class="p">][</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span>
-                <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span></div></div>
+                <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span>
 
-
+</div></div>
 <div class="viewcode-block" id="MultiplierOutputOrientedModel"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel">[docs]</a><span class="k">class</span> <span class="nc">MultiplierOutputOrientedModel</span><span class="p">(</span><span class="n">OutputOrientedModel</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Implements output-oriented multiplier model.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -236,8 +236,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                pulp.LpMinimize.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpMinimize</span></div>
-
+        <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpMinimize</span>
+</div>
 <div class="viewcode-block" id="MultiplierOutputOrientedModel.get_objective_function"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.get_objective_function">[docs]</a>    <span class="k">def</span> <span class="nf">get_objective_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_variables</span><span class="p">,</span>
                                <span class="n">output_variables</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Generates objective function of output-oriented multiplier model.</span>
@@ -257,8 +257,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">lpSum</span><span class="p">([</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span> <span class="o">*</span>
                           <span class="n">input_variables</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
-                          <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">])</span></div>
-
+                          <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">])</span>
+</div>
 <div class="viewcode-block" id="MultiplierOutputOrientedModel.update_objective"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.update_objective">[docs]</a>    <span class="k">def</span> <span class="nf">update_objective</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_variables</span><span class="p">,</span>
                          <span class="n">output_variables</span><span class="p">,</span> <span class="n">lp_model</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficients of the objective function of a given model.</span>
@@ -276,8 +276,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">:</span>
             <span class="n">lp_model</span><span class="o">.</span><span class="n">objective</span><span class="p">[</span><span class="n">input_variables</span><span class="p">[</span><span class="n">category</span><span class="p">]]</span> <span class="o">=</span> <span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span>
-                <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span></div>
-
+                <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span>
+</div>
 <div class="viewcode-block" id="MultiplierOutputOrientedModel.get_equality_constraint"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.get_equality_constraint">[docs]</a>    <span class="k">def</span> <span class="nf">get_equality_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_variables</span><span class="p">,</span>
                                 <span class="n">output_variables</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Generates equality constraint of output-oriented multiplier model.</span>
@@ -297,8 +297,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">lpSum</span><span class="p">([</span><span class="n">input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span> <span class="o">*</span>
                           <span class="n">output_variables</span><span class="p">[</span><span class="n">category</span><span class="p">]</span>
-                          <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span></div>
-
+                          <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+</div>
 <div class="viewcode-block" id="MultiplierOutputOrientedModel.update_equality_constraint"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.multiplier_model.MultiplierOutputOrientedModel.update_equality_constraint">[docs]</a>    <span class="k">def</span> <span class="nf">update_equality_constraint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_data</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">input_variables</span><span class="p">,</span>
                                    <span class="n">output_variables</span><span class="p">,</span> <span class="n">lp_model</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficients of the equality constraint of a given model.</span>

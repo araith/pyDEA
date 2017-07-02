@@ -153,9 +153,9 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">dmu</span> <span class="k">for</span> <span class="p">(</span><span class="n">dmu</span><span class="p">,</span> <span class="n">category</span><span class="p">),</span> <span class="n">coeff</span> <span class="ow">in</span> <span class="n">coefficients</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span> <span class="o">==</span> <span class="n">hierarchical_category</span> <span class="ow">and</span>
-               <span class="n">category</span> <span class="o">==</span> <span class="n">category_name</span> <span class="ow">and</span> <span class="n">dmu</span> <span class="ow">in</span> <span class="n">dmu_codes</span><span class="p">)</span></div>
+               <span class="n">category</span> <span class="o">==</span> <span class="n">category_name</span> <span class="ow">and</span> <span class="n">dmu</span> <span class="ow">in</span> <span class="n">dmu_codes</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="ModelWithCategoricalDMUs"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs">[docs]</a><span class="k">class</span> <span class="nc">ModelWithCategoricalDMUs</span><span class="p">(</span><span class="n">ModelBase</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39; This class implements DEA categorical analysis.</span>
@@ -186,8 +186,8 @@
 <span class="sd">            Attributes:</span>
 <span class="sd">                name (str): attribute name.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span></div>
-
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="ModelWithCategoricalDMUs.run"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Performs categorical analysis.</span>
 
@@ -231,8 +231,8 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">update_dmu_str_var</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span> <span class="o">=</span> <span class="n">copy_of_dmu_codes</span>
-        <span class="k">return</span> <span class="n">model_solution</span></div>
-
+        <span class="k">return</span> <span class="n">model_solution</span>
+</div>
 <div class="viewcode-block" id="ModelWithCategoricalDMUs.run_for_one_DMU"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.categorical_dmus.ModelWithCategoricalDMUs.run_for_one_DMU">[docs]</a>    <span class="k">def</span> <span class="nf">run_for_one_DMU</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Solves LP for a given DMU.</span>
 
@@ -241,8 +241,8 @@
 <span class="sd">                model_solution (Solution): model solution, it will be</span>
 <span class="sd">                    filled by this method.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">run_for_one_DMU</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">run_for_one_DMU</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_fill_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Fills given solution for a given DMU.</span>
 

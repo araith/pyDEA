@@ -235,8 +235,8 @@
         <span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;scrollregion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">HEIGHT_WITHOUT_CHECKBOXES</span><span class="p">)</span>
         <span class="n">yScrollbar</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">yview</span>
 
-        <span class="n">MouseWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">add_scrolling</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">yscrollbar</span><span class="o">=</span><span class="n">yScrollbar</span><span class="p">)</span></div>
-
+        <span class="n">MouseWheel</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">add_scrolling</span><span class="p">(</span><span class="n">canvas</span><span class="p">,</span> <span class="n">yscrollbar</span><span class="o">=</span><span class="n">yScrollbar</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="CategoriesCheckBox.add_category"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.add_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds a given category to this object. If the given</span>
 <span class="sd">            category already exists, it won&#39;t be added again. Category</span>
@@ -278,8 +278,8 @@
                 <span class="s1">&#39;WEAKLY_DISPOSAL_CATEGORIES&#39;</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="n">wd_categories</span><span class="p">:</span>
                 <span class="n">btn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">invoke</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">update_scroll_region</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_scroll_region</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="CategoriesCheckBox.change_category_name"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.change_category_name">[docs]</a>    <span class="k">def</span> <span class="nf">change_category_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Changes category name if such a category is present.</span>
 
@@ -293,8 +293,8 @@
                 <span class="n">old_name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="p">[</span><span class="n">new_name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">new_name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">old_name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">change_category_name</span><span class="p">(</span><span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">change_category_name</span><span class="p">(</span><span class="n">old_name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="CategoriesCheckBox.on_select_box"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.on_select_box">[docs]</a>    <span class="k">def</span> <span class="nf">on_select_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">box</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; This method is called when the user clicks on a Checkbutton.</span>
 <span class="sd">            It updates corresponding parameters that must be changed</span>
@@ -318,8 +318,8 @@
             <span class="k">if</span> <span class="n">category_name</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
                 <span class="n">values</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
             <span class="n">new_value</span> <span class="o">=</span> <span class="s1">&#39;; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">new_value</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_destroy_category_boxes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Destroys all widgets associated with a given category</span>
 <span class="sd">            name.</span>
@@ -358,8 +358,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_destroy_category_boxes</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_scroll_region</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">nb_entries</span> <span class="o">-=</span> <span class="mi">1</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">nb_entries</span> <span class="o">-=</span> <span class="mi">1</span>
+</div>
 <div class="viewcode-block" id="CategoriesCheckBox.remove_all_categories"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.categories_checkbox_gui.CategoriesCheckBox.remove_all_categories">[docs]</a>    <span class="k">def</span> <span class="nf">remove_all_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Removes all categories.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -367,8 +367,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_destroy_category_boxes</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_scroll_region</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">nb_entries</span> <span class="o">=</span> <span class="mi">0</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">nb_entries</span> <span class="o">=</span> <span class="mi">0</span>
+</div>
     <span class="k">def</span> <span class="nf">_config_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Configures columns of a given frame.</span>
 

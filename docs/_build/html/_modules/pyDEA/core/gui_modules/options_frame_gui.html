@@ -292,8 +292,8 @@
         <span class="n">categorical_box</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="n">XPAD_VALUE</span><span class="p">,</span>
                              <span class="n">pady</span><span class="o">=</span><span class="n">YPAD_VALUE</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
         <span class="n">frame_for_toleramce</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="n">XPAD_VALUE</span><span class="p">,</span>
-                                 <span class="n">pady</span><span class="o">=</span><span class="n">YPAD_VALUE</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
-
+                                 <span class="n">pady</span><span class="o">=</span><span class="n">YPAD_VALUE</span><span class="p">,</span> <span class="n">columnspan</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_create_frame_with_radio_btns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">row_index</span><span class="p">,</span>
                                       <span class="n">column_index</span><span class="p">,</span> <span class="n">add_both</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Creates frame with one set of Radiobuttons.</span>
@@ -353,8 +353,8 @@
             <span class="k">elif</span> <span class="n">dea_form</span> <span class="o">==</span> <span class="s1">&#39;env&#39;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">max_slack_box</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">NORMAL</span><span class="p">)</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;MAXIMIZE_SLACKS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="s1">&#39;MAXIMIZE_SLACKS&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">)</span></div>
-
+                    <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="s1">&#39;MAXIMIZE_SLACKS&#39;</span><span class="p">,</span> <span class="s1">&#39;yes&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="OptionsFrame.change_categorical_box"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.options_frame_gui.OptionsFrame.change_categorical_box">[docs]</a>    <span class="k">def</span> <span class="nf">change_categorical_box</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates categories that can be chosen as categorical category</span>
 <span class="sd">            when the user clicks on the Combobox.</span>
@@ -365,8 +365,8 @@
                   <span class="n">category</span> <span class="ow">not</span> <span class="ow">in</span>
                   <span class="bp">self</span><span class="o">.</span><span class="n">output_categories_frame</span><span class="o">.</span><span class="n">category_objects</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
         <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">categorical_box</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">values</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">categorical_box</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">values</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="OptionsFrame.on_categorical_box_change"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.options_frame_gui.OptionsFrame.on_categorical_box_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_categorical_box_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates value of the CATEGORICAL_CATEGORY in parameters.</span>
 <span class="sd">            This method is called when the user clicks on the Combobox and</span>
@@ -377,8 +377,8 @@
 <span class="sd">                    ignored in this method.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">categorical_var</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">combobox_text_var</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="s1">&#39;CATEGORICAL_CATEGORY&#39;</span><span class="p">,</span> <span class="n">categorical_var</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="s1">&#39;CATEGORICAL_CATEGORY&#39;</span><span class="p">,</span> <span class="n">categorical_var</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="OptionsFrame.set_params_values"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.options_frame_gui.OptionsFrame.set_params_values">[docs]</a>    <span class="k">def</span> <span class="nf">set_params_values</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Reads all parameter values from the parameter object (params)</span>
 <span class="sd">            and sets all widgets</span>
@@ -390,8 +390,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">change_categorical_box</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_categorical_box</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span>
             <span class="s1">&#39;CATEGORICAL_CATEGORY&#39;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_multi_tol</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_multi_tol</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="OptionsFrame.set_radio_btns"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.options_frame_gui.OptionsFrame.set_radio_btns">[docs]</a>    <span class="k">def</span> <span class="nf">set_radio_btns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Goes through all Radiobuttons and changes their values</span>
 <span class="sd">            according to the values stored in parameter object.</span>
@@ -399,8 +399,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_one_radio_btn</span><span class="p">(</span><span class="s1">&#39;RETURN_TO_SCALE&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;VRS&#39;</span><span class="p">,</span> <span class="s1">&#39;CRS&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_one_radio_btn</span><span class="p">(</span><span class="s1">&#39;ORIENTATION&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="s1">&#39;both&#39;</span><span class="p">])</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_one_radio_btn</span><span class="p">(</span><span class="s1">&#39;DEA_FORM&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;env&#39;</span><span class="p">,</span> <span class="s1">&#39;multi&#39;</span><span class="p">])</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_one_radio_btn</span><span class="p">(</span><span class="s1">&#39;DEA_FORM&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;env&#39;</span><span class="p">,</span> <span class="s1">&#39;multi&#39;</span><span class="p">])</span>
+</div>
 <div class="viewcode-block" id="OptionsFrame.set_one_radio_btn"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.options_frame_gui.OptionsFrame.set_one_radio_btn">[docs]</a>    <span class="k">def</span> <span class="nf">set_one_radio_btn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">valid_values</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Sets value of a given set of Radiobuttons according to its value</span>
 <span class="sd">            stored in parameter object if this value is valid.</span>
@@ -417,8 +417,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
                 <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_show_warning</span><span class="p">(</span><span class="n">param_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_show_warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Displays a warning saying that a value of a given parameter</span>
 <span class="sd">            is not valid.</span>
@@ -437,8 +437,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_one_check_btn</span><span class="p">(</span><span class="s1">&#39;MAXIMIZE_SLACKS&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_one_check_btn</span><span class="p">(</span><span class="s1">&#39;PEEL_THE_ONION&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">set_one_check_btn</span><span class="p">(</span><span class="s1">&#39;USE_SUPER_EFFICIENCY&#39;</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_one_check_btn</span><span class="p">(</span><span class="s1">&#39;USE_SUPER_EFFICIENCY&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="OptionsFrame.set_one_check_btn"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.options_frame_gui.OptionsFrame.set_one_check_btn">[docs]</a>    <span class="k">def</span> <span class="nf">set_one_check_btn</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Sets value of a given set of Checkbutton according to its value</span>
 <span class="sd">            stored in parameter object if this value is valid. Might</span>
@@ -449,8 +449,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">param_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="n">param_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">param_value</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="n">param_name</span><span class="p">]</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="OptionsFrame.set_categorical_box"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.options_frame_gui.OptionsFrame.set_categorical_box">[docs]</a>    <span class="k">def</span> <span class="nf">set_categorical_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">categorical_param</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Sets the value of Combobox with categorical category according</span>
 <span class="sd">            to a given value</span>
@@ -464,8 +464,8 @@
         <span class="k">if</span> <span class="n">categorical_param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical_box</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;values&#39;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">combobox_text_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">categorical_param</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_show_warning_combobox</span><span class="p">(</span><span class="n">categorical_param</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">_show_warning_combobox</span><span class="p">(</span><span class="n">categorical_param</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_show_warning_combobox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">categorical_param</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Displays a warning saying that a value of a given parameter is</span>
 <span class="sd">            not a valid categorical category.</span>
@@ -493,8 +493,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">multi_tol_strvar</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">tol_str</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_show_multi_tol_warning</span><span class="p">(</span><span class="n">tol_str</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">multi_tol_strvar</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">multi_tol_strvar</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_show_multi_tol_warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tol_str</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Displays a warning saying that a value of a multiplier model</span>
 <span class="sd">            tolerance is invalid.</span>
@@ -518,8 +518,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># this parameter will be validated before run</span>
         <span class="n">tol_str</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">multi_tol_strvar</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="s1">&#39;MULTIPLIER_MODEL_TOLERANCE&#39;</span><span class="p">,</span> <span class="n">tol_str</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">update_parameter</span><span class="p">(</span><span class="s1">&#39;MULTIPLIER_MODEL_TOLERANCE&#39;</span><span class="p">,</span> <span class="n">tol_str</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="OptionsFrame.on_check_box_click"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.options_frame_gui.OptionsFrame.on_check_box_click">[docs]</a>    <span class="k">def</span> <span class="nf">on_check_box_click</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">var</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates parameter specified by the Checkbutton in the parameter</span>
 <span class="sd">            object when the user clicks on the Checkbutton.</span>

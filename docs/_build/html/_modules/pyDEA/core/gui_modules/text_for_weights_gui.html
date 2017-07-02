@@ -228,14 +228,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">S</span><span class="o">+</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="p">)</span>
 
         <span class="n">xscrollbar</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">xview</span><span class="p">)</span>
-        <span class="n">yscrollbar</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">yview</span><span class="p">)</span></div>
-
+        <span class="n">yscrollbar</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">yview</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="TextForWeights.delete_weights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights.delete_weights">[docs]</a>    <span class="k">def</span> <span class="nf">delete_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Removes all weight restrictions.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">error_tag_exists</span> <span class="o">=</span> <span class="bp">False</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">error_tag_exists</span> <span class="o">=</span> <span class="bp">False</span>
+</div>
 <div class="viewcode-block" id="TextForWeights.insert_weight"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights.insert_weight">[docs]</a>    <span class="k">def</span> <span class="nf">insert_weight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Add a given weight restriction in the end of the</span>
 <span class="sd">            text widget.</span>
@@ -245,8 +245,8 @@
 <span class="sd">                    restriction.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="c1"># we assume that inserted weight is always correct</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">END</span><span class="p">,</span> <span class="n">weight</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">END</span><span class="p">,</span> <span class="n">weight</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="TextForWeights.validate_weights"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights.validate_weights">[docs]</a>    <span class="k">def</span> <span class="nf">validate_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Checks if all weight restrictions are valid.</span>
 
@@ -303,8 +303,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">errors_strvar</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_errors</span><span class="p">(</span><span class="n">errors</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">constraints</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">True</span>
-        <span class="k">return</span> <span class="bp">False</span></div>
-
+        <span class="k">return</span> <span class="bp">False</span>
+</div>
 <div class="viewcode-block" id="TextForWeights.get_all_errors"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.text_for_weights_gui.TextForWeights.get_all_errors">[docs]</a>    <span class="k">def</span> <span class="nf">get_all_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error_list</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns given list of errors as one string.</span>
 

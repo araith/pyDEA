@@ -202,8 +202,8 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">DMU_codes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">dmu_user_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_generate_next_DMU_code</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Generates a code for new DMU in the following format: {dmu_number}.</span>
 
@@ -225,8 +225,8 @@
 <span class="sd">            Raises:</span>
 <span class="sd">                KeyError: if dmu_code does not exist.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span>
+</div>
 <div class="viewcode-block" id="InputData.add_input_category"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData.add_input_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_input_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds given category to the set of input categories.</span>
 
@@ -242,8 +242,8 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Category: {category} was previously added&#39;</span>
                              <span class="s1">&#39; to output categories&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                              <span class="n">category</span><span class="o">=</span><span class="n">category_name</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">input_categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="InputData.add_output_category"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.input_data.InputData.add_output_category">[docs]</a>    <span class="k">def</span> <span class="nf">add_output_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds given category to the set of output categories.</span>
 
@@ -259,8 +259,8 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Category: {category} was previously added&#39;</span>
                              <span class="s1">&#39; to input categories&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                              <span class="n">category</span><span class="o">=</span><span class="n">category_name</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">output_categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_categories</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">category_name</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_check_if_category_exists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category_name</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Helper function that raises KeyError if a given category is not</span>
 <span class="sd">            present in the list of categories.</span>

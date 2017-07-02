@@ -156,16 +156,16 @@
         <span class="sd">&#39;&#39;&#39; Calls set method of StringVar object that triggers</span>
 <span class="sd">            progress bar update.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_dmu</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_dmu</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;update&#39;</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ProgressBarDecorator.run"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</div>
     <span class="k">def</span> <span class="nf">_create_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -184,8 +184,8 @@
 <div class="viewcode-block" id="ProgressBarDecorator.run_for_one_DMU"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.model_progress_bar_decorator.ProgressBarDecorator.run_for_one_DMU">[docs]</a>    <span class="k">def</span> <span class="nf">run_for_one_DMU</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">run_for_one_DMU</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">run_for_one_DMU</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">)</span>
+</div>
     <span class="k">def</span> <span class="nf">_fill_solution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">lp_problem</span><span class="p">,</span> <span class="n">model_solution</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; See base class.</span>
 <span class="sd">        &#39;&#39;&#39;</span>

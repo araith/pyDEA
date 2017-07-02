@@ -145,9 +145,9 @@
     <span class="n">model</span><span class="o">.</span><span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span> <span class="o">=</span> <span class="n">copy_of_dmu_codes</span>
     <span class="k">if</span> <span class="n">max_slack_solution</span><span class="p">:</span>
         <span class="n">model</span><span class="o">.</span><span class="n">second_solution</span> <span class="o">=</span> <span class="n">max_slack_solution</span>
-    <span class="k">assert</span><span class="p">(</span><span class="n">first_solution</span><span class="p">)</span></div>
+    <span class="k">assert</span><span class="p">(</span><span class="n">first_solution</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="peel_the_onion_method"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.peel_the_onion.peel_the_onion_method">[docs]</a><span class="k">def</span> <span class="nf">peel_the_onion_method</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Runs the peel the onion model and returns solution that corresponds to</span>
 <span class="sd">        the first run and ranking of all DMUs.</span>

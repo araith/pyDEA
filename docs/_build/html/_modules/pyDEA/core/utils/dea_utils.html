@@ -213,9 +213,9 @@
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
         <span class="n">StringVar</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_categories</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">input_categories</span> <span class="o">=</span> <span class="p">[]</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_categories</span> <span class="o">=</span> <span class="p">[]</span>
 
-
+</div>
 <div class="viewcode-block" id="get_logger"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.get_logger">[docs]</a><span class="k">def</span> <span class="nf">get_logger</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39; Gets a logger with all configuration specified in file ini-file.</span>
 
@@ -224,9 +224,9 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">logfile</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span><span class="n">PACKAGE</span><span class="p">,</span> <span class="n">LOG_FILE</span><span class="p">)</span>
     <span class="n">fileConfig</span><span class="p">(</span><span class="n">logfile</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span></div>
+    <span class="k">return</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
 
-
+</div>
 <div class="viewcode-block" id="change_to_unique_name_if_needed"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.change_to_unique_name_if_needed">[docs]</a><span class="k">def</span> <span class="nf">change_to_unique_name_if_needed</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Given a file name, this function checks if there is a file with</span>
 <span class="sd">        such a name, and generates a new unique name if the file exists.</span>
@@ -246,9 +246,9 @@
         <span class="k">while</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_name</span><span class="p">):</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="n">file_name</span> <span class="o">=</span> <span class="s1">&#39;{0}_{1}{2}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base_name</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">file_extension</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">file_name</span></div>
+    <span class="k">return</span> <span class="n">file_name</span>
 
-
+</div>
 <div class="viewcode-block" id="clean_up_pickled_files"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.clean_up_pickled_files">[docs]</a><span class="k">def</span> <span class="nf">clean_up_pickled_files</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39; Removes mps-files from current folder and p-files from temporary folder.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -259,9 +259,9 @@
     <span class="c1"># remove mps file if any</span>
     <span class="n">filelist</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.mps&#39;</span><span class="p">)]</span>
     <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">filelist</span><span class="p">:</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="format_data"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.format_data">[docs]</a><span class="k">def</span> <span class="nf">format_data</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Formats floating point number to 6 digits.</span>
 
@@ -286,9 +286,9 @@
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">float_data</span></div>
+        <span class="k">return</span> <span class="s1">&#39;</span><span class="si">%.6f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">float_data</span>
 
-
+</div>
 <div class="viewcode-block" id="auto_name_if_needed"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.auto_name_if_needed">[docs]</a><span class="k">def</span> <span class="nf">auto_name_if_needed</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">output_format</span><span class="p">,</span> <span class="n">new_output_dir</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Creates an automatic name for solution file based on current</span>
 <span class="sd">        parameter values, if OUTPUT_FILE is empty or set to auto.</span>
@@ -319,9 +319,9 @@
         <span class="n">output_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_output_dir</span><span class="p">,</span>
                                    <span class="n">input_base_name</span> <span class="o">+</span> <span class="s1">&#39;_result.&#39;</span> <span class="o">+</span> <span class="n">ext</span><span class="p">)</span>
         <span class="n">output_name</span> <span class="o">=</span> <span class="n">change_to_unique_name_if_needed</span><span class="p">(</span><span class="n">output_name</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">output_name</span></div>
+    <span class="k">return</span> <span class="n">output_name</span>
 
-
+</div>
 <div class="viewcode-block" id="calculate_nb_pages"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.calculate_nb_pages">[docs]</a><span class="k">def</span> <span class="nf">calculate_nb_pages</span><span class="p">(</span><span class="n">nb_data_rows</span><span class="p">,</span> <span class="n">nb_table_rows</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Calculates number of pages given number of data rows and number of rows</span>
 <span class="sd">        in the table.</span>
@@ -361,9 +361,9 @@
         <span class="k">if</span> <span class="n">nb_data_rows</span> <span class="o">%</span> <span class="p">(</span><span class="n">nb_table_rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
             <span class="n">base</span> <span class="o">+=</span> <span class="mi">1</span>
         <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="mi">0</span></div>
+    <span class="k">return</span> <span class="mi">0</span>
 
-
+</div>
 <div class="viewcode-block" id="calculate_start_row_index"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.calculate_start_row_index">[docs]</a><span class="k">def</span> <span class="nf">calculate_start_row_index</span><span class="p">(</span><span class="n">curr_page</span><span class="p">,</span> <span class="n">nb_table_rows</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Calculates row index of data that will be displayed given</span>
 <span class="sd">        current page and number of rows in the table.</span>
@@ -380,9 +380,9 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">curr_page</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
         <span class="k">return</span> <span class="mi">0</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">curr_page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">nb_table_rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">curr_page</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">nb_table_rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="validate_category_name"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.validate_category_name">[docs]</a><span class="k">def</span> <span class="nf">validate_category_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">category_index</span><span class="p">,</span> <span class="n">current_categories</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Checks if given category name is valid. Name is valid if it is not</span>
 <span class="sd">        a number, if it does not contain semicolon and if it is not duplicated.</span>
@@ -417,9 +417,9 @@
                 <span class="k">return</span> <span class="s1">&#39;&#39;</span>
         <span class="k">return</span> <span class="n">name</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s1">&#39;&#39;</span></div>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
 
-
+</div>
 <div class="viewcode-block" id="on_canvas_resize"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.on_canvas_resize">[docs]</a><span class="k">def</span> <span class="nf">on_canvas_resize</span><span class="p">(</span><span class="n">canvas</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This function updates scroll region of the canvas.</span>
 <span class="sd">        It should be called on canvas resize.</span>
@@ -434,9 +434,9 @@
         <span class="n">yscroll</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">bbox</span><span class="p">(</span><span class="n">ALL</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">canvas</span><span class="o">.</span><span class="n">bbox</span><span class="p">(</span><span class="n">ALL</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">canvas</span><span class="o">.</span><span class="n">winfo_height</span><span class="p">():</span>
         <span class="n">xscroll</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">bbox</span><span class="p">(</span><span class="n">ALL</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span>
-    <span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;scrollregion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">yscroll</span><span class="p">,</span> <span class="n">xscroll</span><span class="p">)</span></div>
+    <span class="n">canvas</span><span class="p">[</span><span class="s1">&#39;scrollregion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">yscroll</span><span class="p">,</span> <span class="n">xscroll</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="center_window"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.center_window">[docs]</a><span class="k">def</span> <span class="nf">center_window</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Centres widget in the middle of the screen.</span>
 
@@ -461,9 +461,9 @@
     <span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">sw</span> <span class="o">-</span> <span class="n">width</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
     <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">sh</span> <span class="o">-</span> <span class="n">height</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
     <span class="n">widget</span><span class="o">.</span><span class="n">geometry</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">x</span><span class="si">%d</span><span class="s1">+</span><span class="si">%d</span><span class="s1">+</span><span class="si">%d</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
-    <span class="n">widget</span><span class="o">.</span><span class="n">deiconify</span><span class="p">()</span></div>
+    <span class="n">widget</span><span class="o">.</span><span class="n">deiconify</span><span class="p">()</span>
 
-
+</div>
 <div class="viewcode-block" id="create_params_str"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.create_params_str">[docs]</a><span class="k">def</span> <span class="nf">create_params_str</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Creates string from values of ORIENTATION and RETURN_TO_SCALE</span>
 <span class="sd">        specified in parameters.</span>
@@ -473,9 +473,9 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="s1">&#39;{0} orientation, {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">params</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="s1">&#39;ORIENTATION&#39;</span><span class="p">),</span>
-        <span class="n">params</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="s1">&#39;RETURN_TO_SCALE&#39;</span><span class="p">))</span></div>
+        <span class="n">params</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="s1">&#39;RETURN_TO_SCALE&#39;</span><span class="p">))</span>
 
-
+</div>
 <div class="viewcode-block" id="is_valid_coeff"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.is_valid_coeff">[docs]</a><span class="k">def</span> <span class="nf">is_valid_coeff</span><span class="p">(</span><span class="n">coeff</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Checks if given coefficient is valid. Valid coefficient is positive</span>
 <span class="sd">        floating point or integer number.</span>
@@ -496,9 +496,9 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">VALID_COEFF</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">NOT_VALID_COEFF</span></div>
+        <span class="k">return</span> <span class="n">NOT_VALID_COEFF</span>
 
-
+</div>
 <div class="viewcode-block" id="is_efficient"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.is_efficient">[docs]</a><span class="k">def</span> <span class="nf">is_efficient</span><span class="p">(</span><span class="n">efficiency_score</span><span class="p">,</span> <span class="n">lambda_variable</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Checks if dmu with given efficiency score and value of</span>
 <span class="sd">        lambda variable is efficient.</span>
@@ -529,9 +529,9 @@
     <span class="c1"># it seems that lambda_variable is not ultimate indication of efficiency</span>
     <span class="k">if</span> <span class="n">efficiency_score</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="bp">True</span>
-    <span class="k">return</span> <span class="bp">False</span></div>
+    <span class="k">return</span> <span class="bp">False</span>
 
-
+</div>
 <div class="viewcode-block" id="check_input_and_output_categories"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.check_input_and_output_categories">[docs]</a><span class="k">def</span> <span class="nf">check_input_and_output_categories</span><span class="p">(</span><span class="n">input_data</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Raises ValueError if input or output categories are empty.</span>
 
@@ -543,9 +543,9 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">input_data</span><span class="o">.</span><span class="n">input_categories</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span>
             <span class="nb">len</span><span class="p">(</span><span class="n">input_data</span><span class="o">.</span><span class="n">output_categories</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Both input and output categories must be specified&#39;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Both input and output categories must be specified&#39;</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="check_categories"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.check_categories">[docs]</a><span class="k">def</span> <span class="nf">check_categories</span><span class="p">(</span><span class="n">categories_to_ckeck</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Raises ValueError if at least one of the given categories is not</span>
 <span class="sd">        present in categories list.</span>
@@ -572,9 +572,9 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">message</span><span class="p">:</span>
                 <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;Category &lt;{0}&gt; is not present in categories: {1}&#39;</span><span class="o">.</span>
                            <span class="n">format</span><span class="p">(</span><span class="n">category</span><span class="p">,</span> <span class="n">categories</span><span class="p">))</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="parse_price_ratio"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.parse_price_ratio">[docs]</a><span class="k">def</span> <span class="nf">parse_price_ratio</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">bounds</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Parses price ratio constraints and writes result to bounds.</span>
 <span class="sd">        This function is internal utility function that is used for parsing</span>
@@ -610,11 +610,11 @@
             <span class="n">two_categories</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Incorrect constraint, category does not&#39;</span>
                          <span class="s1">&#39; exist: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                         <span class="n">constraint</span><span class="p">))</span>
+                            <span class="n">constraint</span><span class="p">))</span>
     <span class="n">key</span> <span class="o">=</span> <span class="n">two_categories</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">two_categories</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">bounds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span></div>
+    <span class="n">bounds</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
 
-
+</div>
 <div class="viewcode-block" id="parse_constraint"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.parse_constraint">[docs]</a><span class="k">def</span> <span class="nf">parse_constraint</span><span class="p">(</span><span class="n">constraint</span><span class="p">,</span> <span class="n">split_str</span><span class="p">,</span> <span class="n">new_bounds_lb</span><span class="p">,</span> <span class="n">new_bounds_ub</span><span class="p">,</span>
                      <span class="n">categories</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Parses weight restriction constraint. This is internal utility function</span>
@@ -679,10 +679,10 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Incorrect constraint, category does not&#39;</span>
                                  <span class="s1">&#39; exist: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                                 <span class="n">constraint</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">found</span></div>
+                                     <span class="n">constraint</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">found</span>
 
-
+</div>
 <div class="viewcode-block" id="create_bounds"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.create_bounds">[docs]</a><span class="k">def</span> <span class="nf">create_bounds</span><span class="p">(</span><span class="n">constraints</span><span class="p">,</span> <span class="n">categories</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Creates proper data structures after parsing all constraints.</span>
 
@@ -729,9 +729,9 @@
         <span class="n">new_bounds</span><span class="p">[</span><span class="n">up_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_bounds_lb</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">up_key</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="n">up_value</span>
 
     <span class="k">assert</span> <span class="n">new_bounds</span>
-    <span class="k">return</span> <span class="n">new_bounds</span></div>
+    <span class="k">return</span> <span class="n">new_bounds</span>
 
-
+</div>
 <div class="viewcode-block" id="contraint_is_price_ratio_type"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.contraint_is_price_ratio_type">[docs]</a><span class="k">def</span> <span class="nf">contraint_is_price_ratio_type</span><span class="p">(</span><span class="n">bounds_key</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Checks if given parameter is a tuple with two elements. In the case of price</span>
 <span class="sd">        ratio weight restrictions key of bounds dictionary will be a tuple with two</span>
@@ -743,8 +743,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            bool: true if given element is a tuple with two elements, false otherwise.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bounds_key</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds_key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span></div>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">bounds_key</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds_key</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
 
+</div>
 <div class="viewcode-block" id="get_price_ratio_categories"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.get_price_ratio_categories">[docs]</a><span class="k">def</span> <span class="nf">get_price_ratio_categories</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Parses price ratio categories.</span>
 
@@ -769,9 +770,9 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">elements</span> <span class="o">=</span> <span class="p">[</span><span class="n">elem</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">val</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)]</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span>
-    <span class="k">return</span> <span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="n">elements</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">elements</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-
+</div>
 <div class="viewcode-block" id="find_category_name_in_restrictions"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.dea_utils.find_category_name_in_restrictions">[docs]</a><span class="k">def</span> <span class="nf">find_category_name_in_restrictions</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Finds category name in the given constraint.</span>
 

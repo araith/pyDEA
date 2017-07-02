@@ -190,8 +190,8 @@
                                    <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">remove_columns</span><span class="p">)</span>
         <span class="n">remove_column_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
         <span class="n">clear_all_btn</span> <span class="o">=</span> <span class="n">Button</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;Clear all&#39;</span><span class="p">,</span> <span class="n">command</span><span class="o">=</span><span class="n">clear_all_fnc</span><span class="p">)</span>
-        <span class="n">clear_all_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div>
-
+        <span class="n">clear_all_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="o">+</span><span class="n">E</span><span class="o">+</span><span class="n">W</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="TableModifierFrame.add_rows"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.table_modifier_gui.TableModifierFrame.add_rows">[docs]</a>    <span class="k">def</span> <span class="nf">add_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds rows to the data table. Number of rows is specified in Spinbox.</span>
 <span class="sd">            If invalid value is given in Spinbox, only one row is added.</span>
@@ -211,8 +211,8 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">display_data</span><span class="p">(</span><span class="n">start_row</span><span class="p">)</span>
                     <span class="n">nb_pages</span> <span class="o">=</span> <span class="n">calculate_nb_pages</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
                                                   <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_rows</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">set_navigation</span><span class="p">(</span><span class="n">nb_pages</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span></div>
-
+                    <span class="bp">self</span><span class="o">.</span><span class="n">set_navigation</span><span class="p">(</span><span class="n">nb_pages</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="TableModifierFrame.get_nb_to_add"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.table_modifier_gui.TableModifierFrame.get_nb_to_add">[docs]</a>    <span class="k">def</span> <span class="nf">get_nb_to_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">str_var</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Calculates valid number of rows or columns that should be added</span>
 <span class="sd">            to the data table.</span>
@@ -243,8 +243,8 @@
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
             <span class="n">nb_values</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">str_var</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">nb_values</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">nb_values</span></div>
-
+        <span class="k">return</span> <span class="n">nb_values</span>
+</div>
 <div class="viewcode-block" id="TableModifierFrame.remove_rows"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.table_modifier_gui.TableModifierFrame.remove_rows">[docs]</a>    <span class="k">def</span> <span class="nf">remove_rows</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Removes rows that are checked in checkboxes for removal.</span>
 <span class="sd">            First row cannot be removed.</span>
@@ -272,8 +272,8 @@
                                                   <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_rows</span><span class="p">)</span>
                     <span class="n">new_start_row</span> <span class="o">=</span> <span class="n">calculate_start_row_index</span><span class="p">(</span>
                         <span class="n">page_number</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_rows</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">display_data</span><span class="p">(</span><span class="n">new_start_row</span><span class="p">)</span></div>
-
+                    <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">display_data</span><span class="p">(</span><span class="n">new_start_row</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="TableModifierFrame.add_columns"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.table_modifier_gui.TableModifierFrame.add_columns">[docs]</a>    <span class="k">def</span> <span class="nf">add_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Adds columns to the data table. Number of columns is specified</span>
 <span class="sd">            in Spinbox.</span>
@@ -282,8 +282,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="n">nb_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nb_to_add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">col_str_var</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nb_cols</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="TableModifierFrame.remove_columns"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.table_modifier_gui.TableModifierFrame.remove_columns">[docs]</a>    <span class="k">def</span> <span class="nf">remove_columns</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Removes columns that are checked in checkboxes for removal.</span>
 <span class="sd">            First column cannot be removed.</span>

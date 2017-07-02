@@ -147,9 +147,9 @@
     <span class="n">target</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">dmu</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">lambda_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">target</span> <span class="o">+=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">coefficients</span><span class="p">[</span><span class="n">dmu</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">target</span></div>
+    <span class="k">return</span> <span class="n">target</span>
 
-
+</div>
 <div class="viewcode-block" id="calculate_radial_reduction"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.targets_and_slacks.calculate_radial_reduction">[docs]</a><span class="k">def</span> <span class="nf">calculate_radial_reduction</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">efficiency_score</span><span class="p">,</span>
                                <span class="n">orientation</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Calculates radial reduction for a given DMU and category.</span>
@@ -178,9 +178,9 @@
             <span class="k">return</span> <span class="mi">0</span>
         <span class="n">objective_value</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">efficiency_score</span>
 
-    <span class="k">return</span> <span class="p">(</span><span class="n">objective_value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">objective_value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">]</span>
 
-
+</div>
 <div class="viewcode-block" id="calculate_non_radial_reduction"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.targets_and_slacks.calculate_non_radial_reduction">[docs]</a><span class="k">def</span> <span class="nf">calculate_non_radial_reduction</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">radial_reduction</span><span class="p">,</span> <span class="n">original</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Calculates non-radial reduction value.</span>
 

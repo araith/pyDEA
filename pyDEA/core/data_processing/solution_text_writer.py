@@ -171,3 +171,49 @@ class TxtWriter(object):
             new_name = '{0}.csv'.format(tab_writer.name)
             new_name = change_to_unique_name_if_needed(new_name)
             os.rename(saved_file_name, os.path.join(self.folder_name, new_name))
+
+
+class OneCsvWriter(object):
+    ''' This class is used for writing data to a csv file.
+
+        Attributes:
+            file_name (str): name of the file to create.
+            tab_writer (TxtOneFileWriter): TxtOneFileWriter
+                object which is responsible to filling  csv
+                file with data.
+
+        Args:
+            file_name (str): name of the file to create.
+    '''
+    def __init__(self, file_name):
+        self.tab_writer = None
+        self.file_name = file_name
+
+    def add_sheet(self, name):
+        ''' Creates a csv file.
+
+            Args:
+                name (str): this parameter is ignored.
+
+                    Note:
+                        This argument is ignored, the file name given in class
+                        consructor is used.
+
+            Returns:
+                SolutionTextWriter: SolutionTextWriter object that is
+                    responsible for filling this file with data.
+        '''
+        file_ref = open(self.file_name, 'w')
+        tab_writer = TxtOneFileWriter(file_ref)
+        writer = SolutionTextWriter(',', tab_writer.write_text)
+        self.tab_writer = tab_writer
+        return writer
+
+    def save(self, file_name):
+        ''' Closes opened csv file.
+
+            Args:
+                file_name (str): this parameter is ignored.
+        '''
+        # no need to save, only to close opened file
+        self.tab_writer.file_ref.close()

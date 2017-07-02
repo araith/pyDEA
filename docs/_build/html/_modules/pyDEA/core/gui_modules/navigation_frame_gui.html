@@ -182,8 +182,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
         <span class="n">nb_pages_lb</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">textvariable</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">text_var_nb_pages</span><span class="p">)</span>
         <span class="n">nb_pages_lb</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="o">+</span><span class="n">N</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">reset_navigation</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">reset_navigation</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="NavigationForTableFrame.show_prev_page"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.show_prev_page">[docs]</a>    <span class="k">def</span> <span class="nf">show_prev_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Displays previous page.</span>
 
@@ -194,8 +194,8 @@
         <span class="n">prev_page_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">-</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">prev_page_index</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">prev_page_index</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">on_page_change</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_page_change</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="NavigationForTableFrame.show_next_page"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.show_next_page">[docs]</a>    <span class="k">def</span> <span class="nf">show_next_page</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Displays next page.</span>
 
@@ -206,8 +206,8 @@
         <span class="n">next_page_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">get</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">if</span> <span class="n">next_page_index</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">cget</span><span class="p">(</span><span class="s1">&#39;to&#39;</span><span class="p">)):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">next_page_index</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">on_page_change</span><span class="p">()</span></div>
-
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_page_change</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="NavigationForTableFrame.on_page_change"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.on_page_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_page_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Displays a page which number is currently stored in</span>
 <span class="sd">            current_page_str.</span>
@@ -237,8 +237,8 @@
         <span class="c1"># second -1 because row indeces start with 0</span>
         <span class="n">row_index</span> <span class="o">=</span> <span class="n">calculate_start_row_index</span><span class="p">(</span><span class="n">curr_page</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">nb_rows</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">display_data</span><span class="p">(</span><span class="n">row_index</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">display_data</span><span class="p">(</span><span class="n">row_index</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="NavigationForTableFrame.reset_navigation"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.reset_navigation">[docs]</a>    <span class="k">def</span> <span class="nf">reset_navigation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Resets navigation parameters.</span>
 
@@ -246,8 +246,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_page_str</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">text_var_nb_pages</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s1">&#39;1 pages&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">to</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">goto_spin</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">to</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="NavigationForTableFrame.set_navigation"><a class="viewcode-back" href="../../../../pyDEA.core.gui_modules.html#pyDEA.core.gui_modules.navigation_frame_gui.NavigationForTableFrame.set_navigation">[docs]</a>    <span class="k">def</span> <span class="nf">set_navigation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb_data_pages</span><span class="p">,</span> <span class="n">reset_curr_page</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Sets navigation parameters.</span>
 

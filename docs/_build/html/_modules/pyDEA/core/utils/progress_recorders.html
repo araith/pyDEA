@@ -135,14 +135,14 @@
 <div class="viewcode-block" id="NullProgress.set_position"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.progress_recorders.NullProgress.set_position">[docs]</a>    <span class="k">def</span> <span class="nf">set_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Does nothing.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">pass</span></div>
-
+        <span class="k">pass</span>
+</div>
 <div class="viewcode-block" id="NullProgress.increment_step"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.progress_recorders.NullProgress.increment_step">[docs]</a>    <span class="k">def</span> <span class="nf">increment_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Does nothing.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">pass</span></div></div>
+        <span class="k">pass</span>
 
-
+</div></div>
 <div class="viewcode-block" id="GuiProgress"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.progress_recorders.GuiProgress">[docs]</a><span class="k">class</span> <span class="nc">GuiProgress</span><span class="p">(</span><span class="n">NullProgress</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class updates progress bar while a given problem is being</span>
 <span class="sd">        solved.</span>
@@ -171,8 +171,8 @@
 <span class="sd">                position (double): progress bar position.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">position</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="GuiProgress.increment_step"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.progress_recorders.GuiProgress.increment_step">[docs]</a>    <span class="k">def</span> <span class="nf">increment_step</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Increments the progress bar by a step size.</span>
 <span class="sd">        &#39;&#39;&#39;</span>

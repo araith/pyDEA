@@ -142,8 +142,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                str: a string &#39;input&#39;.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="s1">&#39;input&#39;</span></div>
-
+        <span class="k">return</span> <span class="s1">&#39;input&#39;</span>
+</div>
 <div class="viewcode-block" id="InputOrientedModel.process_obj_var"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.InputOrientedModel.process_obj_var">[docs]</a>    <span class="k">def</span> <span class="nf">process_obj_var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_value</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Post-process objective function value if necessary.</span>
 
@@ -156,8 +156,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">obj_value</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">obj_value</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">ZERO_TOLERANCE</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">1.0</span>
-        <span class="k">return</span> <span class="n">obj_value</span></div>
-
+        <span class="k">return</span> <span class="n">obj_value</span>
+</div>
 <div class="viewcode-block" id="InputOrientedModel.process_dual_value"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.InputOrientedModel.process_dual_value">[docs]</a>    <span class="k">def</span> <span class="nf">process_dual_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dual_value</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Post-process given value of a dual variable if necessary.</span>
 
@@ -168,9 +168,9 @@
 <span class="sd">                double: dual_value since in input-oriented model we do nothing</span>
 <span class="sd">                    with duals.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">dual_value</span></div></div>
+        <span class="k">return</span> <span class="n">dual_value</span>
 
-
+</div></div>
 <div class="viewcode-block" id="OutputOrientedModel"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.OutputOrientedModel">[docs]</a><span class="k">class</span> <span class="nc">OutputOrientedModel</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class implements methods that are the same for all output-oriented</span>
 <span class="sd">        models.</span>
@@ -181,8 +181,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                str: a string &#39;output&#39;.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="s1">&#39;output&#39;</span></div>
-
+        <span class="k">return</span> <span class="s1">&#39;output&#39;</span>
+</div>
 <div class="viewcode-block" id="OutputOrientedModel.process_obj_var"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.OutputOrientedModel.process_obj_var">[docs]</a>    <span class="k">def</span> <span class="nf">process_obj_var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_value</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Post-process objective function value if necessary.</span>
 
@@ -196,8 +196,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">obj_value</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">obj_value</span></div>
-
+        <span class="k">return</span> <span class="mf">1.0</span><span class="o">/</span><span class="n">obj_value</span>
+</div>
 <div class="viewcode-block" id="OutputOrientedModel.process_dual_value"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.input_output_model_bases.OutputOrientedModel.process_dual_value">[docs]</a>    <span class="k">def</span> <span class="nf">process_dual_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dual_value</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Post-process given value of a dual variable if necessary.</span>
 

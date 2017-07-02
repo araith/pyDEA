@@ -196,9 +196,9 @@
             <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
             <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">param_value</span><span class="p">)</span>
             <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">row_index</span></div></div>
+        <span class="k">return</span> <span class="n">row_index</span>
 
-
+</div></div>
 <div class="viewcode-block" id="XLSSheetOnionRank"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetOnionRank">[docs]</a><span class="k">class</span> <span class="nc">XLSSheetOnionRank</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Writes information about peel the onion solution to a given output.</span>
 
@@ -263,9 +263,9 @@
                 <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
             <span class="k">return</span> <span class="n">row_index</span>
-        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span></div></div>
+        <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
 
-
+</div></div>
 <div class="viewcode-block" id="XLSSheetWithCategoricalVar"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithCategoricalVar">[docs]</a><span class="k">class</span> <span class="nc">XLSSheetWithCategoricalVar</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Writes various solution information to a given output, and</span>
 <span class="sd">        adds categorical information if necessary.</span>
@@ -322,8 +322,8 @@
                     <span class="n">row_index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
                     <span class="nb">int</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">coefficients</span><span class="p">[</span>
                         <span class="n">dmu_code</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">categorical</span><span class="p">]))</span>
-        <span class="k">return</span> <span class="n">row_index</span></div>
-
+        <span class="k">return</span> <span class="n">row_index</span>
+</div>
 <div class="viewcode-block" id="XLSSheetWithCategoricalVar.create_sheet_input_output_data_base"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithCategoricalVar.create_sheet_input_output_data_base">[docs]</a>    <span class="k">def</span> <span class="nf">create_sheet_input_output_data_base</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
                                             <span class="n">get_multiplier</span><span class="p">,</span>
                                             <span class="n">sheet_name</span><span class="p">,</span> <span class="n">start_row_index</span><span class="p">,</span>
@@ -419,8 +419,8 @@
                     <span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]])</span>
 
             <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">row_index</span></div>
-
+        <span class="k">return</span> <span class="n">row_index</span>
+</div>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_const_multiplier</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Helper method that is used for writing input and output data</span>
@@ -456,8 +456,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_sheet_input_output_data_base</span><span class="p">(</span>
             <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_const_multiplier</span><span class="p">,</span> <span class="s1">&#39;InputOutputWeights&#39;</span><span class="p">,</span>
-            <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span></div>
-
+            <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span>
+</div>
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_get_data_multiplier</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="n">dmu_code</span><span class="p">,</span> <span class="n">category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Helper method that is used for writing weighted data</span>
@@ -493,8 +493,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_sheet_input_output_data_base</span><span class="p">(</span>
             <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_data_multiplier</span><span class="p">,</span> <span class="s1">&#39;WeightedData&#39;</span><span class="p">,</span>
-            <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span></div>
-
+            <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="XLSSheetWithCategoricalVar.create_sheet_targets"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSSheetWithCategoricalVar.create_sheet_targets">[docs]</a>    <span class="k">def</span> <span class="nf">create_sheet_targets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">start_row_index</span><span class="p">,</span>
                              <span class="n">params_str</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Writes targets to a given output.</span>
@@ -574,9 +574,9 @@
                     <span class="n">row_index</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]])</span>
 
             <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">2</span>
-        <span class="k">return</span> <span class="n">row_index</span></div></div>
+        <span class="k">return</span> <span class="n">row_index</span>
 
-
+</div></div>
 <div class="viewcode-block" id="XLSWriter"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSWriter">[docs]</a><span class="k">class</span> <span class="nc">XLSWriter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class is responsible for writing solution information</span>
 <span class="sd">        into a given output.</span>
@@ -665,8 +665,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">params_sheet</span> <span class="o">=</span> <span class="n">XLSSheetWithParameters</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_date</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">)</span><span class="o">.</span><span class="n">create_sheet_parameters</span>
-        <span class="k">return</span> <span class="n">worksheets</span></div>
-
+        <span class="k">return</span> <span class="n">worksheets</span>
+</div>
 <div class="viewcode-block" id="XLSWriter.write_data"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.XLSWriter.write_data">[docs]</a>    <span class="k">def</span> <span class="nf">write_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">params_str</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
                    <span class="n">progress_recorder</span><span class="o">=</span><span class="n">NullProgress</span><span class="p">()):</span>
         <span class="sd">&#39;&#39;&#39; Writes given solution to a given output.</span>
@@ -697,9 +697,9 @@
                 <span class="s1">&#39;Sheet_{count}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">params_sheet</span><span class="p">(</span><span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
             <span class="n">progress_recorder</span><span class="o">.</span><span class="n">increment_step</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">print_params</span> <span class="o">=</span> <span class="bp">False</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_params</span> <span class="o">=</span> <span class="bp">False</span>
 
-
+</div></div>
 <span class="k">def</span> <span class="nf">_calculate_frontier_classification</span><span class="p">(</span><span class="n">sum_of_lambda_values</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Returns string that describes frontier classification. If</span>
 <span class="sd">        sum_of_lambda_values is &gt; 1, then classification is DRS.</span>
@@ -773,9 +773,9 @@
             <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
                 <span class="n">row_index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatus</span><span class="p">[</span><span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]])</span>
         <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">row_index</span></div>
+    <span class="k">return</span> <span class="n">row_index</span>
 
-
+</div>
 <div class="viewcode-block" id="create_sheet_peer_count"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.write_data_to_xls.create_sheet_peer_count">[docs]</a><span class="k">def</span> <span class="nf">create_sheet_peer_count</span><span class="p">(</span><span class="n">work_sheet</span><span class="p">,</span> <span class="n">solution</span><span class="p">,</span> <span class="n">start_row_index</span><span class="p">,</span> <span class="n">params_str</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; Writes peer counts to a given output.</span>
 

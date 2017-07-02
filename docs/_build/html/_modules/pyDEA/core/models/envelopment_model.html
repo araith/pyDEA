@@ -159,8 +159,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: upper bound on efficiency spyDEA.core.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound_generator</span><span class="p">()</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">upper_bound_generator</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelInputOriented.get_lower_bound_for_objective_variable"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_lower_bound_for_objective_variable">[docs]</a>    <span class="k">def</span> <span class="nf">get_lower_bound_for_objective_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns 0 which is the lower bound on efficiency score which</span>
 <span class="sd">            is minimized in the case of input-oriented envelopment model.</span>
@@ -168,8 +168,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: zero.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="mi">0</span></div>
-
+        <span class="k">return</span> <span class="mi">0</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelInputOriented.get_objective_type"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_objective_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_objective_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns pulp.LpMinimize - we minimize objective function in case</span>
 <span class="sd">            of input-oriented envelopment model.</span>
@@ -177,8 +177,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                pulp.LpMaximize: type of objective function.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpMinimize</span></div>
-
+        <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpMinimize</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelInputOriented.get_output_variable_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_output_variable_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_variable_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">,</span> <span class="n">output_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns 1, since in input-oriented model we do not multiply</span>
 <span class="sd">            current output by anything.</span>
@@ -192,8 +192,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: output variable coefficient.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="mi">1</span></div>
-
+        <span class="k">return</span> <span class="mi">1</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelInputOriented.get_input_variable_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.get_input_variable_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_variable_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">,</span> <span class="n">input_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns obj_variable, since in input-oriented model we multiply</span>
 <span class="sd">            current input by efficiency spyDEA.core.</span>
@@ -207,8 +207,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                pulp.LpVariable: input variable coefficient.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">obj_variable</span></div>
-
+        <span class="k">return</span> <span class="n">obj_variable</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelInputOriented.update_output_category_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.update_output_category_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">update_output_category_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_output</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span>
                                            <span class="n">obj_var</span><span class="p">,</span> <span class="n">output_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficient of a given output category with a new</span>
@@ -222,8 +222,8 @@
 <span class="sd">                    model that is optimised in the objective function.</span>
 <span class="sd">                output_category (str): output category name.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">constraint</span><span class="o">.</span><span class="n">changeRHS</span><span class="p">(</span><span class="n">current_output</span><span class="p">)</span></div>
-
+        <span class="n">constraint</span><span class="o">.</span><span class="n">changeRHS</span><span class="p">(</span><span class="n">current_output</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelInputOriented.update_input_category_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOriented.update_input_category_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">update_input_category_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_input</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span>
                                           <span class="n">obj_var</span><span class="p">,</span> <span class="n">input_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficient of a given input category with a new</span>
@@ -237,9 +237,9 @@
 <span class="sd">                    model that is optimised in the objective function.</span>
 <span class="sd">                output_category (str): input category name.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">constraint</span><span class="p">[</span><span class="n">obj_var</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_input</span></div></div>
+        <span class="n">constraint</span><span class="p">[</span><span class="n">obj_var</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_input</span>
 
-
+</div></div>
 <div class="viewcode-block" id="EnvelopmentModelOutputOriented"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented">[docs]</a><span class="k">class</span> <span class="nc">EnvelopmentModelOutputOriented</span><span class="p">(</span><span class="n">OutputOrientedModel</span><span class="p">):</span>
 
     <span class="sd">&#39;&#39;&#39; This class defines methods specific</span>
@@ -267,8 +267,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: None.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">None</span></div>
-
+        <span class="k">return</span> <span class="bp">None</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelOutputOriented.get_lower_bound_for_objective_variable"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_lower_bound_for_objective_variable">[docs]</a>    <span class="k">def</span> <span class="nf">get_lower_bound_for_objective_variable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns a proper lower bound on the variables corresponding</span>
 <span class="sd">            to output-oriented envelopment model.</span>
@@ -276,8 +276,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: lower bound on variables.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound_generator</span><span class="p">()</span></div>
-
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lower_bound_generator</span><span class="p">()</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelOutputOriented.get_objective_type"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_objective_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_objective_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns pulp.LpMinimize - we maximize objective function in case</span>
 <span class="sd">            of output-oriented envelopment model.</span>
@@ -285,8 +285,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                pulp.LpMaximize: objective function type.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpMaximize</span></div>
-
+        <span class="k">return</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpMaximize</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelOutputOriented.get_output_variable_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_output_variable_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">get_output_variable_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">,</span> <span class="n">output_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns obj_variable, since in output-oriented model we multiply</span>
 <span class="sd">            current output by inverse efficiency spyDEA.core.</span>
@@ -300,8 +300,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                pulp.LpVariable: output variable coefficient.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="n">obj_variable</span></div>
-
+        <span class="k">return</span> <span class="n">obj_variable</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelOutputOriented.get_input_variable_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.get_input_variable_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">get_input_variable_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj_variable</span><span class="p">,</span> <span class="n">input_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns 1, since in output-oriented model we do not multiply</span>
 <span class="sd">            current input by anything.</span>
@@ -315,8 +315,8 @@
 <span class="sd">            Returns:</span>
 <span class="sd">                double: input variable coefficient.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">return</span> <span class="mi">1</span></div>
-
+        <span class="k">return</span> <span class="mi">1</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelOutputOriented.update_output_category_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.update_output_category_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">update_output_category_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_output</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span>
                                            <span class="n">obj_var</span><span class="p">,</span> <span class="n">output_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficient of a given output category with a new</span>
@@ -330,8 +330,8 @@
 <span class="sd">                    model that is optimised in the objective function.</span>
 <span class="sd">                output_category (str): output category name.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">constraint</span><span class="p">[</span><span class="n">obj_var</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">current_output</span></div>
-
+        <span class="n">constraint</span><span class="p">[</span><span class="n">obj_var</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">current_output</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelOutputOriented.update_input_category_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOriented.update_input_category_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">update_input_category_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_input</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span>
                                           <span class="n">obj_var</span><span class="p">,</span> <span class="n">input_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficient of a given input category with a new</span>
@@ -345,9 +345,9 @@
 <span class="sd">                    model that is optimised in the objective function.</span>
 <span class="sd">                output_category (str): input category name.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="n">constraint</span><span class="o">.</span><span class="n">changeRHS</span><span class="p">(</span><span class="o">-</span><span class="n">current_input</span><span class="p">)</span></div></div>
+        <span class="n">constraint</span><span class="o">.</span><span class="n">changeRHS</span><span class="p">(</span><span class="o">-</span><span class="n">current_input</span><span class="p">)</span>
 
-
+</div></div>
 <div class="viewcode-block" id="EnvelopmentModelInputOrientedWithNonDiscVars"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars">[docs]</a><span class="k">class</span> <span class="nc">EnvelopmentModelInputOrientedWithNonDiscVars</span><span class="p">(</span>
         <span class="n">EnvelopmentModelInputOriented</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class redefines some methods of EnvelopmentModelInputOriented</span>
@@ -391,8 +391,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">input_category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_disc_inputs</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">obj_variable</span></div>
-
+        <span class="k">return</span> <span class="n">obj_variable</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelInputOrientedWithNonDiscVars.update_input_category_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelInputOrientedWithNonDiscVars.update_input_category_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">update_input_category_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_input</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span>
                                           <span class="n">obj_var</span><span class="p">,</span> <span class="n">input_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficient of a given input category with a new</span>
@@ -409,9 +409,9 @@
         <span class="k">if</span> <span class="n">input_category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_disc_inputs</span><span class="p">:</span>
             <span class="n">constraint</span><span class="o">.</span><span class="n">changeRHS</span><span class="p">(</span><span class="o">-</span><span class="n">current_input</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">constraint</span><span class="p">[</span><span class="n">obj_var</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_input</span></div></div>
+            <span class="n">constraint</span><span class="p">[</span><span class="n">obj_var</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_input</span>
 
-
+</div></div>
 <div class="viewcode-block" id="EnvelopmentModelOutputOrientedWithNonDiscVars"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars">[docs]</a><span class="k">class</span> <span class="nc">EnvelopmentModelOutputOrientedWithNonDiscVars</span><span class="p">(</span>
         <span class="n">EnvelopmentModelOutputOriented</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This class redefines some methods of EnvelopmentModelOutputOriented</span>
@@ -453,8 +453,8 @@
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">output_category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">non_disc_outputs</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">obj_variable</span></div>
-
+        <span class="k">return</span> <span class="n">obj_variable</span>
+</div>
 <div class="viewcode-block" id="EnvelopmentModelOutputOrientedWithNonDiscVars.update_output_category_coefficient"><a class="viewcode-back" href="../../../../pyDEA.core.models.html#pyDEA.core.models.envelopment_model.EnvelopmentModelOutputOrientedWithNonDiscVars.update_output_category_coefficient">[docs]</a>    <span class="k">def</span> <span class="nf">update_output_category_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_output</span><span class="p">,</span> <span class="n">constraint</span><span class="p">,</span>
                                            <span class="n">obj_var</span><span class="p">,</span> <span class="n">output_category</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates coefficient of a given output category with a new</span>

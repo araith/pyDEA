@@ -215,13 +215,13 @@
         <span class="n">run_btn</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_lbl</span> <span class="o">=</span> <span class="n">Label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">foreground</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_lbl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_lbl</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">padx</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">pady</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">sticky</span><span class="o">=</span><span class="n">W</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="MainFrame.on_weights_status_change"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame.on_weights_status_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_weights_status_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; This method is called when weight restrictions status is changed.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_lbl</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span><span class="o">.</span><span class="n">get</span><span class="p">())</span></div>
-
+        <span class="bp">self</span><span class="o">.</span><span class="n">weights_status_lbl</span><span class="o">.</span><span class="n">config</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">weights_status_str</span><span class="o">.</span><span class="n">get</span><span class="p">())</span>
+</div>
 <div class="viewcode-block" id="MainFrame.run"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; This method is called when the user presses Run button.</span>
 <span class="sd">            Solves the problem and displays solution.</span>
@@ -229,8 +229,8 @@
         <span class="n">clean_up_pickled_files</span><span class="p">()</span>
         <span class="n">params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params_frame</span><span class="o">.</span><span class="n">params</span>
         <span class="n">run_method</span> <span class="o">=</span> <span class="n">RunMethodGUI</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-        <span class="n">run_method</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params</span><span class="p">)</span></div>
-
+        <span class="n">run_method</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="MainFrame.construct_categories"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame.construct_categories">[docs]</a>    <span class="k">def</span> <span class="nf">construct_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Returns current categories.</span>
 
@@ -238,15 +238,15 @@
 <span class="sd">                (list of str): list of current categories</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">category</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_categories</span>
-                <span class="k">if</span> <span class="n">category</span><span class="p">]</span></div>
-
+                <span class="k">if</span> <span class="n">category</span><span class="p">]</span>
+</div>
 <div class="viewcode-block" id="MainFrame.on_dmu_change"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.MainFrame.on_dmu_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_dmu_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39; Updates progress bar.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">increment</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_bar</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
 
-
+</div></div>
 <div class="viewcode-block" id="ask_quit"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.ask_quit">[docs]</a><span class="k">def</span> <span class="nf">ask_quit</span><span class="p">(</span><span class="n">main_frame</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39; This method is called before application is closed if there is</span>
 <span class="sd">        an unsaved solution to verify if the user wants to safe solution</span>
@@ -259,17 +259,17 @@
         <span class="k">if</span> <span class="n">askyesno</span><span class="p">(</span><span class="s2">&quot;Verify&quot;</span><span class="p">,</span> <span class="s2">&quot;Do you want to save solution before quitting?&quot;</span><span class="p">):</span>
             <span class="n">main_frame</span><span class="o">.</span><span class="n">data_frame</span><span class="o">.</span><span class="n">solution_tab</span><span class="o">.</span><span class="n">on_save_solution</span><span class="p">()</span>
     <span class="n">clean_up_pickled_files</span><span class="p">()</span>
-    <span class="n">main_frame</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span></div>
+    <span class="n">main_frame</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">destroy</span><span class="p">()</span>
 
-
+</div>
 <div class="viewcode-block" id="show_error"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.show_error">[docs]</a><span class="k">def</span> <span class="nf">show_error</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="n">logger</span> <span class="o">=</span> <span class="n">get_logger</span><span class="p">()</span>
     <span class="n">err</span> <span class="o">=</span> <span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
     <span class="c1"># show only short error message to the user without traceback</span>
-    <span class="n">showerror</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></div>
+    <span class="n">showerror</span><span class="p">(</span><span class="s1">&#39;Error&#39;</span><span class="p">,</span> <span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 
-
+</div>
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../pyDEA.html#pyDEA.main_gui.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39; Runs main application GUI.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -302,9 +302,9 @@
                   <span class="n">root</span><span class="o">.</span><span class="n">winfo_screenheight</span><span class="p">()</span> <span class="o">-</span> <span class="n">root</span><span class="o">.</span><span class="n">winfo_screenheight</span><span class="p">()</span><span class="o">*</span><span class="mf">0.15</span><span class="p">)</span>
 
     <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;pyDEA exited.&#39;</span><span class="p">)</span></div>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;pyDEA exited.&#39;</span><span class="p">)</span>
 
-
+</div>
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
