@@ -26,7 +26,7 @@ class PyTest(TestCommand):
 
 setup(
     name = "pyDEA",
-    version = "1.0",
+    version = "1.1",
     author = "Andrea Raith, Olga Perederieieva",
     author_email = "peredereeva@gmail.com",
     description = ("Package for conducting data envelopment analysis"),
@@ -41,7 +41,9 @@ setup(
         "Intended Audience :: Science/Research",
         "Topic :: Scientific/Engineering",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX :: Linux"
     ],
