@@ -10,7 +10,8 @@ def build_models(params, model_input):
     ''' Creates several models and parameters in the case when
         RETURN_TO_SCALE or ORIENTATION is set to both. If neither
         RETURN_TO_SCALE
-        nor ORIENTATION is set to both, then no new models will be created.
+        nor ORIENTATION is set to both, then no new models will be created,
+        a copy of the given model and parameters will be returned.
 
         Args:
             params (Parameters): parameters.
