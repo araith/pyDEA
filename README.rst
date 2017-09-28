@@ -8,6 +8,7 @@
 :Documentation: 
 :Platforms: Windows, Linux
 :Date: 
+
 Copyright (c) 2017 Andrea Raith, Olga Perederieieva, Fariza Fauzi.
 
 *pyDEA* is a software package developed in Python for conducting data envelopment analysis (DEA). 
@@ -65,10 +66,10 @@ where
   - *output_dir* is output directory. It is optional, if it is not specified, solution will be written to current directory. This value is used only if OUTPUT_FILE in parameters file is empty or set to auto. Otherwise, the value in OUTPUT_FILE is used instead.
 
   - *sheet_name* is sheet name from which data should be read. It is optional, if it is not specified, data will be read from the first sheet.
-  
+
 If you want to specify sheet name, but not output directory use empty string as the third argument, as shown below:
 
-*>> python -m pyDEA.main .file_with_params “” “” sheet_name*
+*>> python -m pyDEA.main .file_with_params "" "" sheet_name*
 
 If file path contains spaces use quotes.
 
@@ -82,7 +83,7 @@ Another example:
 
 This example imports all methods and classes defined in *dea_utils*.
 
-Uninstalling 
+Uninstalling
 ------------
 
 If *pyDEA* was installed via pip or easy_install, it can be uninstalled by using the following command:
@@ -91,13 +92,12 @@ If *pyDEA* was installed via pip or easy_install, it can be uninstalled by using
 
 If *pyDEA* was installed from source, it must be manually uninstalled. Simply remove all files listed in files.txt and all *pyDEA* package files.
 
-===============
+========
  License
-===============
+========
 
 *pyDEA* is distributed under the MIT License
-::
-   https://opensource.org/licenses/MIT
+::https://opensource.org/licenses/MIT
 
 Copyright (c) 2016 Andrea Raith, Olga Perederieieva, Fariza Fauzi
 
@@ -119,14 +119,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-===============
+================
 Acknowledgements
-===============
+================
 
 *pyDEA* has been financially supported by the Department of Engineering Science at the University of Auckland and the Auckland Medical Research Foundation (AMRF).
 
 The *pyDEA* solver was first developed during a summer project in 2009 / 2010 at the University of Auckland, Department of Engineering Science by Kane Harton. Development was continued by Harriet Priddey during her Part IV project at the Department of Engineering Science in 2010. The code was further modified and enhanced with a GUI by Andrea Raith in 2010 / 2011. Alan Lee, Matt Rouse and Andrea Raith continued work on the GUI and the underlying DEA solver continued between November 2011 and February 2012. From 2014, pyDEA was re-implemented by Olga Perederieieva with input from Fariza Fauzi.
 
 Thank you to Paul Rouse for guidance on DEA and help with the revamped version of *pyDEA*. Also, thank you to Oliver Weide for help with python.
-
-
