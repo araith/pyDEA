@@ -2,13 +2,6 @@
  *pyDEA* - READ ME
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:Developers: Andrea Raith, Olga Perederieieva, Fariza Fauzi
-:License: MIT license
-:Web-site: 
-:Documentation: 
-:Platforms: Windows, Linux
-:Date: 
-
 Copyright (c) 2017 Andrea Raith, Olga Perederieieva, Fariza Fauzi.
 
 *pyDEA* is a software package developed in Python for conducting data envelopment analysis (DEA). 
@@ -96,8 +89,7 @@ If *pyDEA* was installed from source, it must be manually uninstalled. Simply re
  License
 ========
 
-*pyDEA* is distributed under the MIT License
-::https://opensource.org/licenses/MIT
+*pyDEA* is distributed under the MIT License (https://opensource.org/licenses/MIT).
 
 Copyright (c) 2016 Andrea Raith, Olga Perederieieva, Fariza Fauzi
 
