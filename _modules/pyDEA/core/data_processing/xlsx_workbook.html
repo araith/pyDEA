@@ -1,0 +1,265 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pyDEA.core.data_processing.xlsx_workbook &mdash; pyDEA  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="pyDEA  documentation" href="../../../../index.html"/>
+        <link rel="up" title="Module code" href="../../../index.html"/> 
+
+  
+  <script src="../../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> pyDEA
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../userGuide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pyDEA.html">pyDEA package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../../index.html">pyDEA</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+      
+    <li>pyDEA.core.data_processing.xlsx_workbook</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pyDEA.core.data_processing.xlsx_workbook</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39; This module contains classes responsible for wrapping openpyxl functionality</span>
+<span class="sd">    for creating xlsx files.</span>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">from</span> <span class="nn">openpyxl</span> <span class="kn">import</span> <span class="n">Workbook</span>
+
+
+<div class="viewcode-block" id="XlsxSheet"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.xlsx_workbook.XlsxSheet">[docs]</a><span class="k">class</span> <span class="nc">XlsxSheet</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class wraps openpyxl work sheet so that it can be used by xls writer</span>
+<span class="sd">        class.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            name (str): work sheet name.</span>
+<span class="sd">            worksheet (openpyxl work sheet): worksheet to wrap.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            worksheet (openpyxl work sheet): worksheet to wrap.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">worksheet</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worksheet</span> <span class="o">=</span> <span class="n">worksheet</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">worksheet</span><span class="o">.</span><span class="n">title</span>
+
+    <span class="nd">@name.setter</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">worksheet</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">value</span>
+
+<div class="viewcode-block" id="XlsxSheet.write"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.xlsx_workbook.XlsxSheet.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Writes given value to a cell with specified row and column.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                row (int): row index.</span>
+<span class="sd">                col (int): column index.</span>
+<span class="sd">                value (object): value to write.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c1"># +1 because openpyxl needs rows and cols to start from 1, not from 0</span>
+        <span class="n">cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">worksheet</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="n">row</span><span class="o">=</span><span class="n">row</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">cell</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+
+</div></div>
+<div class="viewcode-block" id="XlsxWorkbook"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.xlsx_workbook.XlsxWorkbook">[docs]</a><span class="k">class</span> <span class="nc">XlsxWorkbook</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; This class wraps openpyxl workbook so it can be used by</span>
+<span class="sd">        xls writer class.</span>
+
+<span class="sd">        Attributes:</span>
+<span class="sd">            workbook (openpyxl workbook): workbook.</span>
+<span class="sd">            nb_sheets (int): number of added work sheets.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workbook</span> <span class="o">=</span> <span class="n">Workbook</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nb_sheets</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="XlsxWorkbook.add_sheet"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.xlsx_workbook.XlsxWorkbook.add_sheet">[docs]</a>    <span class="k">def</span> <span class="nf">add_sheet</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sheet_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Adds one sheet to the workbook.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                sheet_name (str): name of the work sheet.</span>
+
+<span class="sd">            Returns:</span>
+<span class="sd">                XlsxSheet: created work sheet.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nb_sheets</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nb_sheets</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">worksheet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workbook</span><span class="o">.</span><span class="n">active</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">worksheet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">workbook</span><span class="o">.</span><span class="n">create_sheet</span><span class="p">()</span>
+        <span class="n">worksheet</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">sheet_name</span>
+        <span class="k">return</span> <span class="n">XlsxSheet</span><span class="p">(</span><span class="n">worksheet</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="XlsxWorkbook.save"><a class="viewcode-back" href="../../../../pyDEA.core.data_processing.html#pyDEA.core.data_processing.xlsx_workbook.XlsxWorkbook.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_name</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39; Saves workbook to a given file.</span>
+
+<span class="sd">            Args:</span>
+<span class="sd">                file_name (str): name of the file where workbook should be</span>
+<span class="sd">                    saved.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">workbook</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Andrea Raith, Fariza Fauzi and Olga Perederieieva.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
