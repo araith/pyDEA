@@ -1,17 +1,12 @@
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- *pyDEA* - READ ME
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Copyright (c) 2017 Andrea Raith, Olga Perederieieva, Fariza Fauzi.
-
 *pyDEA* is a software package developed in Python for conducting data envelopment analysis (DEA). 
 
-==============================
-Installing and Running Package
-==============================
+Source
+======
+
+The latest source version is available on github: https://github.com/araith/pyDEA.
 
 Installation
-------------
+============
 
 The *pyDEA* package can be installed via pip, easy_install or from source. In order to install it via pip open terminal and use the following command:
 
@@ -36,7 +31,7 @@ In order to install from source, download and unzip source files, open terminal 
 This command will create distribution files in *pyDEA* folder and write paths to all other installed files to files.txt.
 
 How to Run
-----------
+==========
 
 The *pyDEA* package supports several interfaces. It has a Graphical User Interface (GUI), Command Line Interface (CLI) and it can be imported and used directly in python scripts. After package installation, in order to run GUI, open terminal and type:
 
@@ -77,7 +72,7 @@ Another example:
 This example imports all methods and classes defined in *dea_utils*.
 
 Uninstalling
-------------
+============
 
 If *pyDEA* was installed via pip or easy_install, it can be uninstalled by using the following command:
 
@@ -85,13 +80,12 @@ If *pyDEA* was installed via pip or easy_install, it can be uninstalled by using
 
 If *pyDEA* was installed from source, it must be manually uninstalled. Simply remove all files listed in files.txt and all *pyDEA* package files.
 
-========
- License
-========
+Copyright and License
+=====================
 
 *pyDEA* is distributed under the MIT License (https://opensource.org/licenses/MIT).
 
-Copyright (c) 2016 Andrea Raith, Olga Perederieieva, Fariza Fauzi
+Copyright (c) 2016 Andrea Raith, Olga Perederieieva, Fariza Fauzi.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files, to deal
@@ -111,7 +105,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-================
 Acknowledgements
 ================
 
