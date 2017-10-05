@@ -1,5 +1,7 @@
 *pyDEA* is a software package developed in Python for conducting data envelopment analysis (DEA). 
 
+User documentation can be found at https://araith.github.io/pyDEA/.
+
 Source
 ======
 
