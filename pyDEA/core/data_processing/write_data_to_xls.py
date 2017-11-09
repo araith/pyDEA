@@ -632,6 +632,9 @@ def create_sheet_peers(work_sheet, solution, start_row_index, params_str):
             for dmu, lambda_value in lambda_vars.items():
                 if lambda_value:
                     sum_of_lambda_values += lambda_value
+            
+            for dmu, lambda_value in lambda_vars.items():
+                if lambda_value:
                     dmu_name = solution._input_data.get_dmu_user_name(dmu)
                     work_sheet.write(row_index, 2, dmu_name)
                     work_sheet.write(row_index, 3, lambda_value)
