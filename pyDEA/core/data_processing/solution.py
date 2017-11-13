@@ -33,6 +33,8 @@ class Solution(object):
             output_duals (dict of str to dict of str to double): dictionary
                 that maps DMU code to another dictionary that maps output
                 category name to value of dual variable.
+            return_to_scale (dict of str to str): dictionary that maps DMU code
+                to the return-to-scale of the DMU
 
         Args:
             input_data (InputData): object that stores input data.
@@ -49,6 +51,7 @@ class Solution(object):
         self.lp_status = dict()
         self.input_duals = dict()
         self.output_duals = dict()
+        self.return_to_scale = dict()
         for dmu_code in input_data.DMU_codes:
             self.input_duals[dmu_code] = dict()
             self.output_duals[dmu_code] = dict()

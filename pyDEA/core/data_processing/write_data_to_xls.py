@@ -618,8 +618,11 @@ def create_sheet_peers(work_sheet, solution, start_row_index, params_str):
     work_sheet.write(start_row_index + 1, 0, 'DMU')
     work_sheet.write(start_row_index + 1, 2, 'Peer')
     work_sheet.write(start_row_index + 1, 3, 'Lambda')
-    work_sheet.write(start_row_index + 1, 4, 'Classification')
-
+    write_classification = False
+    if bool(solution.return_to_scale):
+        work_sheet.write(start_row_index + 1, 4, 'Classification')
+        write_classification = True
+        
     ordered_dmu_codes = solution._input_data.DMU_codes_in_added_order
     row_index = start_row_index + 2
     for dmu_code in ordered_dmu_codes:
@@ -627,22 +630,23 @@ def create_sheet_peers(work_sheet, solution, start_row_index, params_str):
             dmu_code))
         if solution.lp_status[dmu_code] == pulp.LpStatusOptimal:
             lambda_vars = solution.get_lambda_variables(dmu_code)
-            sum_of_lambda_values = 0
+#            sum_of_lambda_values = 0
             once = True
-            for dmu, lambda_value in lambda_vars.items():
-                if lambda_value:
-                    sum_of_lambda_values += lambda_value
+#            for dmu, lambda_value in lambda_vars.items():
+#                if lambda_value:
+#                    sum_of_lambda_values += lambda_value
             
             for dmu, lambda_value in lambda_vars.items():
                 if lambda_value:
                     dmu_name = solution._input_data.get_dmu_user_name(dmu)
                     work_sheet.write(row_index, 2, dmu_name)
                     work_sheet.write(row_index, 3, lambda_value)
-                    if once:
+                    if write_classification and once:
                         work_sheet.write(
-                            row_index, 4,
-                            _calculate_frontier_classification(
-                                sum_of_lambda_values))
+                            row_index, 4, solution.return_to_scale[dmu_code]
+                            #_calculate_frontier_classification(sum_of_lambda_values)
+                                )
+
                         once = False
                     row_index += 1
 
@@ -719,3 +723,4 @@ def create_sheet_peer_count(work_sheet, solution, start_row_index, params_str):
             work_sheet.write(row_index, column_index, nb_peers[dmu_code])
             column_index += 1
     return row_index
+
