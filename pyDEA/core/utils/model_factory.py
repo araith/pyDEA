@@ -138,7 +138,7 @@ class ModelFactoryBase(object):
         if use_super_efficiency:
             model = SupperEfficiencyModel(model)
 
-        # It is important to create max slack model after duper efficiency,
+        # It is important to create max slack model after super efficiency,
         # otherwise wrong type of solution is created
         maximize_slacks = params.get_parameter_value('MAXIMIZE_SLACKS')
         if maximize_slacks:
