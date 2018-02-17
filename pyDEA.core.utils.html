@@ -1830,6 +1830,48 @@ directory.</li>
 
 </dd></dl>
 
+<dl class="function">
+<dt id="pyDEA.core.utils.run_routine.derive_returns_to_scale_classification">
+<code class="descclassname">pyDEA.core.utils.run_routine.</code><code class="descname">derive_returns_to_scale_classification</code><span class="sig-paren">(</span><em>param_strs</em>, <em>solutions</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/utils/run_routine.html#derive_returns_to_scale_classification"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.utils.run_routine.derive_returns_to_scale_classification" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a dictionary that describes the DMUs&#8217; returns-to-scale classification
+to the solution object. Note that for a given orientation (intput or
+ouput), the returns-to-scale of a DMU is the same for both the CRS
+and the VRS models. See the following algorithm for more detail:</p>
+<dl class="docutils">
+<dt>For a DMUo</dt>
+<dd><p class="first">If CRSeff of DMUo  = VRSeff of DMUo then classify DMUo as CRS
+Else</p>
+<blockquote class="last">
+<div>If sum of DMUo’s CRS lambdas &lt; 1 then classify DMUo as IRS
+Else classify DMUo as DRS</div></blockquote>
+</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>param_strs</strong> (<em>list of str</em>) &#8211; list of strings that describe
+each model.</li>
+<li><strong>solutions</strong> (<em>list of Solution</em>) &#8211; list of obtained solutions.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>RTS_classification</strong> &#8211;
+indicate frontier</p>
+<blockquote>
+<div><p>for the DMUs.</p>
+</div></blockquote>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict of dmu_code (str) to classification (str)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 <div class="section" id="module-pyDEA.core.utils">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyDEA.core.utils" title="Permalink to this headline">¶</a></h2>

@@ -744,8 +744,11 @@
     <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;DMU&#39;</span><span class="p">)</span>
     <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;Peer&#39;</span><span class="p">)</span>
     <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;Lambda&#39;</span><span class="p">)</span>
-    <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Classification&#39;</span><span class="p">)</span>
-
+    <span class="n">write_classification</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">if</span> <span class="nb">bool</span><span class="p">(</span><span class="n">solution</span><span class="o">.</span><span class="n">return_to_scale</span><span class="p">):</span>
+        <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;Classification&#39;</span><span class="p">)</span>
+        <span class="n">write_classification</span> <span class="o">=</span> <span class="bp">True</span>
+        
     <span class="n">ordered_dmu_codes</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span>
     <span class="n">row_index</span> <span class="o">=</span> <span class="n">start_row_index</span> <span class="o">+</span> <span class="mi">2</span>
     <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
@@ -753,19 +756,23 @@
             <span class="n">dmu_code</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">solution</span><span class="o">.</span><span class="n">lp_status</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">pulp</span><span class="o">.</span><span class="n">LpStatusOptimal</span><span class="p">:</span>
             <span class="n">lambda_vars</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">get_lambda_variables</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
-            <span class="n">sum_of_lambda_values</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1">#            sum_of_lambda_values = 0</span>
             <span class="n">once</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="c1">#            for dmu, lambda_value in lambda_vars.items():</span>
+<span class="c1">#                if lambda_value:</span>
+<span class="c1">#                    sum_of_lambda_values += lambda_value</span>
+            
             <span class="k">for</span> <span class="n">dmu</span><span class="p">,</span> <span class="n">lambda_value</span> <span class="ow">in</span> <span class="n">lambda_vars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                 <span class="k">if</span> <span class="n">lambda_value</span><span class="p">:</span>
-                    <span class="n">sum_of_lambda_values</span> <span class="o">+=</span> <span class="n">lambda_value</span>
                     <span class="n">dmu_name</span> <span class="o">=</span> <span class="n">solution</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">get_dmu_user_name</span><span class="p">(</span><span class="n">dmu</span><span class="p">)</span>
                     <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">dmu_name</span><span class="p">)</span>
                     <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">lambda_value</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">once</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">write_classification</span> <span class="ow">and</span> <span class="n">once</span><span class="p">:</span>
                         <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
-                            <span class="n">row_index</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span>
-                            <span class="n">_calculate_frontier_classification</span><span class="p">(</span>
-                                <span class="n">sum_of_lambda_values</span><span class="p">))</span>
+                            <span class="n">row_index</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">solution</span><span class="o">.</span><span class="n">return_to_scale</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span>
+                            <span class="c1">#_calculate_frontier_classification(sum_of_lambda_values)</span>
+                                <span class="p">)</span>
+
                         <span class="n">once</span> <span class="o">=</span> <span class="bp">False</span>
                     <span class="n">row_index</span> <span class="o">+=</span> <span class="mi">1</span>
 
@@ -841,8 +848,8 @@
         <span class="k">if</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">nb_peers</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="n">work_sheet</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">row_index</span><span class="p">,</span> <span class="n">column_index</span><span class="p">,</span> <span class="n">nb_peers</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">])</span>
             <span class="n">column_index</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">row_index</span></div>
-</pre></div>
+    <span class="k">return</span> <span class="n">row_index</span>
+</pre></div></div>
 
            </div>
           </div>

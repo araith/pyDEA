@@ -264,7 +264,7 @@
         <span class="k">if</span> <span class="n">use_super_efficiency</span><span class="p">:</span>
             <span class="n">model</span> <span class="o">=</span> <span class="n">SupperEfficiencyModel</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
 
-        <span class="c1"># It is important to create max slack model after duper efficiency,</span>
+        <span class="c1"># It is important to create max slack model after super efficiency,</span>
         <span class="c1"># otherwise wrong type of solution is created</span>
         <span class="n">maximize_slacks</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="s1">&#39;MAXIMIZE_SLACKS&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">maximize_slacks</span><span class="p">:</span>

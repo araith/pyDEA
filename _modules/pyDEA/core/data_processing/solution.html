@@ -159,6 +159,8 @@
 <span class="sd">            output_duals (dict of str to dict of str to double): dictionary</span>
 <span class="sd">                that maps DMU code to another dictionary that maps output</span>
 <span class="sd">                category name to value of dual variable.</span>
+<span class="sd">            return_to_scale (dict of str to str): dictionary that maps DMU code</span>
+<span class="sd">                to the return-to-scale of the DMU</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            input_data (InputData): object that stores input data.</span>
@@ -175,6 +177,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lp_status</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">input_duals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">output_duals</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">input_data</span><span class="o">.</span><span class="n">DMU_codes</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">input_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">output_duals</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>

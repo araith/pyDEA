@@ -1098,7 +1098,7 @@ maps DMU name to a list with coefficients.</li>
 
 <dl class="function">
 <dt id="pyDEA.core.data_processing.read_data_from_xls.convert_to_dictionary">
-<code class="descclassname">pyDEA.core.data_processing.read_data_from_xls.</code><code class="descname">convert_to_dictionary</code><span class="sig-paren">(</span><em>data</em>, <em>check_value=&lt;function fake_fnc at 0x00000201D47AD378&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/data_processing/read_data_from_xls.html#convert_to_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.data_processing.read_data_from_xls.convert_to_dictionary" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">pyDEA.core.data_processing.read_data_from_xls.</code><code class="descname">convert_to_dictionary</code><span class="sig-paren">(</span><em>data</em>, <em>check_value=&lt;function fake_fnc at 0x0000023975E05510&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/data_processing/read_data_from_xls.html#convert_to_dictionary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.data_processing.read_data_from_xls.convert_to_dictionary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts given list of data to a dictionary.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1441,6 +1441,14 @@ category name to value of dual variable.</p>
 <p>dictionary
 that maps DMU code to another dictionary that maps output
 category name to value of dual variable.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyDEA.core.data_processing.solution.Solution.return_to_scale">
+<code class="descname">return_to_scale</code><a class="headerlink" href="#pyDEA.core.data_processing.solution.Solution.return_to_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict of str to str</em></p>
+<p>dictionary that maps DMU code
+to the return-to-scale of the DMU</p>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -2671,7 +2679,7 @@ be called to write solution information to a given output.</p>
 
 <dl class="method">
 <dt id="pyDEA.core.data_processing.write_data_to_xls.XLSWriter.write_data">
-<code class="descname">write_data</code><span class="sig-paren">(</span><em>solution</em>, <em>params_str=''</em>, <em>progress_recorder=&lt;pyDEA.core.utils.progress_recorders.NullProgress object at 0x00000201D47BC470&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/data_processing/write_data_to_xls.html#XLSWriter.write_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.data_processing.write_data_to_xls.XLSWriter.write_data" title="Permalink to this definition">¶</a></dt>
+<code class="descname">write_data</code><span class="sig-paren">(</span><em>solution</em>, <em>params_str=''</em>, <em>progress_recorder=&lt;pyDEA.core.utils.progress_recorders.NullProgress object at 0x000002397784AF98&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyDEA/core/data_processing/write_data_to_xls.html#XLSWriter.write_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyDEA.core.data_processing.write_data_to_xls.XLSWriter.write_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Writes given solution to a given output.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />

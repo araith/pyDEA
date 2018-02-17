@@ -214,6 +214,8 @@
                     <span class="n">end_time</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
                     <span class="n">diff</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
                     <span class="n">total_seconds</span> <span class="o">=</span> <span class="n">diff</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">params</span><span class="o">.</span><span class="n">get_parameter_value</span><span class="p">(</span><span class="s1">&#39;RETURN_TO_SCALE&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;both&#39;</span><span class="p">:</span>
+                        <span class="n">derive_returns_to_scale_classification</span><span class="p">(</span><span class="n">param_strs</span><span class="p">,</span> <span class="n">solutions</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">post_process_solutions</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">param_strs</span><span class="p">,</span>
                                                 <span class="n">all_ranks</span><span class="p">,</span> <span class="n">run_date</span><span class="p">,</span>
                                                 <span class="n">total_seconds</span><span class="p">)</span>
@@ -486,13 +488,78 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">progress_bar</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">data_frame</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">data_frame</span><span class="o">.</span><span class="n">solution_tab</span><span class="o">.</span><span class="n">show_solution</span><span class="p">(</span><span class="n">solutions</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span>
                                                          <span class="n">param_strs</span><span class="p">,</span>
                                                          <span class="n">run_date</span><span class="p">,</span>
                                                          <span class="n">total_seconds</span><span class="p">,</span>
                                                          <span class="n">ranks</span><span class="o">=</span><span class="n">all_ranks</span><span class="p">,</span>
                                                          <span class="n">categorical</span><span class="o">=</span>
-                                                         <span class="n">categorical</span><span class="p">)</span></div></div>
+                                                         <span class="n">categorical</span><span class="p">)</span>
+                                                         
+</div></div>
+<div class="viewcode-block" id="derive_returns_to_scale_classification"><a class="viewcode-back" href="../../../../pyDEA.core.utils.html#pyDEA.core.utils.run_routine.derive_returns_to_scale_classification">[docs]</a><span class="k">def</span> <span class="nf">derive_returns_to_scale_classification</span><span class="p">(</span><span class="n">param_strs</span><span class="p">,</span> <span class="n">solutions</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Add a dictionary that describes the DMUs&#39; returns-to-scale classification</span>
+<span class="sd">        to the solution object. Note that for a given orientation (intput or</span>
+<span class="sd">        ouput), the returns-to-scale of a DMU is the same for both the CRS </span>
+<span class="sd">        and the VRS models. See the following algorithm for more detail: </span>
+
+<span class="sd">        For a DMUo</span>
+<span class="sd">            If CRSeff of DMUo  = VRSeff of DMUo then classify DMUo as CRS</span>
+<span class="sd">            Else</span>
+<span class="sd">                If sum of DMUo’s CRS lambdas &lt; 1 then classify DMUo as IRS</span>
+<span class="sd">                Else classify DMUo as DRS</span>
+<span class="sd">        Args:</span>
+<span class="sd">            param_strs (list of str): list of strings that describe</span>
+<span class="sd">                    each model.</span>
+<span class="sd">            solutions (list of Solution): list of obtained solutions.            </span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            RTS_classification (dict of dmu_code (str) to classification (str)): indicate frontier </span>
+<span class="sd">                for the DMUs.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">for</span> <span class="n">orientation</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;input orientation&quot;</span><span class="p">,</span> <span class="s2">&quot;output orientation&quot;</span><span class="p">]:</span>
+        <span class="n">solution_crs</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">solution_vrs</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">RTS_classification</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">param_str</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">param_strs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">param_str</span> <span class="o">==</span> <span class="n">orientation</span> <span class="o">+</span> <span class="s2">&quot;, CRS&quot;</span><span class="p">:</span>
+                <span class="n">solution_crs</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+                <span class="n">solution_crs_count</span> <span class="o">=</span> <span class="n">count</span>
+            <span class="k">elif</span> <span class="n">param_str</span> <span class="o">==</span> <span class="n">orientation</span> <span class="o">+</span> <span class="s2">&quot;, VRS&quot;</span><span class="p">:</span>
+                <span class="n">solution_vrs</span> <span class="o">=</span> <span class="n">solutions</span><span class="p">[</span><span class="n">count</span><span class="p">]</span>
+                <span class="n">solution_vrs_count</span> <span class="o">=</span> <span class="n">count</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="k">if</span> <span class="n">solution_crs</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">solution_vrs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c1"># if we cannot find both the crs and vrs model, then continue to</span>
+            <span class="c1"># the next iteration</span>
+            <span class="k">continue</span>
+            
+        <span class="n">ordered_dmu_codes</span> <span class="o">=</span> <span class="n">solution_crs</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_codes_in_added_order</span>
+        <span class="k">for</span> <span class="n">dmu_code</span> <span class="ow">in</span> <span class="n">ordered_dmu_codes</span><span class="p">:</span>
+            <span class="c1"># check dmu_code exist in both solutions        </span>
+            <span class="k">if</span> <span class="n">solution_crs</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">!=</span> <span class="n">solution_vrs</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Cannot find DMU&quot;</span> <span class="o">+</span> <span class="n">solution_vrs</span><span class="o">.</span><span class="n">_input_data</span><span class="o">.</span><span class="n">DMU_code_to_user_name</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;in the VRS model&quot;</span><span class="p">)</span>
+        
+            <span class="k">if</span> <span class="n">solution_crs</span><span class="o">.</span><span class="n">efficiency_scores</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">==</span> <span class="n">solution_vrs</span><span class="o">.</span><span class="n">efficiency_scores</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]:</span>
+                <span class="n">RTS_classification</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;CRS&#39;</span>
+            <span class="k">else</span><span class="p">:</span> 
+                <span class="n">all_lambda_vars</span> <span class="o">=</span> <span class="n">solution_crs</span><span class="o">.</span><span class="n">get_lambda_variables</span><span class="p">(</span><span class="n">dmu_code</span><span class="p">)</span>
+                <span class="n">sum_of_lambda</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">dmu_key</span> <span class="ow">in</span> <span class="n">all_lambda_vars</span><span class="p">:</span>
+                    <span class="n">sum_of_lambda</span> <span class="o">+=</span> <span class="n">all_lambda_vars</span><span class="p">[</span><span class="n">dmu_key</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">sum_of_lambda</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">RTS_classification</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;IRS&#39;</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">RTS_classification</span><span class="p">[</span><span class="n">dmu_code</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;DRS&#39;</span>
+            
+        <span class="n">solutions</span><span class="p">[</span><span class="n">solution_crs_count</span><span class="p">]</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">=</span> <span class="n">RTS_classification</span>
+        <span class="n">solutions</span><span class="p">[</span><span class="n">solution_vrs_count</span><span class="p">]</span><span class="o">.</span><span class="n">return_to_scale</span> <span class="o">=</span> <span class="n">RTS_classification</span>
+        
+    <span class="k">return</span></div>
 </pre></div>
 
            </div>
