@@ -115,3 +115,24 @@ Acknowledgements
 The *pyDEA* solver was first developed during a summer project in 2009 / 2010 at the University of Auckland, Department of Engineering Science by Kane Harton. Development was continued by Harriet Priddey during her Part IV project at the Department of Engineering Science in 2010. The code was further modified and enhanced with a GUI by Andrea Raith in 2010 / 2011. Alan Lee, Matt Rouse and Andrea Raith continued work on the GUI and the underlying DEA solver continued between November 2011 and February 2012. From 2014, pyDEA was re-implemented by Olga Perederieieva with input from Fariza Fauzi.
 
 Thank you to Paul Rouse for guidance on DEA and help with the revamped version of *pyDEA*. Also, thank you to Oliver Weide for help with python.
+
+Citation
+========
+
+If you use pyDEA for your research, please do cite it by referring to this book chapter that outlines its use:
+@InCollection{RRS19,
+  author     = {Raith, A. and Rouse, P. and Seiford, L.M.},
+  title      = {Benchmarking Using Data Envelopment Analysis: Application to Stores of a Postand Banking Business},
+  booktitle  = {Multiple Criteria DecisionMaking and Aiding},
+  year       = {2019},
+  subtitle   = {Cases on Models and Methods with ComputerImplementations},
+  pages      = {1-39},
+  bookauthor = {Huber, S. and Geiger, M.J. and Almeida, {Adiel Teixeira de}},
+}
+
+Please also refer to this github project:
+@WWW{pyDEA,
+  author = {Raith, A. and Perederieieva, O. and Fauzi, F. and Harton, K. and Lee, A. and Lin, K.M. and Priddey, H. and Rouse, M.},
+  title  = {{pyDEA}},
+  url    = {https://github.com/araith/pyDEA},
+}
