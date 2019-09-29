@@ -137,7 +137,8 @@ class Solution(object):
         '''
         self._check_if_dmu_code_exists(dmu_code)
         self._validate_lambda_variables(variables)
-        pickle.dump(variables, open(self._get_pickle_name(dmu_code), 'wb'))
+        with open(self._get_pickle_name(dmu_code)) as f:
+            pickle.dump(variables, f, 'wb')
 
     def get_lambda_variables(self, dmu_code):
         ''' Returns lambda variables corresponding to a given DMU.
