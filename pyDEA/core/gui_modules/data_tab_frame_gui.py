@@ -1,7 +1,7 @@
 ''' This module contains class DataTabFrame that creates tab with all data.
 '''
 
-import xlrd
+from openpyxl import load_workbook
 import os
 
 from tkinter import StringVar, E, N, W, S, Toplevel
@@ -16,7 +16,7 @@ from pyDEA.core.utils.dea_utils import TEXT_FOR_PANEL, FILE_TYPES, center_window
 from pyDEA.core.utils.dea_utils import calculate_nb_pages
 from pyDEA.core.data_processing.read_data_from_xls import read_data
 from pyDEA.core.gui_modules.load_xls_gui import AskSheetName
-from pyDEA.core.data_processing.save_data_to_file import save_data_to_xls
+from pyDEA.core.data_processing.save_data_to_file import save_data_to_xlsx
 
 
 def remove_star(file_name):
@@ -58,7 +58,7 @@ class DataTabFrame(Frame):
                 name if it was modified.
                 Technically it is not necessary to store this variable,
                 but it is used in unit tests.
-            sheet_name (str): name of the sheet in xls-file from where data
+            sheet_name (str): name of the sheet in xlsx-file from where data
                 has been loaded
             navigation_frame (NavigationForTableFrame): frame that knows how
                 to navigate table with data
@@ -200,7 +200,7 @@ class DataTabFrame(Frame):
         ''' Saves data to a new file.
 
             Calls dialogue to ask user where to save file and saves
-            data file there. Default extension is .xls.
+            data file there. Default extension is .xlsx.
         '''
         file_name = self._call_file_save_as_dialog()
         if file_name:
@@ -212,7 +212,7 @@ class DataTabFrame(Frame):
 
             This method is redefined in unit tests.
         '''
-        return asksaveasfilename(filetypes=FILE_TYPES, defaultextension='.xls')
+        return asksaveasfilename(filetypes=FILE_TYPES, defaultextension='.xlsx')
 
     def save_data_to_given_file(self, data_file, sheet_name='Data'):
         ''' Saves data to a given file.
@@ -224,7 +224,7 @@ class DataTabFrame(Frame):
         '''
         categories = [self.table.cells[0][col].get() for col
                       in range(self.table.nb_cols)]
-        save_data_to_xls(data_file, categories, self.data, sheet_name)
+        save_data_to_xlsx(data_file, categories, self.data, sheet_name)
 
     def on_data_modify(self, *args):
         ''' Adds star to label frame when data was modified.
@@ -240,7 +240,7 @@ class DataTabFrame(Frame):
     def load_file(self):
         ''' Asks user which data file should be loaded and loads specified file.
 
-            Only xls, xlsx and csv files are allowed.
+            Only xlsx and csv files are allowed.
         '''
         file_name = self._call_open_file_dialogue()
         if file_name:
@@ -309,9 +309,9 @@ class DataTabFrame(Frame):
         '''
         just_name, extension = os.path.splitext(file_name)
         should_proceed = False
-        if extension in ['.xls', '.xlsx']:
-            book = xlrd.open_workbook(file_name)
-            names = book.sheet_names()
+        if extension == '.xlsx':
+            book = load_workbook(file_name, data_only = True)
+            names = book.sheetnames
             nb_names = len(names)
             if nb_names == 0:
                 return

@@ -1,4 +1,4 @@
-import xlwt
+from openpyxl import Workbook
 import datetime
 
 from pyDEA.core.data_processing.write_data_to_xls import XLSWriter
@@ -12,7 +12,7 @@ def test_write_data_xls(model):
     start_time = datetime.datetime.now()
     model_solution = model.run()
     end_time = datetime.datetime.now()
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     params = Parameters()
     writer = XLSWriter(params, work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())

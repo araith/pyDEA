@@ -21,8 +21,7 @@ def main(filename, output_format='xlsx', output_dir='', sheet_name_usr=''):
                 If it is not given, solution will be written to current folder.
                 This value is used
                 only if OUTPUT_FILE in parameters is empty or set to auto.
-            sheet_name_usr (str, optional): name of the sheet in xls- or
-                xlsx-file with
+            sheet_name_usr (str, optional): name of the sheet in xlsx-file with
                 input data from which data will be read. If input data file is
                 in csv format,
                 this value is ignored.
@@ -56,7 +55,7 @@ if __name__ == '__main__':
                          'argument must be given, no more than 4 arguments'
                          ' are expected. Input arguments are:\n (1) path to'
                          ' file with parameters (compulsory)\n'
-                         '(2) output file format, possible values: xls, xlsx'
+                         '(2) output file format, possible values: xlsx'
                          ' and csv, default value is xlsx (optional), this'
                          ' value is used only if auto or empty string was set'
                          ' for OUTPUT_FILE in parameters file \n'

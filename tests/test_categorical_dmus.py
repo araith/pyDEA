@@ -1,5 +1,5 @@
 import pytest
-import xlwt
+from openpyxl import Workbook
 import datetime
 
 from pyDEA.core.models.categorical_dmus import ModelWithCategoricalDMUs
@@ -43,7 +43,7 @@ def test_run_with_categorical_dmus(categorical_from_book):
                                                    0.687, 1, 0.787, 1,
                                                    0.849, 0.787, 0.681, 1],
                                             solution, data, 1e-3)
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds(),
                        categorical='Category')

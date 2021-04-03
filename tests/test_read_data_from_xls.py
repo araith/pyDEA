@@ -1,6 +1,6 @@
 import xlrd
 
-from pyDEA.core.data_processing.read_data_from_xls import read_data, XLSReader
+from pyDEA.core.data_processing.read_data_from_xls import read_data, XLSXReader
 from pyDEA.core.data_processing.read_data_from_xls import has_non_empty_cells
 from pyDEA.core.data_processing.read_data_from_xls import extract_categories
 from pyDEA.core.data_processing.read_data_from_xls import extract_coefficients
@@ -10,7 +10,7 @@ from pyDEA.core.data_processing.read_data_from_xls import construct_input_data_i
 
 def test_has_non_empty_cells():
     row = []
-    reader = XLSReader()
+    reader = XLSXReader()
     assert has_non_empty_cells(reader, []) is False
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_EMPTY, ''))
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_EMPTY, ''))
@@ -35,7 +35,7 @@ def test_extract_categories():
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_TEXT, u'x2'))
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_TEXT, u'input with space'))
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_TEXT, u'output starts with space'))
-    reader = XLSReader()
+    reader = XLSXReader()
     categories, indexes = extract_categories(reader, row)
     assert categories == ['x1', 'x2',
                           'input with space', 'output starts with space']
@@ -52,7 +52,7 @@ def test_extract_numeric_categories():
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_EMPTY, ''))
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_TEXT, u'x1'))
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_EMPTY, ''))
-    reader = XLSReader()
+    reader = XLSXReader()
     categories, indexes = extract_categories(reader, row)
     assert categories == [5, 15, -100, 'x1']
 
@@ -72,7 +72,7 @@ def test_extract_coefficients():
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_NUMBER, 7.9))
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_EMPTY, ''))
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_EMPTY, ''))
-    reader = XLSReader()
+    reader = XLSXReader()
     (dmu, coefficients, dmu_name) = extract_coefficients(
         reader, row, [4, 5, 7, 8, 10])
     assert dmu == 'dmu1'
@@ -92,7 +92,7 @@ def test_extract_coefficients_with_numeric_dmu():
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_EMPTY, ''))
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_TEXT, u' aha '))
     row.append(xlrd.sheet.Cell(xlrd.XL_CELL_EMPTY, ''))
-    reader = XLSReader()
+    reader = XLSXReader()
     (dmu, coefficients, dmu_name) = extract_coefficients(
         reader, row, [3, 4, 5, 6, 7, 8, 9])
     assert dmu == 0

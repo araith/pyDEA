@@ -6,12 +6,6 @@
             input file parameters.
         SOLUTION_XLSX_FILE (list of tuple of str, str): list of
             supported solution file formats (xlsx).
-        SOLUTION_XLS_FILE (list of tuple of str, str): list of
-            supported solution file formats (xls).
-
-            Note:
-                This list does not contain csv format since for solution
-                files we create a folder with all csv files inside.
         TEXT_FOR_PANEL (str): text displayed in the label on the data tab before
             path to input data file.
         TEXT_FOR_FILE_LBL (str): text displayed in the label on the solution tab
@@ -49,10 +43,9 @@ from logging.config import fileConfig
 LOG_FILE = 'logging_config.ini'
 PACKAGE = 'pyDEA'
 
-FILE_TYPES = [('Excel (xls)', '*.xls'), ('Excel (xlsx)', '*.xlsx'),
+FILE_TYPES = [('Excel (xlsx)', '*.xlsx'),
               ('Text CSV', '*.csv')]
 SOLUTION_XLSX_FILE = [('Excel (xlsx)', '*.xlsx')]
-SOLUTION_XLS_FILE = [('Excel (xls)', '*.xls')]
 TEXT_FOR_PANEL = 'File: '
 TEXT_FOR_FILE_LBL = 'Data from file: '
 
@@ -170,7 +163,7 @@ def auto_name_if_needed(params, output_format, new_output_dir=''):
         Args:
             params (Parameters): parameters
             output_format (str): output format of solution file that
-                should be used. Allowed values: xls, xlsx, csv
+                should be used. Allowed values: xlsx, csv
             new_output_dir (str, optional): directory where solution must be
                 stored. It should be specified if it is different from current
                 folder. Defaults to empty string.
@@ -180,7 +173,7 @@ def auto_name_if_needed(params, output_format, new_output_dir=''):
                 parameters.
 
         Raises:
-            ValueError: if output_format is not 'xls', 'xlsx' or 'csv'.
+            ValueError: if output_format is not 'xlsx' or 'csv'.
     '''
     output_name = params.get_parameter_value('OUTPUT_FILE')
     if output_name.lower() == 'auto' or output_name.strip() == '':
@@ -188,7 +181,7 @@ def auto_name_if_needed(params, output_format, new_output_dir=''):
         input_base_name = os.path.basename(input_file_name)
         input_base_name, ext_tmp = os.path.splitext(input_base_name)
         ext = output_format
-        if ext not in ['xls', 'xlsx', 'csv']:
+        if ext not in ['xlsx', 'csv']:
             raise ValueError('{0} is not supported output format'.format(ext))
         output_name = os.path.join(new_output_dir,
                                    input_base_name + '_result.' + ext)

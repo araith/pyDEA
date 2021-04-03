@@ -41,7 +41,7 @@ class XlsxSheet(object):
 
 class XlsxWorkbook(object):
     ''' This class wraps openpyxl workbook so it can be used by
-        xls writer class.
+        xlsx writer class.
 
         Attributes:
             workbook (openpyxl workbook): workbook.

@@ -1,5 +1,5 @@
 import pytest
-import xlwt
+from openpyxl import Workbook
 import datetime
 
 from pyDEA.core.data_processing.read_data_from_xls import read_data
@@ -51,7 +51,7 @@ def test_abs_weight_restrictions_multiplier_model(data):
     utils_for_tests.check_if_category_is_within_abs_limits(
         model_solution, bounds)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -67,7 +67,7 @@ def test_abs_weight_restrictions_multiplier_model(data):
     utils_for_tests.check_if_category_is_within_abs_limits(
         model_solution, bounds)
 
-    work_book2 = xlwt.Workbook()
+    work_book2 = Workbook()
     writer = XLSWriter(Parameters(), work_book2, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -87,7 +87,7 @@ def test_virtual_weight_restrictions_multiplier_model(data):
     utils_for_tests.check_if_category_is_within_virtual_limits(
         model_solution, bounds)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -112,7 +112,7 @@ def test_abs_and_virtual_restrictions_multiplier_model(data):
     utils_for_tests.check_if_category_is_within_virtual_limits(
         model_solution, bounds)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -132,7 +132,7 @@ def test_price_ratio_multiplier_model(data):
     utils_for_tests.check_if_category_is_within_price_ratio_constraints(
         model_solution, bounds)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -162,7 +162,7 @@ def test_all_constraints_multiplier_model(data):
     utils_for_tests.check_if_category_is_within_price_ratio_constraints(
         model_solution, ratio_bounds)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -183,7 +183,7 @@ def test_abs_restrictions_env_model(data):
     utils_for_tests.check_if_category_is_within_abs_limits(
         model_solution, bounds)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -208,7 +208,7 @@ def test_abs_restrictions_env_model_output(data):
     utils_for_tests.check_if_category_is_within_abs_limits(
         model_solution, bounds)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -229,7 +229,7 @@ def test_virual_restrictions_env_model(data):
     utils_for_tests.check_if_category_is_within_virtual_limits(
         model_solution, bounds)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -250,7 +250,7 @@ def test_price_ratio_restrictions_env_model(data):
     utils_for_tests.check_if_category_is_within_price_ratio_constraints(
         model_solution, bounds)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)

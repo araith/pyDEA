@@ -1,4 +1,4 @@
-import xlwt
+from openpyxl import Workbook
 import datetime
 
 from pyDEA.core.models.maximize_slacks import MaximizeSlacksModel
@@ -48,7 +48,7 @@ def test_maximize_slacks_usual():
                                                    0.82539683, 0.5, 1],
                                             model_solution, data)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)
@@ -84,7 +84,7 @@ def test_maximize_slacks_usual_weakly_disposable_vars():
     utils_for_tests.check_efficiency_scores(dmus, [1, 0.86998617, 1, 1, 1, 1,
                                                    1, 1, 1, 0.6386574, 1],
                                             model_solution, data)
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(model_solution)

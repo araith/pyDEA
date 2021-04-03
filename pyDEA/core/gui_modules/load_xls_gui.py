@@ -1,5 +1,5 @@
 ''' This module contains class AskSheetName that is responsible for
-    asking the user to specify the sheet name of the xls-file where input
+    asking the user to specify the sheet name of the xlsx-file where input
     data is.
 '''
 
@@ -9,7 +9,7 @@ from tkinter.ttk import Frame, Label, Combobox, Button
 
 class AskSheetName(Frame):
     ''' This class is responsible for asking the user to
-        specify the sheet name of the xls-file where input data is.
+        specify the sheet name of the xlsx-file where input data is.
 
         Attributes:
             parent (Toplevel): new window where this Frame will be situated.

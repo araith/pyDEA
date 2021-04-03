@@ -1,4 +1,4 @@
-import xlwt
+from openpyxl import Workbook
 import datetime
 
 from pyDEA.core.models.super_efficiency_model import SupperEfficiencyModel
@@ -40,7 +40,7 @@ def test_super_efficiency_medium(DEA_example2_data):
          1.244945494, 0.824120607, 2.299898658,
          0.6267333816, 1.088235274],
         solution, data, 1e-6)
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(solution)
@@ -63,7 +63,7 @@ def test_super_efficiency_with_VRS(DEA_example2_data):
     start_time = datetime.datetime.now()
     solution = super_efficiency_model.run()
     end_time = datetime.datetime.now()
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds())
     writer.write_data(solution)

@@ -1,7 +1,6 @@
 ''' This module contains classes responsible for solving a given
     data instance either through terminal or GUI.
 '''
-import xlwt
 import datetime
 import os
 
@@ -267,9 +266,7 @@ class RunMethodTerminal(RunMethodBase):
                 'CATEGORICAL_CATEGORY')
             if not categorical.strip():
                 categorical = None
-            if output_file.endswith('.xls'):
-                work_book = xlwt.Workbook()
-            elif output_file.endswith('.xlsx'):
+            if output_file.endswith('.xlsx'):
                 work_book = XlsxWorkbook()
             elif output_file.endswith('.csv'):
                 work_book = TxtWriter(os.path.splitext(output_file)[0])
