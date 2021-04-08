@@ -131,12 +131,11 @@ class SolutionTabFrame(Frame):
         '''
         if self.model_solutions is not None:
             assert(self.param_strs is not None)
-            if (self.solution_format_var.get() == 1 or
-                    self.solution_format_var.get() == 2):
+            if self.solution_format_var.get() == 1: #xlsx
                 file_name = self.ask_file_name_to_save(
                     self.solution_format_var.get())
                 dir_name = ''
-            else:
+            else: #csv
                 dir_name = askdirectory()
                 file_name = ''
             if file_name or dir_name:
@@ -194,7 +193,7 @@ class SolutionTabFrame(Frame):
         '''
         if ext_code == 1:
             filetype = SOLUTION_XLSX_FILE
-        return asksaveasfilename(filetypes=filetype, defaultextension='xlsx')
+        return asksaveasfilename(filetypes=filetype, defaultextension='.xlsx')
 
     def show_solution(self, solutions, params, param_strs, run_date,
                       total_seconds, ranks=None, categorical=None):
