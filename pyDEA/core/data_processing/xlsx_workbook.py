@@ -5,7 +5,7 @@ from openpyxl import Workbook
 
 
 class XlsxSheet(object):
-    ''' This class wraps openpyxl work sheet so that it can be used by xls writer
+    ''' This class wraps openpyxl work sheet so that it can be used by FileWriter
         class.
 
         Attributes:
@@ -41,7 +41,7 @@ class XlsxSheet(object):
 
 class XlsxWorkbook(object):
     ''' This class wraps openpyxl workbook so it can be used by
-        xlsx writer class.
+        FileWriter class.
 
         Attributes:
             workbook (openpyxl workbook): workbook.

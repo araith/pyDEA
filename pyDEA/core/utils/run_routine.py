@@ -7,12 +7,12 @@ import os
 from tkinter.messagebox import showerror
 from tkinter import StringVar
 
-from pyDEA.core.data_processing.read_data_from_xls import validate_data
-from pyDEA.core.data_processing.read_data_from_xls import construct_input_data_instance, read_data
-from pyDEA.core.data_processing.read_data_from_xls import convert_to_dictionary
+from pyDEA.core.data_processing.read_data import validate_data
+from pyDEA.core.data_processing.read_data import construct_input_data_instance, read_data
+from pyDEA.core.data_processing.read_data import convert_to_dictionary
 from pyDEA.core.utils.dea_utils import create_params_str, auto_name_if_needed
 from pyDEA.core.utils.dea_utils import get_logger
-from pyDEA.core.data_processing.write_data_to_xls import XLSWriter
+from pyDEA.core.data_processing.write_data import FileWriter
 from pyDEA.core.data_processing.xlsx_workbook import XlsxWorkbook
 import pyDEA.core.utils.model_builder as model_builder
 from pyDEA.core.models.model_progress_bar_decorator import ProgressBarDecorator
@@ -273,7 +273,7 @@ class RunMethodTerminal(RunMethodBase):
             else:
                 raise ValueError('File {0} has unsupported output format'.format
                                  (output_file))
-            writer = XLSWriter(self.params, work_book, run_date, total_seconds,
+            writer = FileWriter(self.params, work_book, run_date, total_seconds,
                                ranks=all_ranks, categorical=categorical)
             try:
                 for count, sol in enumerate(solutions):
@@ -281,7 +281,7 @@ class RunMethodTerminal(RunMethodBase):
                 work_book.save(output_file)
             except ValueError:
                 work_book = TxtWriter(os.path.splitext(output_file)[0])
-                writer = XLSWriter(self.params, work_book, run_date,
+                writer = FileWriter(self.params, work_book, run_date,
                                    total_seconds, ranks=all_ranks,
                                    categorical=categorical)
                 for count, sol in enumerate(solutions):

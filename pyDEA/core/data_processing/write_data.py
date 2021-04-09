@@ -1,6 +1,5 @@
 ''' This module contains functions and classes responsible for
     writing solutions into different outputs (files, screen, GUI, etc).
-    All names start with XLS because originally only xls-files were supported.
 
     Warning:
         if new methods for writing output are added, they MUST
@@ -19,7 +18,7 @@ from pyDEA.core.data_processing.targets_and_slacks import calculate_non_radial_r
 from pyDEA.core.utils.progress_recorders import NullProgress
 
 
-class XLSSheetWithParameters(object):
+class SheetWithParameters(object):
     ''' Writes parameters to a given output.
 
         Attributes:
@@ -73,7 +72,7 @@ class XLSSheetWithParameters(object):
         return row_index
 
 
-class XLSSheetOnionRank(object):
+class SheetOnionRank(object):
     ''' Writes information about peel the onion solution to a given output.
 
         Attributes:
@@ -140,7 +139,7 @@ class XLSSheetOnionRank(object):
         return -1
 
 
-class XLSSheetWithCategoricalVar(object):
+class SheetWithCategoricalVar(object):
     ''' Writes various solution information to a given output, and
         adds categorical information if necessary.
 
@@ -451,7 +450,7 @@ class XLSSheetWithCategoricalVar(object):
         return row_index
 
 
-class XLSWriter(object):
+class FileWriter(object):
     ''' This class is responsible for writing solution information
         into a given output.
 
@@ -468,7 +467,7 @@ class XLSWriter(object):
             run_date (datetime): date and time when the problem was solved.
             total_seconds (float): time (in seconds) needed to solve
                 the problem.
-            params_sheet (XLSSheetWithParameters): object that writes
+            params_sheet (SheetWithParameters): object that writes
                 parameters to a given output.
             worksheets (list of func): list of functions that will be called
                 to write solution information to a given output.
@@ -524,7 +523,7 @@ class XLSWriter(object):
             Returns:
                 list of func: list of functions.
         '''
-        sheet_with_categorical_var = XLSSheetWithCategoricalVar(
+        sheet_with_categorical_var = SheetWithCategoricalVar(
             self.categorical)
         worksheets = [
             sheet_with_categorical_var.create_sheet_efficiency_scores,
@@ -533,10 +532,10 @@ class XLSWriter(object):
             sheet_with_categorical_var.create_sheet_weighted_data,
             sheet_with_categorical_var.create_sheet_targets]
         if self.ranks:
-            onion_rank_sheet = XLSSheetOnionRank(self.ranks)
+            onion_rank_sheet = SheetOnionRank(self.ranks)
             worksheets.append(onion_rank_sheet.create_sheet_onion_rank)
 
-        self.params_sheet = XLSSheetWithParameters(
+        self.params_sheet = SheetWithParameters(
             self.params, self.run_date,
             self.total_seconds).create_sheet_parameters
         return worksheets

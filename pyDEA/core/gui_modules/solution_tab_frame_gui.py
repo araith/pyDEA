@@ -14,7 +14,7 @@ from tkinter.filedialog import asksaveasfilename, askdirectory
 from pyDEA.core.utils.dea_utils import SOLUTION_XLSX_FILE
 from pyDEA.core.utils.dea_utils import TEXT_FOR_FILE_LBL
 from pyDEA.core.gui_modules.solution_frame_gui import SolutionFrameWithText
-from pyDEA.core.data_processing.write_data_to_xls import XLSWriter
+from pyDEA.core.data_processing.write_data import FileWriter
 from pyDEA.core.data_processing.xlsx_workbook import XlsxWorkbook
 from pyDEA.core.data_processing.solution_text_writer import TxtWriter
 from pyDEA.core.utils.progress_recorders import GuiProgress
@@ -147,7 +147,7 @@ class SolutionTabFrame(Frame):
                     # all not supported formats will be written to csv
                     assert(dir_name)
                     work_book = TxtWriter(dir_name)
-                writer = XLSWriter(self.params, work_book, self.run_date,
+                writer = FileWriter(self.params, work_book, self.run_date,
                                    self.total_seconds,
                                    ranks=self.ranks,
                                    categorical=self.categorical)
@@ -168,7 +168,7 @@ class SolutionTabFrame(Frame):
                         text='File is too large for xlsx format,'
                         ' it will be saved to csv instead')
                     work_book = TxtWriter(os.path.splitext(file_name)[0])
-                    writer = XLSWriter(self.params, work_book, self.run_date,
+                    writer = FileWriter(self.params, work_book, self.run_date,
                                        self.total_seconds,
                                        ranks=self.ranks,
                                        categorical=self.categorical)

@@ -14,8 +14,8 @@ from pyDEA.core.gui_modules.navigation_frame_gui import NavigationForTableFrame
 from pyDEA.core.gui_modules.table_modifier_gui import TableModifierFrame
 from pyDEA.core.utils.dea_utils import TEXT_FOR_PANEL, FILE_TYPES, center_window
 from pyDEA.core.utils.dea_utils import calculate_nb_pages
-from pyDEA.core.data_processing.read_data_from_xls import read_data
-from pyDEA.core.gui_modules.load_xls_gui import AskSheetName
+from pyDEA.core.data_processing.read_data import read_data
+from pyDEA.core.gui_modules.load_xlsx_gui import AskSheetName
 from pyDEA.core.data_processing.save_data_to_file import save_data_to_xlsx
 
 
@@ -396,6 +396,6 @@ class DataTabFrame(Frame):
             used for running algorithms.
 
             Returns:
-                see read_data_from_xls for details
+                see read_data for details
         '''
         return self.table.read_coefficients()
