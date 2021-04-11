@@ -1,4 +1,4 @@
-import xlwt
+from openpyxl import Workbook
 import datetime
 
 from pyDEA.core.models.peel_the_onion import peel_the_onion_method
@@ -54,7 +54,7 @@ def test_peel_the_onion_CRS_multi_output_oriented(DEA_example2_data):
     utils_for_tests.check_onion_ranks(
         model.input_data, dmus, expected_ranks, ranks)
 
-    work_book = xlwt.Workbook()
+    work_book = Workbook()
     ranks_as_list = []
     ranks_as_list.append(ranks)
     writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),

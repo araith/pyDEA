@@ -5,17 +5,16 @@
         MAX_FILE_PARAMS_LBL_LENGTH (int): module constant that describes
             maximum length of the label with a file name
 '''
-import xlwt
 import os
 
 from tkinter import LEFT, W, N, E, S, IntVar
 from tkinter.ttk import Frame, Label, Button, Progressbar, Radiobutton
 from tkinter.filedialog import asksaveasfilename, askdirectory
 
-from pyDEA.core.utils.dea_utils import SOLUTION_XLSX_FILE, SOLUTION_XLS_FILE
+from pyDEA.core.utils.dea_utils import SOLUTION_XLSX_FILE
 from pyDEA.core.utils.dea_utils import TEXT_FOR_FILE_LBL
 from pyDEA.core.gui_modules.solution_frame_gui import SolutionFrameWithText
-from pyDEA.core.data_processing.write_data_to_xls import XLSWriter
+from pyDEA.core.data_processing.write_data import FileWriter
 from pyDEA.core.data_processing.xlsx_workbook import XlsxWorkbook
 from pyDEA.core.data_processing.solution_text_writer import TxtWriter
 from pyDEA.core.utils.progress_recorders import GuiProgress
@@ -87,8 +86,7 @@ class SolutionTabFrame(Frame):
 
         frame_for_btns = Frame(self)
         self._create_file_format_btn('*.xlsx', 1, frame_for_btns, 0)
-        self._create_file_format_btn('*.xls', 2, frame_for_btns, 1)
-        self._create_file_format_btn('*.csv', 3, frame_for_btns, 2)
+        self._create_file_format_btn('*.csv', 2, frame_for_btns, 1)
         self.solution_format_var.set(1)
 
         frame_for_btns.grid(row=1, column=0, sticky=W+N+E+S, padx=5, pady=5)
@@ -125,9 +123,7 @@ class SolutionTabFrame(Frame):
             If there is a solution, this method will ask user to provide
             a file name where solution should be stored. If a valid name
             is provided,
-            solution is saved to that file. Allowed file formats are:
-            .xls and .xlsx.
-            Default file extension is .xlsx.
+            solution is saved to that file. Allowed file format is .xlsx.
 
             If the user checked 'csv' as solution output format, then
             the user will be asked to choose a directory where all csv files
@@ -135,26 +131,23 @@ class SolutionTabFrame(Frame):
         '''
         if self.model_solutions is not None:
             assert(self.param_strs is not None)
-            if (self.solution_format_var.get() == 1 or
-                    self.solution_format_var.get() == 2):
+            if self.solution_format_var.get() == 1: #xlsx
                 file_name = self.ask_file_name_to_save(
                     self.solution_format_var.get())
                 dir_name = ''
-            else:
+            else: #csv
                 dir_name = askdirectory()
                 file_name = ''
             if file_name or dir_name:
                 print(file_name)
                 self.status_lbl.config(text='Saving solution to file...')
-                if file_name.endswith('.xls'):
-                    work_book = xlwt.Workbook()
-                elif file_name.endswith('.xlsx'):
+                if file_name.endswith('.xlsx'):
                     work_book = XlsxWorkbook()
                 else:
                     # all not supported formats will be written to csv
                     assert(dir_name)
                     work_book = TxtWriter(dir_name)
-                writer = XLSWriter(self.params, work_book, self.run_date,
+                writer = FileWriter(self.params, work_book, self.run_date,
                                    self.total_seconds,
                                    ranks=self.ranks,
                                    categorical=self.categorical)
@@ -172,10 +165,10 @@ class SolutionTabFrame(Frame):
                 except ValueError:
                     # can happen if maximum number of rows is exceeded
                     self.status_lbl.config(
-                        text='File is too large for xls format,'
+                        text='File is too large for xlsx format,'
                         ' it will be saved to csv instead')
                     work_book = TxtWriter(os.path.splitext(file_name)[0])
-                    writer = XLSWriter(self.params, work_book, self.run_date,
+                    writer = FileWriter(self.params, work_book, self.run_date,
                                        self.total_seconds,
                                        ranks=self.ranks,
                                        categorical=self.categorical)
@@ -196,13 +189,11 @@ class SolutionTabFrame(Frame):
             This method is used to mock this object for unit tests.
 
             Args:
-                ext_code (int): code for file extension 1 - xlsx, 2 - xls.
+                ext_code (int): code for file extension 1 - xlsx.
         '''
         if ext_code == 1:
             filetype = SOLUTION_XLSX_FILE
-        else:
-            filetype = SOLUTION_XLS_FILE
-        return asksaveasfilename(filetypes=filetype, defaultextension='xlsx')
+        return asksaveasfilename(filetypes=filetype, defaultextension='.xlsx')
 
     def show_solution(self, solutions, params, param_strs, run_date,
                       total_seconds, ranks=None, categorical=None):

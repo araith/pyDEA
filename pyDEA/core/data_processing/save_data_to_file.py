@@ -1,31 +1,28 @@
-''' This module implements function to write data to xls file.
+''' This module implements function to write data to xlsx file.
 '''
 
-import xlwt
-import xlrd
+from openpyxl import load_workbook
 import os
 
-from pyDEA.core.data_processing.xlsx_workbook import XlsxWorkbook
+from pyDEA.core.data_processing.xlsx_workbook import XlsxWorkbook, XlsxSheet
 from pyDEA.core.data_processing.solution_text_writer import OneCsvWriter
 
 
 def create_workbook(output_file):
     ''' Creates a proper instance of data file writer depending on file extension.
-        Supported formats are: xls, xslx and csv.
+        Supported formats are: xslx and csv.
 
         Args:
             output_file (str): file name.
 
         Returns:
-            (xlwt.Workbook, XlsxWorkbook or OneCsvWriter): created data file
+            (XlsxWorkbook or OneCsvWriter): created data file
                 writer instance.
 
         Raises:
             ValueError: if a file with not supported extension was provided.
     '''
-    if output_file.endswith('.xls'):
-        work_book = xlwt.Workbook()
-    elif output_file.endswith('.xlsx'):
+    if output_file.endswith('.xlsx'):
         work_book = XlsxWorkbook()
     elif output_file.endswith('.csv'):
         work_book = OneCsvWriter(output_file)
@@ -35,8 +32,8 @@ def create_workbook(output_file):
     return work_book
 
 
-def save_data_to_xls(data_file, categories, data, sheet_name='Data'):
-    ''' Writes input data to xls-file.
+def save_data_to_xlsx(data_file, categories, data, sheet_name='Data'):
+    ''' Writes input data to xlsx-file.
 
         Args:
             data_file (str): name of new or existing file where data will
@@ -54,36 +51,28 @@ def save_data_to_xls(data_file, categories, data, sheet_name='Data'):
 
         Raises:
             ValueError: if sheet_name is empty string or None, or any
-                empty value for xls and xlsx files.
+                empty value for xlsx files.
     '''
-    if ((data_file.endswith('.xls') or data_file.endswith('.xlsx')) and
-            not sheet_name):
+    if data_file.endswith('.xlsx') and not sheet_name:
         raise ValueError('Sheet name is not specified')
 
-    use_existing_file = False
     if os.path.isfile(data_file):
-        use_existing_file = True
-    if use_existing_file:
         work_book = create_workbook(data_file)
-        work_sheet = None
-        if data_file.endswith('.xls') or data_file.endswith('.xlsx'):
+        if data_file.endswith('.xlsx'):
             # copy data from all sheets except the one the user modified if any
-            work_book_to_read = xlrd.open_workbook(data_file)
-            for sheet_index in range(work_book_to_read.nsheets):
-                work_sheet_to_read = work_book_to_read.sheet_by_index(
-                    sheet_index)
-                if work_sheet_to_read.name == sheet_name:
-                    work_sheet = work_book.add_sheet(sheet_name)
-                else:
-                    curr_sheet = work_book.add_sheet(work_sheet_to_read.name)
-                    for row_index in range(work_sheet_to_read.nrows):
-                        for col_index in range(work_sheet_to_read.ncols):
-                            curr_sheet.write(row_index, col_index,
-                                             work_sheet_to_read.cell(
-                                               row_index, col_index).value)
-        if work_sheet is None:
+            # copy old file and clear sheet to be overwritten with new data
+            work_book.workbook = load_workbook(data_file, data_only = True)
+            #due to data_only the formulas are replaced by numbers, but otherwise 
+            #the file would get useless for pyDEA until opening it again in Excel and recalculating the equations
+            work_book.nb_sheets = len(work_book.workbook.sheetnames)
+            if sheet_name in work_book.workbook.sheetnames:
+                ws = work_book.workbook[sheet_name]
+                ws.delete_rows(1, amount = ws.max_row)
+                work_sheet = XlsxSheet(ws)
+            else:
+                work_sheet = work_book.add_sheet(sheet_name)
+        else:
             work_sheet = work_book.add_sheet(sheet_name)
-
     else:
         work_book = create_workbook(data_file)
         work_sheet = work_book.add_sheet(sheet_name)

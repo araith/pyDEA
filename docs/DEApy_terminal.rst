@@ -84,10 +84,6 @@ Required packages for *pyDEA*
 
 -  pulp package
 
--  xlrd package: python3-xlrd
-
--  xlwt package: xlwt-future
-
 -  tkinter package: python3-tk
 
 There are other packages for unit tests and documentation, but they are

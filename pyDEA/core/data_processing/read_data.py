@@ -1,13 +1,8 @@
 ''' This module contains functions and classes responsible for reading
-    input data from xls, xlsx and csv files.
-
-    Note:
-        In xlrd when text is read from xlsx, leading white spaces
-        are automatically removed. But when text is read from xls,
-        they are kept.
+    input data from xlsx and csv files.
 '''
 
-import xlrd
+import openpyxl
 import csv
 import os
 from collections import OrderedDict
@@ -41,8 +36,8 @@ def read_data(file_name, sheet_name=''):
             depend on these types.
     '''
     just_name, extension = os.path.splitext(file_name)
-    if extension in ['.xls', '.xlsx']:
-        reader = XLSReader()
+    if extension == '.xlsx':
+        reader = XLSXReader()
     elif extension == '.csv':
         reader = CSVReader()
     else:
@@ -162,7 +157,7 @@ def has_non_empty_cells(reader, row):
         non-empty data.
 
         Args:
-            reader (CSVReader or XLSReader): object that implements
+            reader (CSVReader or XLSXReader): object that implements
                 interface for reading input data.
             row (list of values): list of values stored in a row.
 
@@ -182,7 +177,7 @@ def extract_categories(reader, row):
     ''' Constructs list of categories out of data in row.
 
         Args:
-            reader (CSVReader or XLSReader): object that implements
+            reader (CSVReader or XLSXReader): object that implements
                 interface for reading input data.
             row (list of values): list of values stored in a row.
 
@@ -208,7 +203,7 @@ def extract_coefficients(reader, row, col_indexes):
     ''' Parses row with coefficients.
 
         Args:
-            reader (CSVReader or XLSReader): object that implements
+            reader (CSVReader or XLSXReader): object that implements
                 interface for reading input data.
             row (list of values): list of values stored in a row.
             col_indexes (list of int): list of column indexes where
@@ -258,7 +253,7 @@ def find_first_non_empty_col(reader, row):
     ''' Finds index of the first non-empty column.
 
         Args:
-            reader (CSVReader or XLSReader): object that implements
+            reader (CSVReader or XLSXReader): object that implements
                 interface for reading input data.
             row (list of values): list of values stored in a row.
 
@@ -270,11 +265,11 @@ def find_first_non_empty_col(reader, row):
             return col_index
 
 
-class XLSReader(object):
-    ''' This class implements parsing of input data from xls and xlsx files.
+class XLSXReader(object):
+    ''' This class implements parsing of input data from xlsx files.
 
         Attributes:
-            open_sheet (xlrd.Sheet): open sheet where data is stored.
+            open_sheet (openpyxl.worksheet.worksheet.Worksheet): open sheet where data is stored.
 
     '''
     def __init__(self):
@@ -287,11 +282,11 @@ class XLSReader(object):
                 file_name (str): path to file with input data.
                 sheet_name (str): sheet name.
         '''
-        book = xlrd.open_workbook(file_name)
+        book = openpyxl.load_workbook(file_name, data_only = True)
         if sheet_name:
-            sheet = book.sheet_by_name(sheet_name)
+            sheet = book[sheet_name]
         else:
-            sheet = book.sheet_by_index(0)
+            sheet = book[book.sheetnames[0]] #first sheet
         self.open_sheet = sheet
 
     def get_sheet_name(self):
@@ -300,78 +295,77 @@ class XLSReader(object):
             Returns:
                 str: sheet name.
         '''
-        return self.open_sheet.name
+        return self.open_sheet.title
 
     def get_cell_value(self, row, column):
         ''' Returns value of the cell with given row and column index.
 
             Args:
-                row (int): row index.
-                column (int): column index.
+                row (int): row index (starting with 0).
+                column (int): column index (starting with 0).
 
             Returns:
                 str: cell value.
         '''
-        return self.open_sheet.cell_value(row, column)
+        return self.open_sheet.cell(row+1, column+1).value
 
     def get_rows(self):
         ''' Returns a list of rows.
 
             Returns:
-                list of list of xlrd.Cell: list of rows.
+                list of list of openpyxl.cell.cell.Cell: list of rows.
         '''
-        return [self.open_sheet.row(row_index) for row_index in
-                range(self.open_sheet.nrows)]
+        return [list(i) for i in self.open_sheet.rows]
 
     def cell_is_not_empty(self, cell):
         ''' Checks if a given cell has non-empty value.
 
             Args:
-                cell (xlrd.Cell): cell.
+                cell (openpyxl.cell.cell.Cell): cell.
 
             Returns:
                 bool: True if cell has non-empty value, False otherwise.
         '''
-        return cell.ctype != xlrd.XL_CELL_EMPTY
+        return cell.value is not None
 
     def cell_is_not_blank(self, cell):
         ''' Checks if a given cell has blank value.
 
             Args:
-                cell (xlrd.Cell): cell.
+                cell (openpyxl.cell.cell.Cell): cell.
 
             Returns:
-                bool: True if cell has blank value, False otherwise.
+                bool: True if cell is not error type.
         '''
-        return cell.ctype != xlrd.XL_CELL_BLANK
+        return cell.data_type != 'e'
 
     def is_valid_text(self, cell):
         ''' Checks if a given cell contain valid text.
 
             Args:
-                cell (xlrd.Cell): cell.
+                cell (openpyxl.cell.cell.Cell): cell.
 
             Returns:
                 bool: True if cell contain valid text, False otherwise.
         '''
-        return cell.ctype == xlrd.XL_CELL_TEXT and cell.value
+        return cell.data_type == 's' and bool(cell.value.strip())
 
     def cell_is_text(self, cell):
         ''' Checks if a given cell contain text.
 
             Args:
-                cell (xlrd.Cell): cell.
+                cell (openpyxl.cell.cell.Cell): cell.
 
             Returns:
                 bool: True if cell contain text, False otherwise.
         '''
-        return cell.ctype == xlrd.XL_CELL_TEXT
+        return cell.data_type == 's'
 
     def get_cell_content(self, cell):
         ''' Returns cell content.
 
             Args:
-                cell (xlrd.Cell): cell.
+                cell (openpyxl.cell.cell.Cell): cell.
 
             Returns:
                 cell content (type depends on what is stored in the cell).

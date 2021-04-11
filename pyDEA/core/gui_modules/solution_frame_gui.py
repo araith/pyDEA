@@ -6,7 +6,7 @@ from tkinter.ttk import Notebook
 
 from pyDEA.core.gui_modules.table_gui import TableFrame
 from pyDEA.core.gui_modules.text_frame_gui import TextFrame
-from pyDEA.core.data_processing.write_data_to_xls import XLSWriter
+from pyDEA.core.data_processing.write_data import FileWriter
 from pyDEA.core.utils.progress_recorders import GuiProgress
 
 
@@ -94,7 +94,7 @@ class SolutionFrame(Notebook):
                 categorical (str): name of the categorical variable
                     used in categorical analysis.
         '''
-        writer = XLSWriter(params_to_print, self, run_date, total_seconds,
+        writer = FileWriter(params_to_print, self, run_date, total_seconds,
                            ranks=ranks, categorical=categorical)
         nb_models = len(solutions)
         # +1 for parameters sheet, it is stored separately

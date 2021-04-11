@@ -27,7 +27,7 @@ class SolutionTextWriter(object):
             name (str): name of the solution page
                 (i.e. EfficiencyScores, Parameters,...).
                 Name is usually changed by the user or another function
-                manually, for example see module write_data_to_xls.
+                manually, for example see module write_data.
 
         Args:
             delimiter (str): delimiter used to separate columns.

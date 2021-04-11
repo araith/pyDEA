@@ -16,7 +16,7 @@ from pyDEA.core.utils.dea_utils import CHANGE_CATEGORY_NAME, INPUT_OBSERVER
 from pyDEA.core.utils.dea_utils import OUTPUT_OBSERVER, on_canvas_resize
 from pyDEA.core.utils.dea_utils import validate_category_name, calculate_nb_pages
 from pyDEA.core.gui_modules.custom_canvas_gui import StyledCanvas
-from pyDEA.core.data_processing.read_data_from_xls import convert_to_dictionary
+from pyDEA.core.data_processing.read_data import convert_to_dictionary
 
 CELL_WIDTH = 10
 
