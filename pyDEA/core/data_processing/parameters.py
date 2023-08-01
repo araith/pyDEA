@@ -25,7 +25,7 @@ VALID_PARAM_NAME = r'\w[\w ]*'
 # must start with any non-space character,
 # all other characters are allowed,
 # since file paths must be treated
-VALID_PARAM_VALUE = r'\S.*|(?imsux)' #previously r'\S.*|(?iLmsux)' causing error "cannot use LOCALE flag with a str pattern" with Python>=3.6
+VALID_PARAM_VALUE = r'\S.*|(imsux)' #previously r'\S.*|(?iLmsux)' causing error "cannot use LOCALE flag with a str pattern" with Python>=3.6
 
 VALID_PARAM_NAMES = ['DATA_FILE', 'INPUT_CATEGORIES', 'OUTPUT_CATEGORIES',
                      'DEA_FORM', 'RETURN_TO_SCALE', 'ORIENTATION',
@@ -73,10 +73,9 @@ def parse_parameters_from_file(filename):
                        VALID_PARAM_VALUE, ')}'])
     params = Parameters()
     # will raise IOError exception if fileName
-    # does not exists, 'rU' - r - read mode,
-    # U - Universal for encoding
+    # does not exists, 'r' - r - read mode
     nb_parsed_params = 0
-    with open(filename, 'rU') as file_with_params:
+    with open(filename, 'r') as file_with_params:
         for line in file_with_params:
             line = extract_comment(line)
             matched_params = re.findall(pattern, line)
