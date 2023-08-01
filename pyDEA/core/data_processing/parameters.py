@@ -108,9 +108,7 @@ def extract_comment(line):
             str: line without comment.
     '''
     pos = line.find('#')
-    if pos != -1:
-        return line[:pos]
-    return line
+    return line[:pos] if pos != -1 else line
 
 
 def write_parameters_to_file(params, filename):
@@ -123,10 +121,9 @@ def write_parameters_to_file(params, filename):
             params (Parameters): parameters object.
             filename (str): file name where parameters must be written.
     '''
-    file_with_params = open(filename, 'w')  # w - open to write data
-    for (name, value) in params.params.items():
-        file_with_params.write('<' + name + '> {' + value + '}\n')
-    file_with_params.close()
+    with open(filename, 'w') as file_with_params:
+        for (name, value) in params.params.items():
+            file_with_params.write(f'<{name}' + '> {' + value + '}\n')
 
 
 def validate_string(string, expression):
@@ -157,9 +154,7 @@ def validate_string(string, expression):
                 expression, False otherwise.
     '''
     match = re.search(expression, string)
-    if match and match.group() == string:
-        return True
-    return False
+    return bool(match and match.group() == string)
 
 
 class Parameters:
@@ -175,9 +170,7 @@ class Parameters:
                     >> params = {'DEAform': 'env', 'ReturnsToScale': 'VRS'}
     '''
     def __init__(self):
-        self.params = dict()
-        for key in VALID_PARAM_NAMES:
-            self.params[key] = ''
+        self.params = {key: '' for key in VALID_PARAM_NAMES}
 
     def update_parameter(self, param_name, param_value):
         ''' Updates existing parameter in the dictionary. If parameter does not
@@ -249,9 +242,10 @@ class Parameters:
             Returns:
                 str: all paremeters with values.
         '''
-        all_params = []
-        for param in self.params.items():
-            all_params.append("<{0}> = '{1}'".format(param[0], param[1]))
+        all_params = [
+            "<{0}> = '{1}'".format(param[0], param[1])
+            for param in self.params.items()
+        ]
         return ', '.join(all_params)
 
     def get_set_of_parameters(self, param_name, delimiter=';'):
@@ -267,8 +261,9 @@ class Parameters:
                 set of str: set of parsed parameter values.
         '''
         params_as_str = self.get_parameter_value(param_name)
-        return set([elem.strip() for elem in params_as_str.split(delimiter)
-                    if elem.strip()])
+        return {
+            elem.strip() for elem in params_as_str.split(delimiter) if elem.strip()
+        }
 
     def copy_all_params(self, params_from):
         ''' Copies all parameter values from a given parameter object.
@@ -308,7 +303,7 @@ class Parameters:
                 new_name (str): new category name.
         '''
         for param_name in CATEGORICAL_AND_DATA_FIELDS:
-            if param_name != 'DATA_FILE' and param_name != 'OUTPUT_FILE':
+            if param_name not in ['DATA_FILE', 'OUTPUT_FILE']:
                 param_values = self.get_set_of_parameters(param_name)
                 new_param_value = ''
                 for val in param_values:
@@ -317,17 +312,19 @@ class Parameters:
                     index = 0
                     name_to_add = new_name
                     price_ratio = False
-                    if (param_name == 'ABS_WEIGHT_RESTRICTIONS' or
-                            param_name == 'VIRTUAL_WEIGHT_RESTRICTIONS'):
+                    if param_name in [
+                        'ABS_WEIGHT_RESTRICTIONS',
+                        'VIRTUAL_WEIGHT_RESTRICTIONS',
+                    ]:
                         value_to_compare, index = dea_utils.find_category_name_in_restrictions(val)
                     elif param_name == 'PRICE_RATIO_RESTRICTIONS':
                         value_to_compare, index = dea_utils.find_category_name_in_restrictions(val)
                         category1, category2 = dea_utils.get_price_ratio_categories(value_to_compare)
                         if old_name == category1:
-                            name_to_add = new_name + '/' + category2
+                            name_to_add = f'{new_name}/{category2}'
                             price_ratio = True
                         elif old_name == category2:
-                            name_to_add = category1 + '/' + new_name
+                            name_to_add = f'{category1}/{new_name}'
                             price_ratio = True
 
                     if old_name == value_to_compare or price_ratio:
@@ -337,7 +334,7 @@ class Parameters:
                     else:
                         new_param_value = new_param_value + val
                     if new_param_value and param_name != 'CATEGORICAL_CATEGORY':
-                        new_param_value = new_param_value + ';'
+                        new_param_value = f'{new_param_value};'
 
                 if new_param_value:
                     self.update_parameter(param_name, new_param_value)
