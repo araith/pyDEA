@@ -1,10 +1,13 @@
-from pulp import LpStatusOptimal
+from pulp import LpSolveStatus
+
+LpStatusOptimal = LpSolveStatus.Optimal
+import math
 import pytest
 
-from pyDEA.core.data_processing.read_data_from_xls import read_data
-from pyDEA.core.data_processing.read_data_from_xls import construct_input_data_instance
-from pyDEA.core.data_processing.read_data_from_xls import validate_data
-from pyDEA.core.data_processing.read_data_from_xls import convert_to_dictionary
+from pyDEA.core.data_processing.read_data import read_data
+from pyDEA.core.data_processing.read_data import construct_input_data_instance
+from pyDEA.core.data_processing.read_data import validate_data
+from pyDEA.core.data_processing.read_data import convert_to_dictionary
 from pyDEA.core.utils.dea_utils import clean_up_pickled_files
 
 
@@ -15,7 +18,7 @@ WEIGHT_RESTRICTION_TOLERANCE = 1e-7
 @pytest.fixture
 def DEA_example2_data(request):
     categories, xls_data, dmu_name, sheet_name = read_data(
-        'tests/DEA_example2_data.xls')
+        'tests/DEA_example2_data.xlsx')
     coefficients, has_same_dmus = convert_to_dictionary(xls_data)
     assert has_same_dmus is False
     assert validate_data(categories, coefficients) is True
@@ -26,7 +29,7 @@ def DEA_example2_data(request):
 @pytest.fixture
 def categorical_from_book(request):
     categories, xls_data, dmu_name, sheet_name = read_data(
-        'tests/categorical_test_from_book.xls')
+        'tests/categorical_test_from_book.xlsx')
     coefficients, has_same_dmus = convert_to_dictionary(xls_data)
     assert has_same_dmus is False
     assert validate_data(categories, coefficients) is True
@@ -43,7 +46,7 @@ def categorical_from_book(request):
 @pytest.fixture
 def DEA_example_data(request):
     categories, xls_data, dmu_name, sheet_name = read_data(
-        'tests/DEA_example_data.xls')
+        'tests/DEA_example_data.xlsx')
     coefficients, has_same_dmus = convert_to_dictionary(xls_data)
     assert has_same_dmus is False
     assert validate_data(categories, coefficients) is True
@@ -54,7 +57,7 @@ def DEA_example_data(request):
 @pytest.fixture
 def categorical_data(request):
     categories, xls_data, dmu_name, sheet_name = read_data(
-        'tests/categorical_test.xls')
+        'tests/categorical_test.xlsx')
     coefficients, has_same_dmus = convert_to_dictionary(xls_data)
     assert has_same_dmus is False
     assert validate_data(categories, coefficients) is True
@@ -114,6 +117,137 @@ def check_VRS_duals(dmus, expected_values, model_solution, data):
     for count, dmu in enumerate(dmus):
         assert model_solution.get_VRS_dual(data._DMU_user_name_to_code[
                                            dmu]) == expected_values[count]
+
+
+def check_output_multiplier_solution(model_solution, data,
+                                     weakly_disposable=(), vrs=False,
+                                     lower_bound=0.0, tolerance=1e-7):
+    '''Check the returned weights and peers, not just the solver status.
+
+    CBC writes rounded solution values, so use an absolute residual tolerance
+    rather than a relative tolerance that would accept cancellation at 1e10.
+    Alternative optimal weights are allowed only if both DEA formulations
+    are feasible and their objectives agree (strong duality).
+    '''
+    check_optimal_solution_status_and_sizes(model_solution, data)
+    for dmu in data.DMU_codes:
+        inputs = model_solution.input_duals[dmu]
+        outputs = model_solution.output_duals[dmu]
+        intercept = model_solution.get_VRS_dual(dmu) if vrs else 0
+        score = model_solution.efficiency_scores[dmu]
+        assert math.isfinite(score) and score > 0
+        assert math.isfinite(intercept)
+        for category, weight in list(inputs.items()) + list(outputs.items()):
+            assert math.isfinite(weight), (dmu, category, weight)
+            if category not in weakly_disposable:
+                assert weight >= lower_bound - tolerance, (dmu, category, weight)
+
+        normalization = math.fsum(data.coefficients[dmu, cat] * weight
+                                  for cat, weight in outputs.items())
+        assert normalization == pytest.approx(1, abs=tolerance, rel=0)
+        objective = math.fsum(
+            [data.coefficients[dmu, cat] * weight
+             for cat, weight in inputs.items()] + [intercept])
+        assert objective == pytest.approx(1 / score, abs=tolerance, rel=0)
+
+        peers = model_solution.get_lambda_variables(dmu)
+        for peer, value in peers.items():
+            assert peer in data.DMU_codes
+            assert math.isfinite(value) and value >= -tolerance
+        if vrs:
+            assert math.fsum(peers.values()) == pytest.approx(
+                1, abs=tolerance, rel=0)
+
+        for peer in data.DMU_codes:
+            residual = math.fsum(
+                [data.coefficients[peer, cat] * weight
+                 for cat, weight in outputs.items()] +
+                [-data.coefficients[peer, cat] * weight
+                 for cat, weight in inputs.items()] + [-intercept])
+            assert residual <= tolerance, (dmu, peer, residual)
+            assert abs(peers.get(peer, 0) * residual) <= tolerance
+
+        for category in data.input_categories | data.output_categories:
+            projected = math.fsum(value * data.coefficients[peer, category]
+                                  for peer, value in peers.items())
+            target = data.coefficients[dmu, category]
+            if category in data.output_categories:
+                target /= score
+            residual = projected - target
+            if category in weakly_disposable:
+                assert abs(residual) <= tolerance, (dmu, category, residual)
+            elif category in data.input_categories:
+                assert residual <= tolerance, (dmu, category, residual)
+            else:
+                assert residual >= -tolerance, (dmu, category, residual)
+
+
+def check_dea_solution(solution, data, weakly_disposable=(), vrs=False,
+                       non_discretionary=(), tolerance=1e-7):
+    '''Accept alternative optima only with primal/dual feasibility and equality.
+
+    Unlike fixed-weight assertions this is independent of the simplex basis.
+    Absolute tolerances deliberately reject huge rounded, cancelling weights.
+    '''
+    check_optimal_solution_status_and_sizes(solution, data)
+    input_oriented = solution.orientation == 'input'
+    for dmu in data.DMU_codes:
+        inputs = solution.input_duals[dmu]
+        outputs = solution.output_duals[dmu]
+        intercept = solution.get_VRS_dual(dmu) if vrs else 0
+        score = solution.efficiency_scores[dmu]
+        assert math.isfinite(score) and score > 0
+        assert math.isfinite(intercept)
+        weights = dict(inputs, **outputs)
+        for category, weight in weights.items():
+            assert math.isfinite(weight), (dmu, category, weight)
+            if category not in weakly_disposable:
+                assert weight >= -tolerance, (dmu, category, weight)
+
+        normalized = inputs if input_oriented else outputs
+        objective_weights = outputs if input_oriented else inputs
+        normalization = math.fsum(
+            data.coefficients[dmu, cat] * weight
+            for cat, weight in normalized.items()
+            if cat not in non_discretionary)
+        assert normalization == pytest.approx(1, abs=tolerance, rel=0)
+        objective = math.fsum(
+            [data.coefficients[dmu, cat] * weight
+             for cat, weight in objective_weights.items()] +
+            [-data.coefficients[dmu, cat] * weight
+             for cat, weight in normalized.items()
+             if cat in non_discretionary] + [intercept])
+        radial = score if input_oriented else 1 / score
+        assert objective == pytest.approx(radial, abs=tolerance, rel=0)
+
+        peers = solution.get_lambda_variables(dmu)
+        for peer, value in peers.items():
+            assert peer in data.DMU_codes
+            assert math.isfinite(value) and value >= -tolerance
+        if vrs:
+            assert math.fsum(peers.values()) == pytest.approx(
+                1, abs=tolerance, rel=0)
+        for peer in data.DMU_codes:
+            residual = math.fsum(
+                [data.coefficients[peer, cat] * w for cat, w in outputs.items()] +
+                [-data.coefficients[peer, cat] * w for cat, w in inputs.items()] +
+                [intercept if input_oriented else -intercept])
+            assert residual <= tolerance, (dmu, peer, residual)
+            assert abs(peers.get(peer, 0) * residual) <= tolerance
+        for category in weights:
+            projected = math.fsum(value * data.coefficients[peer, category]
+                                  for peer, value in peers.items())
+            target = data.coefficients[dmu, category]
+            oriented = (category in inputs) == input_oriented
+            if oriented and category not in non_discretionary:
+                target *= radial
+            residual = projected - target
+            if category in weakly_disposable:
+                assert abs(residual) <= tolerance, (dmu, category, residual)
+            elif category in inputs:
+                assert residual <= tolerance, (dmu, category, residual)
+            else:
+                assert residual >= -tolerance, (dmu, category, residual)
 
 
 def _check_lower_bound(dual_value, lower_bound):

@@ -2,7 +2,7 @@
 '''
 
 import copy
-from pulp import LpStatusOptimal
+from pulp import LpSolveStatus
 
 
 def restore_base(model, first_solution, copy_of_dmu_codes, max_slack_solution):
@@ -57,7 +57,7 @@ def peel_the_onion_method(model):
 
         one_is_infeasible = False
         for dmu_code in model.input_data.DMU_codes:
-            if solution.lp_status[dmu_code] != LpStatusOptimal:
+            if solution.lp_status[dmu_code] != LpSolveStatus.Optimal:
                 one_is_infeasible = True
             elif solution.is_efficient(dmu_code):
                 ranks[dmu_code] = current_rank

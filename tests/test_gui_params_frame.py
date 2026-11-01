@@ -45,7 +45,7 @@ def params_frame(request):
 
 
 def _check_params(params, other_params_dict=None):
-    params_to_check = {'DATA_FILE': 'tests/DEA_example2_data.xls',
+    params_to_check = {'DATA_FILE': 'tests/DEA_example2_data.xlsx',
                        'INPUT_CATEGORIES': 'I1; I2; I3',
                        'OUTPUT_CATEGORIES': 'O1; O2',
                        'DEA_FORM': 'env',

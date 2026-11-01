@@ -58,7 +58,7 @@ class EnvelopmentModelVRSDecorator(EnvelopmentModelBase):
         '''
         self._model_to_decorate._fill_solution(dmu_code, model_solution)
         model_solution.add_VRS_dual(
-            dmu_code, self.lp_model.constraints['VRS_constraint'].pi)
+            dmu_code, self.lp_model.get_constraint_by_name('VRS_constraint').pi)
 
     def _update_lp(self, dmu_code):
         ''' Updates LP with coefficients corresponding to a given DMU.
@@ -217,25 +217,25 @@ class EnvelopmentModelWithAbsoluteWeightRestrictions(EnvelopmentModelBase):
 
         for category, (lower_bound, upper_bound) in self.bounds.items():
             if lower_bound:
-                variable = pulp.LpVariable(
+                variable = self.lp_model.add_variable(
                     '{0}_category_{1}_lb'.format(
                         self._get_var_name(), category),
                     None, 0, pulp.LpContinuous)
                 self.new_vars_lb[category] = variable
                 name = self.model._constraints[category]
-                self.lp_model.constraints[name].addterm(variable, 1)
+                self.lp_model.get_constraint_by_name(name).addInPlace(variable)
                 self.lp_model.objective += (self._get_multiplier(
                                             dmu_code, category) *
                                             lower_bound * variable)
 
             if upper_bound:
-                variable = pulp.LpVariable(
+                variable = self.lp_model.add_variable(
                     '{0}_category_{1}_ub'.format(self._get_var_name(),
                                                  category),
                     0, None, pulp.LpContinuous)
                 self.new_vars_ub[category] = variable
                 name = self.model._constraints[category]
-                self.lp_model.constraints[name].addterm(variable, 1)
+                self.lp_model.get_constraint_by_name(name).addInPlace(variable)
                 self.lp_model.objective += (self._get_multiplier(
                                             dmu_code, category) *
                                             upper_bound * variable)
@@ -249,18 +249,19 @@ class EnvelopmentModelWithAbsoluteWeightRestrictions(EnvelopmentModelBase):
         ''' See base class.
         '''
         self.model._update_lp(dmu_code)
+        objective = self.lp_model.objective
         for category, (lower_bound, upper_bound) in self.bounds.items():
             if lower_bound:
                 variable = self.new_vars_lb[category]
-                self.lp_model.objective[variable] = (self._get_multiplier(
-                                                     dmu_code, category) *
-                                                     lower_bound)
+                objective[variable] = (self._get_multiplier(
+                    dmu_code, category) * lower_bound)
 
             if upper_bound:
                 variable = self.new_vars_ub[category]
-                self.lp_model.objective[variable] = (self._get_multiplier(
+                objective[variable] = (self._get_multiplier(
                                                      dmu_code, category) *
                                                      upper_bound)
+        self.lp_model.objective = objective
 
     def _create_solution(self):
         ''' See base class.
@@ -365,24 +366,24 @@ class EnvelopmentModelWithPriceRatioConstraints(EnvelopmentModelBase):
         # create varibales
         for (category_in_nom, category_in_denom), (lower_bound, upper_bound) in self.bounds.items():
             if lower_bound:
-                variable = pulp.LpVariable(
+                variable = self.lp_model.add_variable(
                     'price_ratio_category_{0}_{1}_lb'.format(
                         category_in_nom, category_in_denom),
                     0, None, pulp.LpContinuous)
                 name = self.model._constraints[category_in_nom]
-                self.lp_model.constraints[name].addterm(variable, -1)
+                self.lp_model.get_constraint_by_name(name).addInPlace(-variable)
                 name = self.model._constraints[category_in_denom]
-                self.lp_model.constraints[name].addterm(variable, lower_bound)
+                self.lp_model.get_constraint_by_name(name).addInPlace(lower_bound * variable)
 
             if upper_bound:
-                variable = pulp.LpVariable(
+                variable = self.lp_model.add_variable(
                     'price_ratio_category_{0}_{1}_ub'.format(
                         category_in_nom, category_in_denom),
                     0, None, pulp.LpContinuous)
                 name = self.model._constraints[category_in_nom]
-                self.lp_model.constraints[name].addterm(variable, 1)
+                self.lp_model.get_constraint_by_name(name).addInPlace(variable)
                 name = self.model._constraints[category_in_denom]
-                self.lp_model.constraints[name].addterm(variable, -upper_bound)
+                self.lp_model.get_constraint_by_name(name).addInPlace(-upper_bound * variable)
 
     def _create_solution(self):
         ''' See base class.

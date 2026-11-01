@@ -77,7 +77,7 @@ class DataTabFrameMock(DataTabFrame):
                          ParamsFrameMock(parent),
                          ['', '', ''], StringVar(master=parent),
                          StringVar(master=parent))
-        self.file_to_save = 'tests/test_file_save_data_frame_tab.xls'
+        self.file_to_save = 'tests/test_file_save_data_frame_tab.xlsx'
         self.file_to_load = ''
         self.my_sheet_name = sheet_name
 
@@ -140,7 +140,7 @@ def _check_clear_all(data_tab):
 
 
 def test_clear_all(data_tab):
-    data_tab.show_loaded_data('tests/categorical_test.xls')
+    data_tab.show_loaded_data('tests/categorical_test.xlsx')
     data_tab.clear_all()
     _check_clear_all(data_tab)
 
@@ -181,13 +181,13 @@ def test_save_data(data_tab):
 
 
 def test_on_params_file_change(data_tab):
-    data_tab.show_loaded_data('tests/categorical_test.xls')
+    data_tab.show_loaded_data('tests/categorical_test.xlsx')
     data_tab.data_from_params_file.set('')
     assert data_tab.panel.cget(
-        'text') == TEXT_FOR_PANEL + 'tests/categorical_test.xls'
-    data_tab.data_from_params_file.set('tests/DEA_example2_data.xls')
+        'text') == TEXT_FOR_PANEL + 'tests/categorical_test.xlsx'
+    data_tab.data_from_params_file.set('tests/DEA_example2_data.xlsx')
     assert data_tab.panel.cget('text') == TEXT_FOR_PANEL + \
-        'tests/DEA_example2_data.xls'
+        'tests/DEA_example2_data.xlsx'
 
 
 def test_show_data(data_tab):
@@ -209,6 +209,13 @@ def test_show_data(data_tab):
     assert data_tab.navigation_frame.text_var_nb_pages.get() == '1 pages'
     assert data_tab.navigation_frame.current_page_str.get() == '1'
     assert data_tab.navigation_frame.goto_spin.cget('to') == 1
+
+
+@pytest.mark.parametrize('header, expected', [(None, ''), (0, '0'),
+                                              ('0', '0'), ('DMUs', 'DMUs')])
+def test_show_data_preserves_header(data_tab, header, expected):
+    data_tab.show_data(['input', 'output'], [['A', 1, 2]], header)
+    assert data_tab.table.cells[0][0].get() == expected
 
 
 def test_show_data_multiple_pages(data_tab):
@@ -237,15 +244,15 @@ def _check_data_and_table(tab, categories, coefficients):
 
 
 def test_show_loaded_data(data_tab):
-    file_name = 'tests/dataToTestDataLoad.xls'
+    file_name = 'tests/dataToTestDataLoad.xlsx'
     data_tab.file_to_load = file_name
     data_tab.load_file()
     categories = ['i1', 'i2', 'o1', 'o2']
-    coefficients = [[1.0,   1.0,   2.0,   3.0,   4.0],
-                    [2.0,   5.0,   6.0,   7.0,   8.0],
-                    [3.0,   9.0,   10.0,  11.0,  12.0],
-                    [4.0,   13.0,  14.0,  15.0,  16.0],
-                    [5.0,   17.0,  18.0,  19.0,  20.0]]
+    coefficients = [[1, 1, 2, 3, 4],
+                    [2, 5, 6, 7, 8],
+                    [3, 9, 10, 11, 12],
+                    [4, 13, 14, 15, 16],
+                    [5, 17, 18, 19, 20]]
     assert data_tab.params_frame.params.get_parameter_value(
         'DATA_FILE') == file_name
     _check_data_and_table(data_tab, categories, coefficients)
@@ -254,25 +261,25 @@ def test_show_loaded_data(data_tab):
 def test_show_loaded_data_second_sheet():
     parent = Tk()
     tab = DataTabFrameMock(parent, 'Sheet2')
-    tab.show_loaded_data('tests/dataToTestDataLoad.xls')
+    tab.show_loaded_data('tests/dataToTestDataLoad.xlsx')
     categories = ['inp1',  'inp2',  'out']
-    coefficients = [['a',   10.0,  10.0,  10.0],
-                    ['b',   20.0,  20.0,  20.0],
-                    ['c',   30.0,  30.0,  30.0],
-                    ['d',   40.0,  40.0,  40.0],
-                    ['e',   50.0,  50.0,  50.0]
+    coefficients = [['a', 10, 10, 10],
+                    ['b', 20, 20, 20],
+                    ['c', 30, 30, 30],
+                    ['d', 40, 40, 40],
+                    ['e', 50, 50, 50]
                     ]
     _check_data_and_table(tab, categories, coefficients)
     parent.destroy()
 
 
 def test_show_loaded_data_one_page(data_tab):
-    data_tab.show_loaded_data('tests/dataToTestDataLoadOneSheet.xls')
+    data_tab.show_loaded_data('tests/dataToTestDataLoadOneSheet.xlsx')
     categories = ['i1', 'i2', 'o1', 'o2']
-    coefficients = [[1.0,   1.0,   2.0,   3.0,   4.0],
-                    [2.0,   5.0,   6.0,   7.0,   8.0],
-                    [3.0,   9.0,   10.0,  11.0,  12.0],
-                    [4.0,   13.0,  14.0,  15.0,  16.0],
-                    [5.0,   17.0,  18.0,  19.0,  20.0]]
+    coefficients = [[1, 1, 2, 3, 4],
+                    [2, 5, 6, 7, 8],
+                    [3, 9, 10, 11, 12],
+                    [4, 13, 14, 15, 16],
+                    [5, 17, 18, 19, 20]]
 
     _check_data_and_table(data_tab, categories, coefficients)

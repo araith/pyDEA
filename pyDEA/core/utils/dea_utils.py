@@ -36,7 +36,7 @@
 from tkinter import StringVar
 from tkinter import ALL
 import os
-import pkg_resources
+from importlib.resources import files
 import logging
 from logging.config import fileConfig
 
@@ -89,8 +89,8 @@ def get_logger():
         Returns:
             logger: configured logger
     '''
-    logfile = pkg_resources.resource_filename(PACKAGE, LOG_FILE)
-    fileConfig(logfile)
+    with files(PACKAGE).joinpath(LOG_FILE).open('r') as logfile:
+        fileConfig(logfile)
     return logging.getLogger()
 
 

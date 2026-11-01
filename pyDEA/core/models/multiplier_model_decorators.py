@@ -38,13 +38,13 @@ class MultiplierModelVRSDecorator(MultiplierModelBase):
         self._model_to_decorate._create_lp()
         self.lp_model = self._model_to_decorate.lp_model
 
-        self._vrs_variable = pulp.LpVariable('VRS_variable', None, None,
+        self._vrs_variable = self.lp_model.add_variable('VRS_variable', None, None,
                                              pulp.LpContinuous)
         self._model_to_decorate.lp_model.objective += self._vrs_variable
 
         for dmu_constraint in self._model_to_decorate._dmu_constraint_names.keys():
-            self._model_to_decorate.lp_model.constraints[dmu_constraint] += (
-                self.multiplier * self._vrs_variable)
+            constraint = self.lp_model.get_constraint_by_name(dmu_constraint)
+            constraint += self.multiplier * self._vrs_variable
 
     def _update_lp(self, dmu_code):
         ''' Updates LP with coefficients corresponding to a given DMU.
@@ -206,8 +206,10 @@ class MultiplierModelWithNonDiscVarsForDecoration(MultiplierModelBase):
         for category, var in variables.items():
             if category in self.categories:
                 var.lowBound = 0
-        self.lp_model.constraints['equality_constraint'] = self._get_equality_constraint(
-            dmu_code)
+        constraint = self.lp_model.get_constraint_by_name('equality_constraint')
+        for category, var in variables.items():
+            if category in self.categories:
+                constraint[var] = 0
 
     def _update_lp(self, dmu_code):
         ''' Updates LP with coefficients corresponding to a given DMU.
@@ -223,11 +225,13 @@ class MultiplierModelWithNonDiscVarsForDecoration(MultiplierModelBase):
         self._model_to_decorate._concrete_model.update_equality_constraint(
             self.input_data, dmu_code, in_vars, out_vars, self.lp_model)
         variables = self._get_variables()
+        objective = self.lp_model.objective
         for category, var in variables.items():
             if category in self.categories:
-                self.lp_model.objective[var] = (
+                objective[var] = (
                     -self._model_to_decorate.input_data.coefficients[
                         dmu_code, category])
+        self.lp_model.objective = objective
 
     def _get_variables(self):
         ''' Returns proper variables.
@@ -578,12 +582,12 @@ class MultiplierModelWithVirtualWeightRestrictions(
             if lower_bound:
                 variable, constraint_name = self.lb_weight_rest_variables[
                     category]
-                self.lp_model.constraints[constraint_name][variable] = multiplier
+                self.lp_model.get_constraint_by_name(constraint_name)[variable] = multiplier
 
             if upper_bound:
                 variable, constraint_name = self.ub_weight_rest_variables[
                     category]
-                self.lp_model.constraints[constraint_name][variable] = multiplier
+                self.lp_model.get_constraint_by_name(constraint_name)[variable] = multiplier
 
     def _store_vars_lb(self, category, constraint_name, variable):
         ''' See base class.

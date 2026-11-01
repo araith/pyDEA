@@ -79,7 +79,9 @@ def save_data_to_xlsx(data_file, categories, data, sheet_name='Data'):
 
     # save categories
     for count, category in enumerate(categories):
-        work_sheet.write(0, count, category.strip())
+        work_sheet.write(0, count,
+                         category.strip() if isinstance(category, str)
+                         else category)
 
     # save data
     row_index = 1

@@ -2,6 +2,8 @@
     models.
 '''
 
+import pulp
+
 from pyDEA.core.data_processing.solution import Solution
 from pyDEA.core.utils.dea_utils import check_input_and_output_categories
 
@@ -10,6 +12,18 @@ def do_nothing():
     ''' Helper function. Does nothing.
     '''
     pass
+
+
+def solve_problem(problem, solver=None):
+    '''Solve without losing CBC maximization dual signs in MPS conversion.
+
+    PuLP 4.2 negates maximization objectives in MPS, but CBC's row duals
+    are not converted back. LP format preserves the original objective sense.
+    Other solvers keep their native export/API behavior.
+    '''
+    selected_solver = solver or problem.solver or pulp.LpSolverDefault
+    kwargs = {'use_mps': False} if isinstance(selected_solver, pulp.COIN_CMD) else {}
+    return problem.solve(selected_solver, **kwargs)
 
 
 class ModelBase(object):
@@ -59,8 +73,12 @@ class ModelBase(object):
                 model_solution (Solution): solution.
         '''
         self._update_lp(dmu_code)
-        self.lp_model.solve()
+        self._solve_lp()
         self._fill_solution(dmu_code, model_solution)
+
+    def _solve_lp(self):
+        '''Solve the current LP; subclasses may handle solver-specific issues.'''
+        self.lp_model.solve_stats = solve_problem(self.lp_model)
 
     def _fill_solution(self, dmu_code, model_solution):
         ''' Fills given solution with data calculated for one DMU.

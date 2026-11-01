@@ -124,7 +124,7 @@ class SheetOnionRank(object):
                 work_sheet.write(
                     row_index, 0,
                     solution._input_data.get_dmu_user_name(dmu_code))
-                if solution.lp_status[dmu_code] == pulp.LpStatusOptimal:
+                if solution.lp_status[dmu_code] == pulp.LpSolveStatus.Optimal:
                     work_sheet.write(row_index, 1,
                                      solution.get_efficiency_score(dmu_code))
                     work_sheet.write(row_index, 2,
@@ -132,7 +132,7 @@ class SheetOnionRank(object):
                 else:
                     work_sheet.write(
                         row_index, 1,
-                        pulp.LpStatus[solution.lp_status[dmu_code]])
+                        pulp.LpSolveStatus(solution.lp_status[dmu_code]).name)
                 row_index += 1
             self.count += 1
             return row_index
@@ -184,12 +184,12 @@ class SheetWithCategoricalVar(object):
             row_index = start_row_index + count + 2
             work_sheet.write(
                 row_index, 0, solution._input_data.get_dmu_user_name(dmu_code))
-            if solution.lp_status[dmu_code] == pulp.LpStatusOptimal:
+            if solution.lp_status[dmu_code] == pulp.LpSolveStatus.Optimal:
                 work_sheet.write(
                     row_index, 1, solution.get_efficiency_score(dmu_code))
             else:
                 work_sheet.write(
-                    row_index, 1, pulp.LpStatus[solution.lp_status[dmu_code]])
+                    row_index, 1, pulp.LpSolveStatus(solution.lp_status[dmu_code]).name)
             if self.categorical is not None:
                 work_sheet.write(
                     row_index, 2,
@@ -255,7 +255,7 @@ class SheetWithCategoricalVar(object):
             dmu_name = solution._input_data.get_dmu_user_name(dmu_code)
             work_sheet.write(row_index, 0, dmu_name)
 
-            if solution.lp_status[dmu_code] == pulp.LpStatusOptimal:
+            if solution.lp_status[dmu_code] == pulp.LpSolveStatus.Optimal:
                 work_sheet.write(
                     row_index, 1, solution.get_efficiency_score(dmu_code))
 
@@ -265,7 +265,7 @@ class SheetWithCategoricalVar(object):
                     int(solution._input_data.coefficients[
                         dmu_code, self.categorical]))
 
-            if solution.lp_status[dmu_code] == pulp.LpStatusOptimal:
+            if solution.lp_status[dmu_code] == pulp.LpSolveStatus.Optimal:
 
                 column_index = init_column_index
                 for input_category in solution._input_data.input_categories:
@@ -289,7 +289,7 @@ class SheetWithCategoricalVar(object):
                     pass
             else:
                 work_sheet.write(
-                    row_index, 1, pulp.LpStatus[solution.lp_status[dmu_code]])
+                    row_index, 1, pulp.LpSolveStatus(solution.lp_status[dmu_code]).name)
 
             row_index += 1
         return row_index
@@ -405,7 +405,7 @@ class SheetWithCategoricalVar(object):
             work_sheet.write(
                 row_index, 0, solution._input_data.get_dmu_user_name(dmu_code))
 
-            if solution.lp_status[dmu_code] == pulp.LpStatusOptimal:
+            if solution.lp_status[dmu_code] == pulp.LpSolveStatus.Optimal:
 
                 once = True
                 all_lambda_vars = solution.get_lambda_variables(dmu_code)
@@ -444,7 +444,7 @@ class SheetWithCategoricalVar(object):
                     row_index += 1
             else:
                 work_sheet.write(
-                    row_index, 1, pulp.LpStatus[solution.lp_status[dmu_code]])
+                    row_index, 1, pulp.LpSolveStatus(solution.lp_status[dmu_code]).name)
 
             row_index += 2
         return row_index
@@ -627,7 +627,7 @@ def create_sheet_peers(work_sheet, solution, start_row_index, params_str):
     for dmu_code in ordered_dmu_codes:
         work_sheet.write(row_index, 0, solution._input_data.get_dmu_user_name(
             dmu_code))
-        if solution.lp_status[dmu_code] == pulp.LpStatusOptimal:
+        if solution.lp_status[dmu_code] == pulp.LpSolveStatus.Optimal:
             lambda_vars = solution.get_lambda_variables(dmu_code)
 #            sum_of_lambda_values = 0
             once = True
@@ -651,7 +651,7 @@ def create_sheet_peers(work_sheet, solution, start_row_index, params_str):
 
         else:
             work_sheet.write(
-                row_index, 2, pulp.LpStatus[solution.lp_status[dmu_code]])
+                row_index, 2, pulp.LpSolveStatus(solution.lp_status[dmu_code]).name)
         row_index += 1
     return row_index
 
@@ -681,7 +681,7 @@ def create_sheet_peer_count(work_sheet, solution, start_row_index, params_str):
     # write names of efficient DMUs first
     column_index = 1
     for dmu_code in ordered_dmu_codes:
-        if solution.lp_status[dmu_code] == pulp.LpStatusOptimal:
+        if solution.lp_status[dmu_code] == pulp.LpSolveStatus.Optimal:
             if solution.is_efficient(dmu_code):
                 dmu_name = solution._input_data.get_dmu_user_name(dmu_code)
                 work_sheet.write(start_row_index + 1, column_index, dmu_name)
@@ -696,11 +696,11 @@ def create_sheet_peer_count(work_sheet, solution, start_row_index, params_str):
         dmu_name = solution._input_data.get_dmu_user_name(dmu_code)
         work_sheet.write(row_index, 0, dmu_name)
 
-        if solution.lp_status[dmu_code] == pulp.LpStatusOptimal:
+        if solution.lp_status[dmu_code] == pulp.LpSolveStatus.Optimal:
             column_index = 1
             all_lambda_vars = solution.get_lambda_variables(dmu_code)
             for dmu in ordered_dmu_codes:
-                if (solution.lp_status[dmu] == pulp.LpStatusOptimal and
+                if (solution.lp_status[dmu] == pulp.LpSolveStatus.Optimal and
                         solution.is_efficient(dmu, all_lambda_vars)):
                     # get is used since some lambda
                     # # variables might not be present in categorical model!
@@ -713,7 +713,7 @@ def create_sheet_peer_count(work_sheet, solution, start_row_index, params_str):
                     column_index += 1
         else:
             work_sheet.write(
-                row_index, 1, pulp.LpStatus[solution.lp_status[dmu_code]])
+                row_index, 1, pulp.LpSolveStatus(solution.lp_status[dmu_code]).name)
         row_index += 1
     work_sheet.write(row_index, 0, 'Peer count')
     column_index = 1

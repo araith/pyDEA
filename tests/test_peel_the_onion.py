@@ -1,14 +1,14 @@
-from openpyxl import Workbook
+from pyDEA.core.data_processing.xlsx_workbook import XlsxWorkbook
 import datetime
 
 from pyDEA.core.models.peel_the_onion import peel_the_onion_method
-from pyDEA.core.data_processing.write_data_to_xls import XLSWriter
+from pyDEA.core.data_processing.write_data import FileWriter
 from pyDEA.core.data_processing.parameters import Parameters, parse_parameters_from_file
 from pyDEA.core.models.multiplier_model_decorators import MultiplierModelVRSDecorator
 from pyDEA.core.models.multiplier_model_base import MultiplierModelBase
 from pyDEA.core.models.multiplier_model import MultiplierInputOrientedModel
-from pyDEA.core.data_processing.read_data_from_xls import read_data, construct_input_data_instance
-from pyDEA.core.data_processing.read_data_from_xls import validate_data, convert_to_dictionary
+from pyDEA.core.data_processing.read_data import read_data, construct_input_data_instance
+from pyDEA.core.data_processing.read_data import validate_data, convert_to_dictionary
 import pyDEA.core.utils.model_factory as model_factory
 from pyDEA.core.models.envelopment_model_base import EnvelopmentModelBase
 from pyDEA.core.models.envelopment_model import EnvelopmentModelInputOriented
@@ -54,14 +54,14 @@ def test_peel_the_onion_CRS_multi_output_oriented(DEA_example2_data):
     utils_for_tests.check_onion_ranks(
         model.input_data, dmus, expected_ranks, ranks)
 
-    work_book = Workbook()
+    work_book = XlsxWorkbook()
     ranks_as_list = []
     ranks_as_list.append(ranks)
-    writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
+    writer = FileWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds(),
                        ranks=ranks_as_list)
     writer.write_data(solution)
-    work_book.save('tests/test_peel_the_onion.xls')
+    work_book.save('tests/test_peel_the_onion.xlsx')
 
 
 def test_peel_the_onion_VRS_multi(categorical_data):

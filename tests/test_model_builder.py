@@ -1,7 +1,7 @@
 from pyDEA.core.utils.model_builder import build_models
 from pyDEA.core.data_processing.parameters import parse_parameters_from_file
-from pyDEA.core.data_processing.read_data_from_xls import construct_input_data_instance
-from pyDEA.core.data_processing.read_data_from_xls import read_data, convert_to_dictionary
+from pyDEA.core.data_processing.read_data import construct_input_data_instance
+from pyDEA.core.data_processing.read_data import read_data, convert_to_dictionary
 
 
 def _construct_params_and_input():

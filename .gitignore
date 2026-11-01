@@ -1,0 +1,31 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Package build artifacts
+/build/
+/dist/
+*.egg-info/
+.eggs/
+
+# Local virtual environments
+/.venv/
+/venv/
+/env/
+
+# Coverage reports
+.coverage
+.coverage.*
+/htmlcov/
+/coverage.xml
+
+# Runtime logs and temporary solution data
+/pyDEA.log
+/tmp/
+
+# Generated test results (keep input spreadsheets versioned)
+/tests/test_output.xlsx
+/tests/test_*_output.xlsx

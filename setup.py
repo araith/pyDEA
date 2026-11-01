@@ -1,6 +1,5 @@
 import os
 from setuptools import setup, find_packages
-from setuptools.command.test import test as TestCommand
 
 
 # Utility function to read the README file.
@@ -9,20 +8,6 @@ from setuptools.command.test import test as TestCommand
 # string in below ...
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
-
-class PyTest(TestCommand):
-    user_options = [('pytest-args=', 'a', "Arguments to pass to pytest")]
-
-    def initialize_options(self):
-        TestCommand.initialize_options(self)
-        self.pytest_args = []
-
-    def run_tests(self):
-        # import here, cause outside the eggs aren't loaded
-        import pytest
-        errno = pytest.main(self.pytest_args)
-        sys.exit(errno)
 
 
 setup(
@@ -43,20 +28,18 @@ setup(
         "Intended Audience :: Science/Research",
         "Topic :: Scientific/Engineering",
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3.3",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3 :: Only",
         "Operating System :: Microsoft :: Windows",
         "Operating System :: POSIX :: Linux"
     ],
-    install_requires=['pulp>=1.6.1', 'openpyxl'],
+    python_requires='>=3.12',
+    install_requires=['pulp[cbc]>=4.2,<5', 'openpyxl>=3.1.5,<4'],
+    extras_require={'test': ['pytest>=8,<10']},
     entry_points={
         'gui_scripts': [
             'pyDEA=pyDEA.main_gui:main',
         ],
     },
     include_package_data=True,
-    tests_require=['pytest'],
-    cmdclass={'test': PyTest},
-    test_suite='tests',
 )

@@ -3,9 +3,9 @@ import pytest
 from pyDEA.core.models.multiplier_model_base import MultiplierModelBase
 from pyDEA.core.models.multiplier_model import MultiplierInputOrientedModel
 from pyDEA.core.models.multiplier_model_decorators import MultiplierModelVRSDecorator
-from pyDEA.core.data_processing.read_data_from_xls import read_data
-from pyDEA.core.data_processing.read_data_from_xls import construct_input_data_instance
-from pyDEA.core.data_processing.read_data_from_xls import validate_data
+from pyDEA.core.data_processing.read_data import read_data
+from pyDEA.core.data_processing.read_data import construct_input_data_instance
+from pyDEA.core.data_processing.read_data import validate_data
 
 from tests.test_CRS_env_input_oriented_model import data
 import tests.utils_for_tests as utils_for_tests

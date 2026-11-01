@@ -60,7 +60,7 @@ class EnvelopmentModelBase(ModelBase):
                                        'oriented'.format(orientation),
                                        obj_type)
         ub_obj = self._concrete_model.get_upper_bound_for_objective_variable()
-        obj_variable = pulp.LpVariable('Variable in objective function',
+        obj_variable = self.lp_model.add_variable('Variable_in_objective_function',
                                        self._concrete_model.
                                        get_lower_bound_for_objective_variable(),
                                        ub_obj,
@@ -70,7 +70,7 @@ class EnvelopmentModelBase(ModelBase):
         self.lp_model += (obj_variable,
                           'Efficiency score or inverse of efficiency score')
 
-        lambda_variables = pulp.LpVariable.dicts('lambda',
+        lambda_variables = self.lp_model.add_variable_dicts('lambda',
                                                  self.input_data.DMU_codes,
                                                  0, None, pulp.LpContinuous)
         self._variables.update(lambda_variables)
@@ -90,7 +90,7 @@ class EnvelopmentModelBase(ModelBase):
             constraint_name = self._constraints[output_category]
             current_output = self.input_data.coefficients[(dmu_code,
                                                           output_category)]
-            constraint = self.lp_model.constraints[constraint_name]
+            constraint = self.lp_model.get_constraint_by_name(constraint_name)
             self._concrete_model.update_output_category_coefficient(
                 current_output, constraint, self._variables['obj_var'],
                 output_category)
@@ -98,7 +98,7 @@ class EnvelopmentModelBase(ModelBase):
             current_input = self.input_data.coefficients[(dmu_code,
                                                          input_category)]
             constraint_name = self._constraints[input_category]
-            constraint = self.lp_model.constraints[constraint_name]
+            constraint = self.lp_model.get_constraint_by_name(constraint_name)
             self._concrete_model.update_input_category_coefficient(
                 current_input, constraint, self._variables['obj_var'],
                 input_category)
@@ -169,9 +169,9 @@ class EnvelopmentModelBase(ModelBase):
                     will be written.
         '''
         model_solution.orientation = self._concrete_model.get_orientation()
-        model_solution.add_lp_status(dmu_code, self.lp_model.status)
+        model_solution.add_lp_status(dmu_code, self.lp_model.solve_stats.status)
 
-        if self.lp_model.status == pulp.LpStatusOptimal:
+        if self.lp_model.solve_stats.status == pulp.LpSolveStatus.Optimal:
             lambda_variables = dict()
             for dmu in self.input_data.DMU_codes:
                 var = self._variables.get(dmu, None)
@@ -204,5 +204,5 @@ class EnvelopmentModelBase(ModelBase):
         for category in categories:
             constraint_name = self._constraints[category]
             dual = self._concrete_model.process_dual_value(
-                self.lp_model.constraints[constraint_name].pi)
+                self.lp_model.get_constraint_by_name(constraint_name).pi)
             func(dmu_code, category, dual)

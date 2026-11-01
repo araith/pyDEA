@@ -1,7 +1,7 @@
 from tkinter import Toplevel
 import pytest
 
-from pyDEA.core.gui_modules.load_xls_gui import AskSheetName
+from pyDEA.core.gui_modules.load_xlsx_gui import AskSheetName
 
 
 @pytest.fixture
