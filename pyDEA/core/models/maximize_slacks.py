@@ -37,6 +37,7 @@ class MaximizeSlacksModel(EnvelopmentModelBase):
         self.model = model
         self.second_solution = None
         self.lp_model_max_slack = None
+        self._slack_model = None
 
     def __getattr__(self, name):
         return getattr(self.model, name)
@@ -45,24 +46,25 @@ class MaximizeSlacksModel(EnvelopmentModelBase):
         ''' See base class.
         '''
         self.model.run_for_one_DMU(dmu_code, model_solution)
-        lp_model_copy = self.model.lp_model
-        self.model.lp_model = self.lp_model_max_slack
-        self.model._update_lp(dmu_code)
-        self.model.lp_model = lp_model_copy
-        self.lp_model_max_slack.solve()
-        self.model._should_add_efficiency = False  # keep efficiency
-         # calculated previously
+        if self.model.lp_model.solve_stats.status != pulp.LpSolveStatus.Optimal:
+            self.second_solution.add_lp_status(
+                dmu_code, self.model.lp_model.solve_stats.status)
+            return
+        self._slack_model._update_lp(dmu_code)
+        # PuLP 4 variables belong to exactly one problem. Fix the second
+        # problem's radial variable, not a handle from the first problem.
+        radial = self._slack_model._variables['obj_var']
+        score = self.model._variables['obj_var'].varValue
+        radial.lowBound = score
+        radial.upBound = score
+        self._slack_model._solve_lp()
         assert(self.second_solution is not None)
-        lp_model_copy = self.model.lp_model
-        self.model.lp_model = self.lp_model_max_slack
-        self.model._fill_solution(dmu_code, self.second_solution)
+        self._slack_model._fill_solution(dmu_code, self.second_solution)
         # sometimes
         # we can have optimal solution in second phase for a DMU
         # for which we had unbounded solution in the first phase
         self.second_solution.efficiency_scores[dmu_code] = float('inf')
-        self.model._should_add_efficiency = True
         self.fill_efficiency(model_solution)
-        self.model.lp_model = lp_model_copy
 
     # we need to explicitly redirect all calls to model since this class
     # inherits from EnvelopmentModelBase and all methods are defined there.
@@ -72,13 +74,31 @@ class MaximizeSlacksModel(EnvelopmentModelBase):
     def _create_lp(self):
         ''' See base class.
         '''
-        self.model._create_lp()
-        self.lp_model_max_slack = self.model.lp_model.deepcopy()
+        # Rebuild a separate decorator chain, so all handles (including VRS
+        # and weight restriction variables) belong to the correct problem.
+        def clone_model(model):
+            # Avoid copy.copy's __setstate__ probing: legacy decorators
+            # forward __getattr__ before their wrapped model is initialized.
+            cloned = object.__new__(type(model))
+            cloned.__dict__.update(vars(model))
+            for name, value in vars(model).items():
+                if name == '_should_add_efficiency':
+                    setattr(cloned, name, False)
+                elif isinstance(value, dict):
+                    setattr(cloned, name, value.copy())
+                elif name in ('model', '_model_to_decorate'):
+                    setattr(cloned, name, clone_model(value))
+            return cloned
 
-        input_slack_vars = pulp.LpVariable.dicts(
+        self._slack_model = clone_model(self.model)
+        self.model._create_lp()
+        self._slack_model._create_lp()
+        self.lp_model_max_slack = self._slack_model.lp_model
+
+        input_slack_vars = self.lp_model_max_slack.add_variable_dicts(
             'input_slack', self.strongly_disposal_input_categories,
             0, None, pulp.LpContinuous)
-        output_slack_vars = pulp.LpVariable.dicts(
+        output_slack_vars = self.lp_model_max_slack.add_variable_dicts(
             'output_slack', self.strongly_disposal_output_categories,
             0, None, pulp.LpContinuous)
 
@@ -91,15 +111,15 @@ class MaximizeSlacksModel(EnvelopmentModelBase):
         # change constraints
         for input_category in self.strongly_disposal_input_categories:
             name = self.model._constraints[input_category]
-            self.lp_model_max_slack.constraints[name].addterm(
-                input_slack_vars[input_category], 1)
-            self.lp_model_max_slack.constraints[name].sense = pulp.LpConstraintEQ
+            constraint = self.lp_model_max_slack.get_constraint_by_name(name)
+            constraint += -input_slack_vars[input_category]
+            constraint.sense = pulp.LpConstraintEQ
 
         for output_category in self.strongly_disposal_output_categories:
             name = self.model._constraints[output_category]
-            self.lp_model_max_slack.constraints[name].addterm(
-                output_slack_vars[output_category], -1)
-            self.lp_model_max_slack.constraints[name].sense = pulp.LpConstraintEQ
+            constraint = self.lp_model_max_slack.get_constraint_by_name(name)
+            constraint += -output_slack_vars[output_category]
+            constraint.sense = pulp.LpConstraintEQ
 
     def _update_lp(self, dmu_code):
         ''' See base class.

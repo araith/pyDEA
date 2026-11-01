@@ -1,12 +1,12 @@
 import pytest
-from openpyxl import Workbook
+from pyDEA.core.data_processing.xlsx_workbook import XlsxWorkbook
 import datetime
 
 from pyDEA.core.models.categorical_dmus import ModelWithCategoricalDMUs
 from pyDEA.core.models.categorical_dmus import get_dmus_with_fixed_hierarchical_category
 from pyDEA.core.models.multiplier_model_base import MultiplierModelBase
 from pyDEA.core.models.multiplier_model import MultiplierInputOrientedModel
-from pyDEA.core.data_processing.write_data_to_xls import XLSWriter
+from pyDEA.core.data_processing.write_data import FileWriter
 from pyDEA.core.data_processing.parameters import Parameters
 
 from tests.test_CRS_env_input_oriented_model import data
@@ -43,12 +43,12 @@ def test_run_with_categorical_dmus(categorical_from_book):
                                                    0.687, 1, 0.787, 1,
                                                    0.849, 0.787, 0.681, 1],
                                             solution, data, 1e-3)
-    work_book = Workbook()
-    writer = XLSWriter(Parameters(), work_book, datetime.datetime.today(),
+    work_book = XlsxWorkbook()
+    writer = FileWriter(Parameters(), work_book, datetime.datetime.today(),
                        (end_time - start_time).total_seconds(),
                        categorical='Category')
     writer.write_data(solution)
-    work_book.save('tests/test_categorical_output.xls')
+    work_book.save('tests/test_categorical_output.xlsx')
 
 
 def test_run_with_categorical_dmus_invalid_data(categorical_from_book):

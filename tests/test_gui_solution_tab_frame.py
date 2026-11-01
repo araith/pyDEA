@@ -24,7 +24,7 @@ class TabParentMock(Frame):
 class SolutionTabFrameMock(SolutionTabFrame):
 
     def ask_file_name_to_save(self, ext_code):
-        return "test_solution_output.xls"
+        return "test_solution_output.xlsx"
 
 
 @pytest.fixture

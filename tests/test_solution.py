@@ -1,5 +1,7 @@
 import pytest
-from pulp import LpStatusOptimal
+from pulp import LpSolveStatus
+
+LpStatusOptimal = LpSolveStatus.Optimal
 
 from pyDEA.core.data_processing.solution import Solution, SolutionWithVRS, SolutionWithSuperEfficiency
 from pyDEA.core.data_processing.input_data import InputData

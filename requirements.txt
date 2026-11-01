@@ -1,2 +1,2 @@
-pulp>=1.6.1
-openpyxl
+pulp[cbc]>=4.2,<5
+openpyxl>=3.1.5,<4

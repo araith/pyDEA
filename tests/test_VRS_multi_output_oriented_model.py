@@ -4,9 +4,9 @@ from pyDEA.core.models.multiplier_model_base import MultiplierModelBase
 from pyDEA.core.models.multiplier_model import MultiplierOutputOrientedModel
 from pyDEA.core.models.multiplier_model_decorators import MultiplierModelVRSDecorator
 from pyDEA.core.models.multiplier_model_decorators import MultiplierModelWithDisposableCategories
-from pyDEA.core.data_processing.read_data_from_xls import read_data
-from pyDEA.core.data_processing.read_data_from_xls import construct_input_data_instance
-from pyDEA.core.data_processing.read_data_from_xls import validate_data
+from pyDEA.core.data_processing.read_data import read_data
+from pyDEA.core.data_processing.read_data import construct_input_data_instance
+from pyDEA.core.data_processing.read_data import validate_data
 
 from tests.test_CRS_env_input_oriented_model import data
 import tests.utils_for_tests as utils_for_tests
@@ -35,21 +35,10 @@ def test_VRS_multi_output_oriented_small(model, data):
     utils_for_tests.check_lambda_variables('D', 'D', 1, model_solution, data)
     utils_for_tests.check_lambda_variables('E', 'E', 1, model_solution, data)
 
-    utils_for_tests.check_categories_for_dmu(
-        'A', ['x1', 'x2', 'q'], [0.25, 0, 1], model_solution, data)
-    utils_for_tests.check_categories_for_dmu(
-        'B', ['x1', 'x2', 'q'], [0.125, 0, 0.5], model_solution, data)
-    utils_for_tests.check_categories_for_dmu(
-        'C', ['x1', 'x2', 'q'], [0.083333333, 0, 0.33333333], model_solution,
-        data)
-    utils_for_tests.check_categories_for_dmu(
-        'D', ['x1', 'x2', 'q'], [0.33333333, 0.66666667, 1], model_solution,
-        data)
-    utils_for_tests.check_categories_for_dmu(
-        'E', ['x1', 'x2', 'q'], [0, 0.125, 0.5], model_solution, data)
-
-    utils_for_tests.check_VRS_duals(
-        dmus, [1.5, 0.75, 0.5, -1.3333333, 0.75], model_solution, data)
+    # VRS weights/intercepts need not be unique. Check every returned weight
+    # and intercept through feasibility, normalization and strong duality.
+    utils_for_tests.check_output_multiplier_solution(
+        model_solution, data, vrs=True)
 
 
 def test_VRS_multi_output_oriented_with_weakly_disposable_vars_small(data):
@@ -69,18 +58,7 @@ def test_VRS_multi_output_oriented_with_weakly_disposable_vars_small(data):
     utils_for_tests.check_lambda_variables('E', 'E', 1, model_solution, data)
     utils_for_tests.check_lambda_variables('D', 'D', 1, model_solution, data)
 
-    utils_for_tests.check_categories_for_dmu(
-        'A', ['x1', 'x2', 'q'], [0.25, 0, 1], model_solution, data)
-    utils_for_tests.check_categories_for_dmu(
-        'B', ['x1', 'x2', 'q'], [0.125, 0, 0.5], model_solution, data)
-    utils_for_tests.check_categories_for_dmu(
-        'C', ['x1', 'x2', 'q'], [0.083333333, 0, 0.33333333], model_solution,
-        data)
-    utils_for_tests.check_categories_for_dmu(
-        'D', ['x1', 'x2', 'q'], [0.33333333, 0.66666667, 1], model_solution,
-        data)
-    utils_for_tests.check_categories_for_dmu(
-        'E', ['x1', 'x2', 'q'], [0, 0.125, 0.5], model_solution, data)
-
-    utils_for_tests.check_VRS_duals(
-        dmus, [1.5, 0.75, 0.5, -1.3333333, 0.75], model_solution, data)
+    # The same invariants apply with an unrestricted output multiplier.
+    utils_for_tests.check_output_multiplier_solution(
+        model_solution, data, weakly_disposable={'q'}, vrs=True,
+        lower_bound=1e-12)

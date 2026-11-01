@@ -1,7 +1,7 @@
 ''' This module contains SupperEfficiencyModel class that
     implements super efficiency model.
 '''
-from pulp import LpStatusOptimal
+from pulp import LpSolveStatus
 
 from pyDEA.core.models.model_base import ModelBase
 from pyDEA.core.data_processing.solution import SolutionWithSuperEfficiency
@@ -89,7 +89,7 @@ class SupperEfficiencyModel(ModelBase):
                     will be written.
         '''
         model_solution.orientation = self._concrete_model.get_orientation()
-        model_solution.add_lp_status(dmu_code, LpStatusOptimal)
+        model_solution.add_lp_status(dmu_code, LpSolveStatus.Optimal)
 
         model_solution.add_efficiency_score(dmu_code, 1)
         model_solution.add_lambda_variables(dmu_code, dict())

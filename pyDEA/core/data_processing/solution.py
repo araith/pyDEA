@@ -6,7 +6,7 @@
             solution IDs.
 '''
 
-from pulp import LpStatus, LpStatusOptimal
+from pulp import LpSolveStatus
 import pickle
 import os
 
@@ -71,6 +71,12 @@ class Solution(object):
                 ValueError: if dmu_code does not exist or has invalid
                     value.
         '''
+        # CBC's text solution rounds weights to roughly eight digits.
+        # Normalize only boundary roundoff, not genuinely invalid scores.
+        if abs(efficiency_score - 1) <= 1e-7:
+            efficiency_score = 1.0
+        elif -1e-7 <= efficiency_score < 0:
+            efficiency_score = 0.0
         self._check_efficiency_score(efficiency_score)
         self._check_if_dmu_code_exists(dmu_code)
         self.efficiency_scores[dmu_code] = efficiency_score
@@ -111,7 +117,7 @@ class Solution(object):
             Returns:
                 bool: True if a given DMU is efficient, False otherwise.
         '''
-        if self.lp_status[dmu_code] != LpStatusOptimal:
+        if self.lp_status[dmu_code] != LpSolveStatus.Optimal:
             return False
         file_name = self._get_pickle_name(dmu_code)
         if not lambda_variables:
@@ -276,8 +282,8 @@ class Solution(object):
         print('code: ', dmu_code)
         if self.lp_status.get(dmu_code):
             print('LP status: {status}'.format(
-                status=LpStatus[self.lp_status.get(dmu_code)]))
-            if self.lp_status.get(dmu_code) == LpStatusOptimal:
+                status=LpSolveStatus(self.lp_status.get(dmu_code)).name))
+            if self.lp_status.get(dmu_code) == LpSolveStatus.Optimal:
                 print('Efficiency score: {score}'.format(
                     score=self.efficiency_scores.get(dmu_code)))
                 print('Lambda variables: {vars}'.format(

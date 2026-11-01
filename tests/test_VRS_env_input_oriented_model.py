@@ -6,9 +6,9 @@ from pyDEA.core.models.envelopment_model import EnvelopmentModelInputOrientedWit
 from pyDEA.core.models.envelopment_model_decorators import EnvelopmentModelVRSDecorator
 from pyDEA.core.models.envelopment_model_decorators import DefaultConstraintCreator
 from pyDEA.core.models.envelopment_model_decorators import DisposableVarsConstraintCreator
-from pyDEA.core.data_processing.read_data_from_xls import read_data, convert_to_dictionary
-from pyDEA.core.data_processing.read_data_from_xls import construct_input_data_instance
-from pyDEA.core.data_processing.read_data_from_xls import validate_data
+from pyDEA.core.data_processing.read_data import read_data, convert_to_dictionary
+from pyDEA.core.data_processing.read_data import construct_input_data_instance
+from pyDEA.core.data_processing.read_data import validate_data
 from pyDEA.core.models.bound_generators import generate_upper_bound_for_efficiency_score
 from pyDEA.core.data_processing.parameters import parse_parameters_from_file
 import pyDEA.core.utils.model_factory as model_factory
@@ -63,7 +63,7 @@ def test_VRS_env_input_oriented_small(model, data):
 
 def test_VRS_env_input_oriented_non_disc_vars():
     categories, xls_data, dmu_name, sheet_name = read_data(
-        'tests/DEA_example_data.xls')
+        'tests/DEA_example_data.xlsx')
     coefficients, has_same_dmus = convert_to_dictionary(xls_data)
     assert has_same_dmus is False
     assert validate_data(categories, coefficients) is True
@@ -94,7 +94,7 @@ def test_VRS_env_input_oriented_non_disc_vars():
 
 def test_VRS_env_input_oriented_weakly_disposable_vars():
     categories, xls_data, dmu_name, sheet_name = read_data(
-        'tests/DEA_example2_data.xls')
+        'tests/DEA_example2_data.xlsx')
     coefficients, has_same_dmus = convert_to_dictionary(xls_data)
     assert has_same_dmus is False
     assert validate_data(categories, coefficients) is True

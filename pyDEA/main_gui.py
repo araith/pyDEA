@@ -3,7 +3,7 @@
 
 import os
 import traceback
-import pkg_resources
+from importlib.resources import as_file, files
 
 from tkinter import Tk, BOTH, W, N, E, S, StringVar, PhotoImage
 from tkinter.ttk import Frame, Button, Label, Style, Progressbar
@@ -156,11 +156,11 @@ def main():
 
     # load logo
     if "nt" == os.name:
-        iconfile = pkg_resources.resource_filename(PACKAGE, 'pyDEAlogo.ico')
-        root.wm_iconbitmap(bitmap=iconfile)
+        with as_file(files(PACKAGE).joinpath('pyDEAlogo.ico')) as iconfile:
+            root.wm_iconbitmap(bitmap=str(iconfile))
     else:
-        iconfile = pkg_resources.resource_filename(PACKAGE, 'pyDEAlogo.gif')
-        img = PhotoImage(file=iconfile)
+        with as_file(files(PACKAGE).joinpath('pyDEAlogo.gif')) as iconfile:
+            img = PhotoImage(file=str(iconfile))
         root.tk.call('wm', 'iconphoto', root._w, img)
 
     # change background color of all widgets

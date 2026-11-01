@@ -1,9 +1,10 @@
 ''' This module contains MultiplierModelBase class that
     implements basic functionality of the multiplier model.
 '''
+import math
 import pulp
 
-from pyDEA.core.models.model_base import ModelBase
+from pyDEA.core.models.model_base import ModelBase, solve_problem
 from pyDEA.core.utils.dea_utils import is_efficient, ZERO_TOLERANCE
 
 
@@ -58,10 +59,10 @@ class MultiplierModelBase(ModelBase):
             orientation=self._concrete_model.get_orientation()),
             self._concrete_model.get_objective_type())
 
-        self._output_variables = pulp.LpVariable.dicts(
+        self._output_variables = self.lp_model.add_variable_dicts(
             'mu', self.input_data.output_categories, self.tolerance, None,
             pulp.LpContinuous)
-        self._input_variables = pulp.LpVariable.dicts(
+        self._input_variables = self.lp_model.add_variable_dicts(
             'eta', self.input_data.input_categories, self.tolerance, None,
             pulp.LpContinuous)
 
@@ -103,6 +104,51 @@ class MultiplierModelBase(ModelBase):
                                                         self._output_variables,
                                                         self.lp_model)
 
+    def _solve_lp(self):
+        '''Recover CBC solutions damaged by rounding on degenerate faces.
+
+        Do not accept an optimal status alone: rounded weights must satisfy
+        feasibility and complementary slackness. Retry only inconsistent CBC
+        results, using a private solver copy and the same mathematical LP.
+        '''
+        self.lp_model.solve_stats = solve_problem(self.lp_model)
+        solver = self.lp_model.solver
+        if (self.lp_model.solve_stats.status == pulp.LpSolveStatus.Optimal and
+                isinstance(solver, pulp.COIN_CMD) and
+                not self._has_consistent_cbc_solution()):
+            retry_solver = solver.copy()
+            # CBC normally serializes weights/duals with only eight
+            # significant digits. Preserve double precision on retry rather
+            # than relaxing feasibility checks for large data coefficients.
+            retry_solver.options = list(solver.options) + [
+                'primalSimplex', 'scaling off', 'precisionOutput %.17g']
+            try:
+                self.lp_model.solve_stats = solve_problem(self.lp_model, retry_solver)
+            finally:
+                # Keep the caller's solver unchanged even when solving fails.
+                self.lp_model.solver = solver
+            if (self.lp_model.solve_stats.status == pulp.LpSolveStatus.Optimal and
+                    not self._has_consistent_cbc_solution()):
+                raise ArithmeticError(
+                    'CBC returned inconsistent multiplier weights after retry')
+
+    def _has_consistent_cbc_solution(self):
+        '''Check primal feasibility and complementary slackness after rounding.'''
+        tolerance = 1e-6
+        if not all(var.varValue is not None and math.isfinite(var.varValue)
+                   for var in self.lp_model.variables()
+                   if var.name != '__dummy'):
+            return False
+        if not self.lp_model.valid(tolerance):
+            return False
+        for constraint in self.lp_model.constraints():
+            residual = constraint.value()
+            if (constraint.pi is None or not math.isfinite(constraint.pi) or
+                    not math.isfinite(residual) or
+                    abs(constraint.pi * residual) > tolerance):
+                return False
+        return True
+
     def _fill_solution(self, dmu_code, model_solution):
         ''' Fills given solution with data calculated for one DMU.
 
@@ -112,8 +158,8 @@ class MultiplierModelBase(ModelBase):
                     will be written.
         '''
         model_solution.orientation = self._concrete_model.get_orientation()
-        model_solution.add_lp_status(dmu_code, self.lp_model.status)
-        if self.lp_model.status == pulp.LpStatusOptimal:
+        model_solution.add_lp_status(dmu_code, self.lp_model.solve_stats.status)
+        if self.lp_model.solve_stats.status == pulp.LpSolveStatus.Optimal:
             for input_category in self.input_data.input_categories:
                 model_solution.add_input_dual(
                     dmu_code, input_category,
@@ -125,14 +171,10 @@ class MultiplierModelBase(ModelBase):
                     self._output_variables[output_category].varValue)
             lambda_variables = dict()
             for dmu_constraint, dmu in self._dmu_constraint_names.items():
-                if self.lp_model.constraints[dmu_constraint].pi is None:
-                    self.lp_model.constraints[dmu_constraint].pi = 0
-                # else:
-                #     print(self.lp_model.constraints[dmu_constraint].pi)
-                if (abs(self.lp_model.constraints[dmu_constraint].pi) >
-                        ZERO_TOLERANCE):
+                dual = self.lp_model.get_constraint_by_name(dmu_constraint).pi
+                if dual is not None and abs(dual) > ZERO_TOLERANCE:
                     lambda_variables[dmu] = self._concrete_model.process_dual_value(
-                        self.lp_model.constraints[dmu_constraint].pi)
+                        dual)
             lambda_var = lambda_variables.get(dmu_code, 0)
             model_solution.add_efficiency_score(
                 dmu_code, self._get_efficiency_score(lambda_var))

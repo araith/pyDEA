@@ -371,7 +371,7 @@ class DataTabFrame(Frame):
                 dmu_name (str): text that appear in the same line with
                     categories before the categories appear
         '''
-        self.table.cells[0][0].insert(0, dmu_name)
+        self.table.cells[0][0].insert(0, '' if dmu_name is None else dmu_name)
 
         nb_needed_cols = len(categories) + 1
         for i in range(self.table.nb_cols, nb_needed_cols):

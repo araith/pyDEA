@@ -5,9 +5,9 @@ from pyDEA.core.models.multiplier_model_base import MultiplierModelBase
 from pyDEA.core.models.multiplier_model import MultiplierOutputOrientedModel
 from pyDEA.core.models.multiplier_model_decorators import MultiplierModelWithDisposableCategories
 from pyDEA.core.models.multiplier_model_decorators import MultiplierModelOutputOrientedWithNonDiscVars
-from pyDEA.core.data_processing.read_data_from_xls import read_data, convert_to_dictionary
-from pyDEA.core.data_processing.read_data_from_xls import construct_input_data_instance
-from pyDEA.core.data_processing.read_data_from_xls import validate_data
+from pyDEA.core.data_processing.read_data import read_data, convert_to_dictionary
+from pyDEA.core.data_processing.read_data import construct_input_data_instance
+from pyDEA.core.data_processing.read_data import validate_data
 from pyDEA.core.utils.dea_utils import clean_up_pickled_files
 
 from tests.test_CRS_env_input_oriented_model import data
@@ -83,6 +83,8 @@ def test_CRS_multi_output_oriented_with_weakly_disposable_vars_small(data):
         'D', ['x1', 'x2', 'q'], [0.2, 0.4, 1], model_solution, data)
     utils_for_tests.check_categories_for_dmu(
         'E', ['x1', 'x2', 'q'], [0.1, 0.2, 0.5], model_solution, data)
+    utils_for_tests.check_output_multiplier_solution(
+        model_solution, data, weakly_disposable={'x1'}, lower_bound=1e-12)
 
 
 def test_CRS_multi_output_oriented_with_non_discretionary_vars_with_error(data):
@@ -133,7 +135,7 @@ def test_CRS_multi_output_oriented_with_non_discretionary_vars(
 
 def test_with_zero_data():
     categories, xls_data, dmu_name, sheet_name = read_data(
-        'tests/with_zeros.xls')
+        'tests/with_zeros.xlsx')
     coefficients, has_same_dmus = convert_to_dictionary(xls_data)
     assert has_same_dmus is False
     assert validate_data(categories, coefficients) is True

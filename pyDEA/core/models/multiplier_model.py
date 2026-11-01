@@ -55,9 +55,11 @@ class MultiplierInputOrientedModel(InputOrientedModel):
                     to output categories.
                 lp_model (pulp.LpProblem): linear programming model.
         '''
+        objective = lp_model.objective
         for category in input_data.output_categories:
-            lp_model.objective[output_variables[category]] = input_data.coefficients[
+            objective[output_variables[category]] = input_data.coefficients[
                 dmu_code, category]
+        lp_model.objective = objective
 
     def get_equality_constraint(self, input_data, dmu_code, input_variables,
                                 output_variables):
@@ -96,7 +98,7 @@ class MultiplierInputOrientedModel(InputOrientedModel):
                 lp_model (pulp.LpProblem): linear programming model.
         '''
         for category, var in input_variables.items():
-            lp_model.constraints['equality_constraint'][var] = input_data.coefficients[
+            lp_model.get_constraint_by_name('equality_constraint')[var] = input_data.coefficients[
                 dmu_code, category]
 
 
@@ -148,9 +150,11 @@ class MultiplierOutputOrientedModel(OutputOrientedModel):
                     to output categories.
                 lp_model (pulp.LpProblem): linear programming model.
         '''
+        objective = lp_model.objective
         for category in input_data.input_categories:
-            lp_model.objective[input_variables[category]] = input_data.coefficients[
+            objective[input_variables[category]] = input_data.coefficients[
                 dmu_code, category]
+        lp_model.objective = objective
 
     def get_equality_constraint(self, input_data, dmu_code, input_variables,
                                 output_variables):
@@ -189,5 +193,5 @@ class MultiplierOutputOrientedModel(OutputOrientedModel):
                 lp_model (pulp.LpProblem): linear programming model.
         '''
         for category, var in output_variables.items():
-            lp_model.constraints['equality_constraint'][var] = input_data.coefficients[
+            lp_model.get_constraint_by_name('equality_constraint')[var] = input_data.coefficients[
                 dmu_code, category]

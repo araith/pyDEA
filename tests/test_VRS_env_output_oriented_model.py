@@ -6,9 +6,9 @@ from pyDEA.core.models.envelopment_model import EnvelopmentModelOutputOrientedWi
 from pyDEA.core.models.envelopment_model_decorators import EnvelopmentModelVRSDecorator
 from pyDEA.core.models.envelopment_model_decorators import DefaultConstraintCreator
 from pyDEA.core.models.envelopment_model_decorators import DisposableVarsConstraintCreator
-from pyDEA.core.data_processing.read_data_from_xls import read_data
-from pyDEA.core.data_processing.read_data_from_xls import construct_input_data_instance
-from pyDEA.core.data_processing.read_data_from_xls import validate_data, convert_to_dictionary
+from pyDEA.core.data_processing.read_data import read_data
+from pyDEA.core.data_processing.read_data import construct_input_data_instance
+from pyDEA.core.data_processing.read_data import validate_data, convert_to_dictionary
 from pyDEA.core.models.bound_generators import generate_lower_bound_for_efficiency_score
 from pyDEA.core.utils.dea_utils import clean_up_pickled_files
 
@@ -41,24 +41,14 @@ def test_VRS_env_output_oriented_small(model, data):
     utils_for_tests.check_lambda_variables('D', 'D', 1, model_solution, data)
     utils_for_tests.check_lambda_variables('E', 'E', 1, model_solution, data)
 
-    utils_for_tests.check_categories_for_dmu(
-        'A', ['x1', 'x2', 'q'], [0.25, 0, 1], model_solution, data)
-    utils_for_tests.check_categories_for_dmu(
-        'C', ['x1', 'x2', 'q'], [0, 0, 0.33333333], model_solution, data)
-    utils_for_tests.check_categories_for_dmu(
-        'D', ['x1', 'x2', 'q'], [0.33333333, 0.66666667, 1], model_solution,
-        data)
-    utils_for_tests.check_categories_for_dmu(
-        'E', ['x1', 'x2', 'q'], [0, 0.125, 0.5], model_solution, data)
-
-    # B does not return the same value
-    utils_for_tests.check_VRS_duals(
-        ['A', 'C', 'D', 'E'], [1.5, 1, -1.3333333, 0.75], model_solution, data)
+    # Different simplex bases can select different optimal supporting planes.
+    # Require feasible weights and peers with matching primal/dual objectives.
+    utils_for_tests.check_dea_solution(model_solution, data, vrs=True)
 
 
 def test_VRS_env_output_oriented_non_disc_vars():
     categories, xls_data, dmu_name, sheet_name = read_data(
-        'tests/DEA_example_data.xls')
+        'tests/DEA_example_data.xlsx')
     coefficients, has_same_dmus = convert_to_dictionary(xls_data)
     assert has_same_dmus is False
     assert validate_data(categories, coefficients) is True
@@ -88,7 +78,7 @@ def test_VRS_env_output_oriented_non_disc_vars():
 
 def test_VRS_env_output_oriented_weakly_disposable_vars():
     categories, xls_data, dmu_name, sheet_name = read_data(
-        'tests/DEA_example2_data.xls')
+        'tests/DEA_example2_data.xlsx')
     coefficients, has_same_dmus = convert_to_dictionary(xls_data)
     assert has_same_dmus is False
     assert validate_data(categories, coefficients) is True
